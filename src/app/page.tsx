@@ -4,10 +4,13 @@ import { FeaturedCollectionSection } from "@/components/commerce/featured-collec
 import { HomepageProductSection } from "@/components/commerce/product-showcase/homepage-product-section";
 import { CampaignHero } from "@/components/storytelling/campaign-hero";
 import { BrandPromiseSection } from "@/components/storytelling/brand-promise/brand-promise-section";
+import { EmotionalEditorialBanner } from "@/components/storytelling/editorial-banner/emotional-editorial-banner";
 import {
   homepageBrandPromise,
+  homepageBestSellers,
   homepageCollections,
   homepageDiscovery,
+  homepageEditorialBanner,
   homepageFeaturedCollection,
   homepageHero,
   homepageNewArrivals,
@@ -25,6 +28,9 @@ export default function Home() {
   const newArrivalProducts = developmentCollection.products
     .filter((product) => "isNew" in product && product.isNew)
     .slice(0, homepageNewArrivals.productLimit);
+  const bestSellerProducts = developmentCollection.products
+    .filter((product) => "isBestSeller" in product && product.isBestSeller)
+    .slice(0, homepageBestSellers.productLimit);
 
   return (
     <>
@@ -42,6 +48,12 @@ export default function Home() {
       />
       <BrandPromiseSection config={homepageBrandPromise} />
       <ShopByCollectionSection config={homepageCollections} />
+      <HomepageProductSection
+        config={homepageBestSellers}
+        products={bestSellerProducts}
+        quickAddAction={developmentQuickAdd}
+      />
+      <EmotionalEditorialBanner config={homepageEditorialBanner} />
     </>
   );
 }

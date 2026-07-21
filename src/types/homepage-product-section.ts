@@ -16,6 +16,7 @@ export interface HomepageProductSectionConfig {
   };
   collectionLabel?: string;
   productLimit: number;
+  maxColumns?: 2 | 3 | 4;
   mobileLayout?: HomepageProductMobileLayout;
   tone?: HomepageProductSectionTone;
   hideWhenEmpty?: boolean;

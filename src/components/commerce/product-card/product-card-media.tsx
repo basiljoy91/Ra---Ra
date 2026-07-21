@@ -19,6 +19,7 @@ interface ProductCardMediaProps {
   imageRatio: ProductCardImageRatio;
   showAlternateImage: boolean;
   priority: boolean;
+  sizes: string;
 }
 
 const ratioClasses: Record<ProductCardImageRatio, string> = {
@@ -36,6 +37,7 @@ export function ProductCardMedia({
   imageRatio,
   showAlternateImage,
   priority,
+  sizes,
 }: ProductCardMediaProps) {
   return (
     <div
@@ -54,7 +56,7 @@ export function ProductCardMedia({
             alt={primaryImage.alt}
             className="absolute inset-0 h-full w-full object-contain"
             height={primaryImage.height ?? 1122}
-            sizes="(min-width: 1280px) 22vw, (min-width: 768px) 31vw, 50vw"
+            sizes={sizes}
             src={primaryImage.url}
             width={primaryImage.width ?? 1402}
             {...(priority
@@ -82,7 +84,7 @@ export function ProductCardMedia({
             height={alternateImage.height ?? 1122}
             loading="lazy"
             quality={65}
-            sizes="(min-width: 1280px) 22vw, (min-width: 768px) 31vw, 50vw"
+            sizes={sizes}
             src={alternateImage.url}
             width={alternateImage.width ?? 1402}
           />

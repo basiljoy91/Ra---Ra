@@ -1,6 +1,7 @@
 import type { BrandPromiseConfig } from "@/types/brand-promise";
 import type { ShopByCollectionConfig } from "@/types/collection-card";
 import type { DiscoveryConfig } from "@/types/discovery";
+import type { EditorialBannerConfig } from "@/types/editorial-banner";
 import type { FeaturedCollectionPresentation } from "@/types/featured-collection";
 import type { HeroConfig } from "@/types/hero";
 import type { HomepageProductSectionConfig } from "@/types/homepage-product-section";
@@ -233,3 +234,41 @@ export const homepageCollections = {
     },
   ],
 } as const satisfies ShopByCollectionConfig;
+
+export const homepageBestSellers = {
+  id: "featured-favourites",
+  eyebrow: "Development Merchandising Preview",
+  heading: "Featured Favourites",
+  description:
+    "A mock selection used to preview how manually curated favourites will appear until genuine commerce or merchandising data is connected.",
+  collectionLabel: "Development Pet Stories",
+  productLimit: 2,
+  maxColumns: 2,
+  mobileLayout: "grid",
+  tone: "muted",
+  hideWhenEmpty: true,
+  emptyMessage:
+    "Featured favourites will appear here when merchandising data is available.",
+} as const satisfies HomepageProductSectionConfig;
+
+export const homepageEditorialBanner = {
+  id: "wear-the-love",
+  eyebrow: "The Bond We Carry",
+  heading: "Wear the love that waits for you.",
+  description:
+    "A small reminder of the companion who is always part of where you go.",
+  media: {
+    src: "/editorial/dog-owner-love.png",
+    alt: "Golden retriever holding a dog-illustrated white T-shirt beside its smiling owner in a warm home",
+    width: 1672,
+    height: 941,
+    focalPoint: {
+      mobile: "74% 50%",
+      desktop: "76% 50%",
+    },
+  },
+  action: {
+    label: "Discover the Story",
+    href: "/about",
+  },
+} as const satisfies EditorialBannerConfig;

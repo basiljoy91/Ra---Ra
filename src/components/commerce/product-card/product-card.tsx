@@ -25,6 +25,7 @@ export interface ProductCardProps {
   showColourOptions?: boolean;
   showQuickAdd?: boolean;
   priority?: boolean;
+  imageSizes?: string;
   headingLevel?: ProductCardHeadingLevel;
   collectionLabel?: string;
   quickAddAction?: ProductCardQuickAddHandler;
@@ -40,6 +41,8 @@ export function ProductCard({
   showColourOptions,
   showQuickAdd,
   priority = false,
+  imageSizes =
+    "(min-width: 1280px) 22vw, (min-width: 768px) 31vw, (min-width: 640px) 50vw, 100vw",
   headingLevel = 3,
   collectionLabel,
   quickAddAction,
@@ -76,6 +79,7 @@ export function ProductCard({
         imageRatio={imageRatio}
         primaryImage={product.images[0]}
         priority={priority}
+        sizes={imageSizes}
         productHref={productHref}
         productTitle={product.title}
         showAlternateImage={resolvedShowAlternate}

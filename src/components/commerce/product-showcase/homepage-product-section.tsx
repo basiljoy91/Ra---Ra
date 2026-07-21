@@ -43,6 +43,7 @@ export function HomepageProductSection({
         {products.length > 0 ? (
           <ProductGrid
             collectionLabel={config.collectionLabel}
+            maxColumns={config.maxColumns}
             mobileLayout={config.mobileLayout}
             products={products}
             quickAddAction={quickAddAction}
