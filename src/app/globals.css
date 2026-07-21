@@ -320,9 +320,11 @@
   .featured-collection-media-image {
     object-position: var(--collection-media-position-desktop, 50% 50%);
   }
+}
 
+@media (min-width: 64rem) {
   .editorial-banner-image {
-    object-position: var(--editorial-position-desktop, 76% 50%);
+    object-position: var(--editorial-position-desktop, 100% 50%);
   }
 }
 

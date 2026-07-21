@@ -5,6 +5,7 @@ import { HomepageProductSection } from "@/components/commerce/product-showcase/h
 import { CampaignHero } from "@/components/storytelling/campaign-hero";
 import { BrandPromiseSection } from "@/components/storytelling/brand-promise/brand-promise-section";
 import { EmotionalEditorialBanner } from "@/components/storytelling/editorial-banner/emotional-editorial-banner";
+import { ReviewSection } from "@/components/storytelling/reviews/review-section";
 import {
   homepageBrandPromise,
   homepageBestSellers,
@@ -14,7 +15,9 @@ import {
   homepageFeaturedCollection,
   homepageHero,
   homepageNewArrivals,
+  homepageReviews,
 } from "@/config/homepage";
+import { siteConfig } from "@/config/site";
 import { developmentCollection } from "@/data/development/mock-commerce";
 import { developmentQuickAdd } from "@/features/cart/development-quick-add";
 
@@ -54,6 +57,9 @@ export default function Home() {
         quickAddAction={developmentQuickAdd}
       />
       <EmotionalEditorialBanner config={homepageEditorialBanner} />
+      {siteConfig.reviewsEnabled ? (
+        <ReviewSection config={homepageReviews} reviews={[]} />
+      ) : null}
     </>
   );
 }

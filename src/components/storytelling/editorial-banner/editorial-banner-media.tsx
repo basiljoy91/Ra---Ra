@@ -22,12 +22,12 @@ export function EditorialBannerMedia({
 
   return (
     <figure
-      className="relative aspect-square overflow-hidden bg-surface-muted lg:min-h-[38rem] lg:aspect-auto"
+      className="relative aspect-square overflow-hidden bg-surface-muted md:aspect-[4/3] lg:min-h-[38rem] lg:aspect-auto"
       style={style}
     >
       <Image
         alt={media.alt}
-        className="editorial-banner-image absolute inset-0 h-full w-full scale-[1.16] object-cover"
+        className="editorial-banner-image absolute inset-0 h-full w-full scale-[1.25] object-cover md:scale-[1.5] lg:scale-[1.1] xl:scale-[1.4]"
         height={media.height}
         loading="lazy"
         sizes="(min-width: 1024px) 62vw, 100vw"

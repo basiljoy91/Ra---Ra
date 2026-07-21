@@ -17,7 +17,7 @@ export function EditorialBannerContent({
       {config.eyebrow ? (
         <p className="type-label text-accent-soft">{config.eyebrow}</p>
       ) : null}
-      <h2 className="type-page-heading mt-4 max-w-[12ch]" id={headingId}>
+      <h2 className="type-section-heading mt-4 max-w-[14ch]" id={headingId}>
         {config.heading}
       </h2>
       <p className="type-subheading mt-6 max-w-[34rem] text-primary-foreground/80">

@@ -124,6 +124,7 @@ export const siteConfig = {
   },
   accountEnabled: false,
   wishlistEnabled: false,
+  reviewsEnabled: false,
   header: headerConfig,
   usesPlaceholderContactDetails: true,
 } as const;

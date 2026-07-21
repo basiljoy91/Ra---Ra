@@ -5,6 +5,7 @@ import type { EditorialBannerConfig } from "@/types/editorial-banner";
 import type { FeaturedCollectionPresentation } from "@/types/featured-collection";
 import type { HeroConfig } from "@/types/hero";
 import type { HomepageProductSectionConfig } from "@/types/homepage-product-section";
+import type { ReviewSectionConfig } from "@/types/review";
 
 export const homepageHero = {
   eyebrow: "The First Story: Dogs & Their Humans",
@@ -263,8 +264,8 @@ export const homepageEditorialBanner = {
     width: 1672,
     height: 941,
     focalPoint: {
-      mobile: "74% 50%",
-      desktop: "76% 50%",
+      mobile: "90% 50%",
+      desktop: "100% 50%",
     },
   },
   action: {
@@ -272,3 +273,21 @@ export const homepageEditorialBanner = {
     href: "/about",
   },
 } as const satisfies EditorialBannerConfig;
+
+export const homepageReviews = {
+  id: "customer-reviews",
+  eyebrow: "Community Stories",
+  heading: "Worn with Meaning",
+  description:
+    "Genuine customer experiences will appear here after an approved review provider or verified first-party process is connected.",
+  hideWhenEmpty: true,
+} as const satisfies ReviewSectionConfig;
+
+export const developmentReviewShowcase = {
+  id: "development-review-showcase",
+  eyebrow: "Development Fixtures",
+  heading: "Review Layout States",
+  description:
+    "Interface-only examples for rating text, optional titles and different review lengths.",
+  hideWhenEmpty: false,
+} as const satisfies ReviewSectionConfig;
