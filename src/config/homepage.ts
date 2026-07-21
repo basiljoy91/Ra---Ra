@@ -1,6 +1,7 @@
 import type { DiscoveryConfig } from "@/types/discovery";
 import type { FeaturedCollectionPresentation } from "@/types/featured-collection";
 import type { HeroConfig } from "@/types/hero";
+import type { HomepageProductSectionConfig } from "@/types/homepage-product-section";
 
 export const homepageHero = {
   eyebrow: "The First Story: Dogs & Their Humans",
@@ -140,3 +141,21 @@ export const homepageFeaturedCollection = {
     mobile: "50% 50%",
   },
 } as const satisfies FeaturedCollectionPresentation;
+
+export const homepageNewArrivals = {
+  id: "new-arrivals",
+  eyebrow: "Just Arrived",
+  heading: "New Stories to Wear",
+  description:
+    "The latest minimal designs inspired by the connections and everyday moments that matter.",
+  cta: {
+    label: "View All New Arrivals",
+    href: "/shop?sort=newest",
+  },
+  collectionLabel: "Development Pet Stories",
+  productLimit: 4,
+  mobileLayout: "rail",
+  tone: "surface",
+  hideWhenEmpty: true,
+  emptyMessage: "New stories will appear here when they are ready.",
+} as const satisfies HomepageProductSectionConfig;

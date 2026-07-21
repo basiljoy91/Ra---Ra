@@ -178,6 +178,7 @@ export const developmentProducts = [
       noIndex: true,
     },
     contentStatus: "development",
+    isNew: true,
     isBestSeller: true,
   },
   {
@@ -205,6 +206,7 @@ export const developmentProducts = [
       noIndex: true,
     },
     contentStatus: "development",
+    isNew: true,
     isLimitedEdition: true,
   },
   {
@@ -235,6 +237,7 @@ export const developmentProducts = [
       noIndex: true,
     },
     contentStatus: "development",
+    isNew: true,
   },
   {
     id: "development-product-city-companion-sold-out",
