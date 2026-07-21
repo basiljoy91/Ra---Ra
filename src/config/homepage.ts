@@ -1,4 +1,5 @@
 import type { BrandPromiseConfig } from "@/types/brand-promise";
+import type { ShopByCollectionConfig } from "@/types/collection-card";
 import type { DiscoveryConfig } from "@/types/discovery";
 import type { FeaturedCollectionPresentation } from "@/types/featured-collection";
 import type { HeroConfig } from "@/types/hero";
@@ -187,3 +188,48 @@ export const homepageBrandPromise = {
     },
   ],
 } as const satisfies BrandPromiseConfig;
+
+export const homepageCollections = {
+  eyebrow: "Collection Stories",
+  heading: "Shop by Collection",
+  description:
+    "Each Ra & Ra collection begins with a theme that connects people through shared passions, rituals and everyday meaning.",
+  activeStatusLabel: "Current Collection",
+  comingSoonStatusLabel: "Coming Soon",
+  activeCtaLabel: "Explore the Collection",
+  collections: [
+    {
+      id: "pets",
+      title: "Dogs & Their Humans",
+      handle: "pets",
+      href: "/collections/pets",
+      description:
+        "Minimal apparel inspired by companionship, familiar routines and the bond between dogs and their humans.",
+      image: {
+        url: "/collections/pets-collection.png",
+        alt: "Golden retriever presenting a dog-illustrated T-shirt to its owner in a warm home",
+        width: 1717,
+        height: 916,
+      },
+      status: "active",
+      themeKey: "default",
+    },
+    {
+      id: "limited-editions",
+      title: "Limited Editions",
+      description:
+        "Reserved for confirmed limited releases when real collection content is available.",
+      status: "hidden",
+      themeKey: "default",
+    },
+    {
+      id: "future-story",
+      title: "Future Story",
+      description:
+        "The next themed collection will be revealed when its story and products are ready.",
+      placeholderLabel: "A new story will begin here.",
+      status: "coming-soon",
+      themeKey: "default",
+    },
+  ],
+} as const satisfies ShopByCollectionConfig;

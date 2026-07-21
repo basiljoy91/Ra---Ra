@@ -1,10 +1,12 @@
 import { HomepageDiscovery } from "@/components/commerce/discovery/homepage-discovery";
+import { ShopByCollectionSection } from "@/components/commerce/collection-navigation/shop-by-collection-section";
 import { FeaturedCollectionSection } from "@/components/commerce/featured-collection/featured-collection-section";
 import { HomepageProductSection } from "@/components/commerce/product-showcase/homepage-product-section";
 import { CampaignHero } from "@/components/storytelling/campaign-hero";
 import { BrandPromiseSection } from "@/components/storytelling/brand-promise/brand-promise-section";
 import {
   homepageBrandPromise,
+  homepageCollections,
   homepageDiscovery,
   homepageFeaturedCollection,
   homepageHero,
@@ -39,6 +41,7 @@ export default function Home() {
         quickAddAction={developmentQuickAdd}
       />
       <BrandPromiseSection config={homepageBrandPromise} />
+      <ShopByCollectionSection config={homepageCollections} />
     </>
   );
 }
