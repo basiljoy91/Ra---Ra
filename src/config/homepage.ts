@@ -1,3 +1,4 @@
+import type { BrandPromiseConfig } from "@/types/brand-promise";
 import type { DiscoveryConfig } from "@/types/discovery";
 import type { FeaturedCollectionPresentation } from "@/types/featured-collection";
 import type { HeroConfig } from "@/types/hero";
@@ -159,3 +160,30 @@ export const homepageNewArrivals = {
   hideWhenEmpty: true,
   emptyMessage: "New stories will appear here when they are ready.",
 } as const satisfies HomepageProductSectionConfig;
+
+export const homepageBrandPromise = {
+  eyebrow: "Why Ra & Ra",
+  heading: "Created Around What Matters.",
+  description:
+    "Ra & Ra starts with meaning, then translates it into restrained everyday apparel—one collection and one community at a time.",
+  principles: [
+    {
+      id: "meaningful-design",
+      title: "Meaningful Design",
+      description:
+        "Every collection begins with a story, passion or emotional connection.",
+    },
+    {
+      id: "thoughtful-minimalism",
+      title: "Thoughtful Minimalism",
+      description:
+        "Restrained artwork designed to feel personal without becoming loud or novelty-driven.",
+    },
+    {
+      id: "stories-beyond-one-theme",
+      title: "Stories Beyond One Theme",
+      description:
+        "A collection-based brand designed to explore pets, travel, music, coffee and other meaningful communities.",
+    },
+  ],
+} as const satisfies BrandPromiseConfig;
