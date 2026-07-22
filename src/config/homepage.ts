@@ -1,11 +1,13 @@
 import type { BrandPromiseConfig } from "@/types/brand-promise";
 import type { ShopByCollectionConfig } from "@/types/collection-card";
+import type { CommunityGridConfig } from "@/types/community";
 import type { DiscoveryConfig } from "@/types/discovery";
 import type { EditorialBannerConfig } from "@/types/editorial-banner";
 import type { FeaturedCollectionPresentation } from "@/types/featured-collection";
 import type { HeroConfig } from "@/types/hero";
 import type { HomepageProductSectionConfig } from "@/types/homepage-product-section";
 import type { ReviewSectionConfig } from "@/types/review";
+import type { NewsletterSectionConfig } from "@/types/newsletter";
 
 export const homepageHero = {
   eyebrow: "The First Story: Dogs & Their Humans",
@@ -291,3 +293,51 @@ export const developmentReviewShowcase = {
     "Interface-only examples for rating text, optional titles and different review lengths.",
   hideWhenEmpty: false,
 } as const satisfies ReviewSectionConfig;
+
+export const homepageNewsletter = {
+  id: "homepage-newsletter",
+  eyebrow: "From Ra & Ra",
+  heading: "Stories Worth Wearing",
+  description:
+    "Join us for new collections, meaningful designs and limited releases.",
+  emailLabel: "Email address",
+  emailPlaceholder: "you@example.com",
+  submitLabel: "Join the Story",
+  pendingLabel: "Joining…",
+  consentText:
+    "Newsletter consent wording and provider disclosure will be finalized before launch.",
+  privacyLabel: "View the privacy policy placeholder.",
+  privacyHref: "/privacy",
+} as const satisfies NewsletterSectionConfig;
+
+export const developmentNewsletterShowcase = {
+  ...homepageNewsletter,
+  id: "development-newsletter-showcase",
+  eyebrow: "Development Form",
+  description:
+    "Test the email field, validation and status messages without storing an address or creating a subscription.",
+  consentText:
+    "This development form does not create a marketing subscription. Final consent wording, provider disclosure and double opt-in details are pending review.",
+} as const satisfies NewsletterSectionConfig;
+
+export const homepageCommunity = {
+  id: "homepage-community",
+  eyebrow: "Ra & Ra Stories",
+  heading: "Worn in Everyday Moments",
+  description:
+    "Approved campaign and community imagery will appear here as the Ra & Ra story grows.",
+  itemLimit: 8,
+  hideWhenEmpty: true,
+  emptyMessage:
+    "Approved campaign and community imagery will appear here when available.",
+} as const satisfies CommunityGridConfig;
+
+export const developmentCommunityShowcase = {
+  ...homepageCommunity,
+  id: "development-community-showcase",
+  eyebrow: "Development Campaign Fixtures",
+  heading: "A Curated Visual Rhythm",
+  description:
+    "A static local-image grid used to validate cropping, captions and responsive layout without a social embed or customer-content claim.",
+  hideWhenEmpty: false,
+} as const satisfies CommunityGridConfig;

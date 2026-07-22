@@ -125,6 +125,8 @@ export const siteConfig = {
   accountEnabled: false,
   wishlistEnabled: false,
   reviewsEnabled: false,
+  newsletterEnabled: false,
+  communityEnabled: false,
   header: headerConfig,
   usesPlaceholderContactDetails: true,
 } as const;

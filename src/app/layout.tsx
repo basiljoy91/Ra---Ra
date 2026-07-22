@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 
 import { SkipLink } from "@/components/layout/skip-link";
+import { SiteFooter } from "@/components/layout/footer/site-footer";
 import { SiteHeader } from "@/components/navigation/site-header";
+import { footerConfig } from "@/config/footer";
 import { siteConfig } from "@/config/site";
 
 import "./globals.css";
@@ -60,6 +62,7 @@ export default function RootLayout({
         <main id="main-content" tabIndex={-1} className="flex-1">
           {children}
         </main>
+        <SiteFooter config={footerConfig} />
       </body>
     </html>
   );
