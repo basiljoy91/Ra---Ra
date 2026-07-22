@@ -135,7 +135,9 @@ export const developmentProducts = [
           !(color === "White" && size === "M"),
       },
     ),
-    collectionHandles: ["development-pet-stories"],
+    collectionHandles: ["pets"],
+    productType: "T-Shirt",
+    artworkPlacement: "Statement Print",
     story: {
       eyebrow: "Development story",
       title: "Chosen by paws. Worn by love.",
@@ -165,7 +167,9 @@ export const developmentProducts = [
       amount: "36.00",
       currencyCode: "EUR",
     }),
-    collectionHandles: ["development-pet-stories"],
+    collectionHandles: ["pets"],
+    productType: "T-Shirt",
+    artworkPlacement: "Small Chest Print",
     story: {
       eyebrow: "Development story",
       title: "Always just around the corner.",
@@ -193,7 +197,9 @@ export const developmentProducts = [
       amount: "38.00",
       currencyCode: "EUR",
     }),
-    collectionHandles: ["development-pet-stories"],
+    collectionHandles: ["pets"],
+    productType: "T-Shirt",
+    artworkPlacement: "Small Chest Print",
     story: {
       eyebrow: "Development story",
       title: "A quiet portrait of loyalty.",
@@ -224,7 +230,9 @@ export const developmentProducts = [
       { amount: "41.00", currencyCode: "EUR" },
       { colors: ["Black"], sizes: ["M"] },
     ),
-    collectionHandles: ["development-pet-stories"],
+    collectionHandles: ["pets"],
+    productType: "T-Shirt",
+    artworkPlacement: "Small Chest Print",
     story: {
       eyebrow: "Development story",
       title: "A long-title and single-variant test record.",
@@ -252,7 +260,9 @@ export const developmentProducts = [
       { amount: "37.00", currencyCode: "EUR" },
       { isAvailable: () => false },
     ),
-    collectionHandles: ["development-pet-stories"],
+    collectionHandles: ["pets"],
+    productType: "T-Shirt",
+    artworkPlacement: "Statement Print",
     seo: {
       title: "City Companion Tee — Sold-out Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -272,7 +282,9 @@ export const developmentProducts = [
       amount: "35.00",
       currencyCode: "EUR",
     }),
-    collectionHandles: ["development-pet-stories"],
+    collectionHandles: ["pets"],
+    productType: "T-Shirt",
+    artworkPlacement: "Statement Print",
     seo: {
       title: "Image Pending Tee — Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -284,7 +296,7 @@ export const developmentProducts = [
 
 export const developmentCollection = {
   id: "development-collection-pet-stories",
-  handle: "development-pet-stories",
+  handle: "pets",
   title: "Dogs & Their Humans",
   subtitle: "Development collection preview.",
   description:
@@ -292,7 +304,7 @@ export const developmentCollection = {
   story:
     "Inspired by the quiet rituals, familiar glances and unconditional companionship that dog owners understand.",
   heroImage: collectionCampaignImage,
-  themeKey: "default",
+  themeKey: "pets",
   products: developmentProducts,
   seo: {
     title: "Dogs & Their Humans — Development Collection",

@@ -53,7 +53,7 @@ export interface SeoFields {
 export type ContentStatus = "development" | "production";
 
 /** Extend this union only after a collection theme has been approved. */
-export type CollectionThemeKey = "default";
+export type CollectionThemeKey = "default" | "pets" | "travel-development";
 
 export interface Product {
   id: string;
@@ -67,6 +67,8 @@ export interface Product {
   variants: readonly ProductVariant[];
   collectionHandles: readonly string[];
   story?: ProductStory;
+  productType?: string;
+  artworkPlacement?: string;
   seo: SeoFields;
   contentStatus: ContentStatus;
   isNew?: boolean;

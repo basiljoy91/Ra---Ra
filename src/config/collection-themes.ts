@@ -14,6 +14,18 @@ const featuredCollectionThemes = {
     campaignFrameClassName: "border-border bg-surface",
     productFrameClassName: "border-border bg-surface",
   },
+  pets: {
+    sectionTone: "muted",
+    eyebrowClassName: "text-accent",
+    campaignFrameClassName: "border-border bg-surface",
+    productFrameClassName: "border-border bg-surface",
+  },
+  "travel-development": {
+    sectionTone: "muted",
+    eyebrowClassName: "text-accent",
+    campaignFrameClassName: "border-border bg-surface",
+    productFrameClassName: "border-border bg-surface",
+  },
 } as const satisfies Record<CollectionThemeKey, FeaturedCollectionTheme>;
 
 export function getFeaturedCollectionTheme(
