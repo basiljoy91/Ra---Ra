@@ -72,7 +72,7 @@ const primaryNavigation = [
       },
     ],
   },
-  { id: "our-story", label: "Our Story", href: "/our-story", enabled: true },
+  { id: "our-story", label: "Our Story", href: "/about#our-story", enabled: true },
   { id: "journal", label: "Journal", href: "/journal", enabled: true },
   { id: "about", label: "About", href: "/about", enabled: true },
   { id: "contact", label: "Contact", href: "/contact", enabled: true },

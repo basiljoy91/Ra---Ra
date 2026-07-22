@@ -270,6 +270,42 @@
   margin-block-start: var(--space-3);
 }
 
+.editorial-prose {
+  max-width: 72ch;
+}
+
+.editorial-prose > * + * {
+  margin-block-start: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.editorial-prose > .editorial-heading,
+.editorial-prose > .editorial-subheading {
+  margin-block-start: clamp(3.25rem, 7vw, 5rem);
+  scroll-margin-top: 7rem;
+}
+
+.editorial-paragraph,
+.editorial-list {
+  font-size: clamp(1rem, 1.4vw, 1.0625rem);
+  line-height: 1.8;
+}
+
+.editorial-columns .editorial-prose > :first-child {
+  margin-block-start: 0;
+}
+
+.editorial-columns .editorial-prose > * + * {
+  margin-block-start: var(--space-5);
+}
+
+.editorial-image,
+.editorial-quote,
+.editorial-callout,
+.editorial-columns,
+.editorial-divider {
+  margin-block: clamp(2.5rem, 6vw, 4rem);
+}
+
 .discovery-scroll {
   overscroll-behavior-inline: contain;
   scroll-padding-inline: var(--page-gutter);
