@@ -22,12 +22,30 @@ export interface SelectedOption {
 export interface ProductVariant {
   id: string;
   title: string;
+  sku?: string;
   available: boolean;
   size?: string;
   color?: string;
   selectedOptions: readonly SelectedOption[];
   price: Money;
   compareAtPrice?: Money;
+  image?: ProductImage;
+}
+
+export interface ProductOption {
+  id: string;
+  name: string;
+  values: readonly string[];
+}
+
+export interface ProductDetails {
+  material?: string;
+  fit?: string;
+  care?: readonly string[];
+  artworkPlacement?: string;
+  manufacturing?: string;
+  shippingSummary?: string;
+  returnSummary?: string;
 }
 
 export interface ProductStory {
@@ -65,8 +83,12 @@ export interface Product {
   price: Money;
   compareAtPrice?: Money;
   variants: readonly ProductVariant[];
+  options?: readonly ProductOption[];
+  defaultSelectedOptions?: readonly SelectedOption[];
   collectionHandles: readonly string[];
   story?: ProductStory;
+  details?: ProductDetails;
+  relatedProductIds?: readonly string[];
   productType?: string;
   artworkPlacement?: string;
   seo: SeoFields;

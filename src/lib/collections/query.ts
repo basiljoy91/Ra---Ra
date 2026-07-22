@@ -1,9 +1,9 @@
 import type { Money, Product } from "@/lib/commerce";
-import { compareMoney, isProductSoldOut } from "@/lib/commerce";
+import { isProductSoldOut } from "@/lib/commerce";
 import { normalizeFilterValue } from "@/lib/collections/facets";
 import { COLLECTION_FILTER_KEYS } from "@/lib/collections/query-params";
+import { compareMoney } from "@/lib/utilities";
 import type {
-  ActiveFilterToken,
   CollectionFilter,
   CollectionFilterKey,
   CollectionQueryResult,
@@ -58,31 +58,38 @@ export function parseCollectionQuery(
   searchParams: CollectionSearchParams,
   filters: readonly CollectionFilter[],
 ): CollectionQueryState {
-  const selected = Object.fromEntries(
-    COLLECTION_FILTER_KEYS.map((key) => {
+  const selected = COLLECTION_FILTER_KEYS.reduce<
+    Record<CollectionFilterKey, readonly string[]>
+  >(
+    (result, key) => {
       const allowed = validOptionsFor(filters, key);
       const values = rawValues(searchParams, key)
         .map(normalizeFilterValue)
         .filter((value) => allowed.has(value));
 
-      return [key, Array.from(new Set(values)).sort()];
-    }),
-  ) as Record<CollectionFilterKey, readonly string[]>;
+      return { ...result, [key]: Array.from(new Set(values)).sort() };
+    },
+    {
+      size: [],
+      colour: [],
+      type: [],
+      placement: [],
+      availability: [],
+    },
+  );
   const rawSort = rawValues(searchParams, "sort").at(-1);
   const sort = SORT_OPTIONS.has(rawSort as CollectionSort)
     ? (rawSort as CollectionSort)
     : "featured";
   const parsedPage = Number.parseInt(rawValues(searchParams, "page").at(-1) ?? "1", 10);
+  const priceMin = decimalValue(rawValues(searchParams, "price-min").at(-1));
+  const priceMax = decimalValue(rawValues(searchParams, "price-max").at(-1));
 
   return {
     sort,
     selected,
-    ...(decimalValue(rawValues(searchParams, "price-min").at(-1))
-      ? { priceMin: decimalValue(rawValues(searchParams, "price-min").at(-1)) }
-      : {}),
-    ...(decimalValue(rawValues(searchParams, "price-max").at(-1))
-      ? { priceMax: decimalValue(rawValues(searchParams, "price-max").at(-1)) }
-      : {}),
+    ...(priceMin ? { priceMin } : {}),
+    ...(priceMax ? { priceMax } : {}),
     page: Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1,
   };
 }
@@ -265,5 +272,3 @@ export function emptySelectedFilters(): CollectionQueryState["selected"] {
     availability: [],
   };
 }
-
-export type { ActiveFilterToken };

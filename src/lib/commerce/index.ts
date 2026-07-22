@@ -5,7 +5,9 @@ export type {
   Market,
   Money,
   Product,
+  ProductDetails,
   ProductImage,
+  ProductOption,
   ProductStory,
   ProductVariant,
   SelectedOption,
@@ -21,3 +23,13 @@ export {
   getProductColourOptions,
   isProductSoldOut,
 } from "@/lib/commerce/product-card";
+export {
+  getInitialProductSelections,
+  getOptionSelectionKey,
+  getOptionValueAvailability,
+  getProductOptions,
+  resolveProductVariant,
+  selectedOptionsToRecord,
+  type OptionValueAvailability,
+  type VariantResolution,
+} from "@/lib/commerce/variant-resolution";

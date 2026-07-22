@@ -29,7 +29,7 @@ const developmentTravelCollection = {
   contentStatus: "development",
 } as const satisfies Collection;
 
-export const collectionCatalog = [
+export const collectionCatalog: readonly CollectionCatalogEntry[] = [
   {
     collection: developmentCollection,
     status: "active",
@@ -83,7 +83,7 @@ export const collectionCatalog = [
       campaignLine: "A future story, intentionally unstocked.",
     },
   },
-] as const satisfies readonly CollectionCatalogEntry[];
+];
 
 export function getCollectionCatalogEntry(
   handle: string,

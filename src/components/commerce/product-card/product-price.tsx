@@ -10,6 +10,7 @@ interface ProductPriceProps {
   compareAtPrice?: Money | undefined;
   priceRange?: MoneyRange | undefined;
   locale?: string | undefined;
+  size?: "small" | "large" | undefined;
 }
 
 export function ProductPrice({
@@ -17,14 +18,17 @@ export function ProductPrice({
   compareAtPrice,
   priceRange,
   locale,
+  size = "small",
 }: ProductPriceProps) {
+  const priceClassName =
+    size === "large" ? "type-price" : "type-small font-semibold";
   const rangeComparison = priceRange
     ? compareMoney(priceRange.min, priceRange.max)
     : 0;
 
   if (priceRange && rangeComparison !== null && rangeComparison !== 0) {
     return (
-      <p className="type-small font-semibold tabular-nums text-foreground">
+      <p className={`${priceClassName} tabular-nums text-foreground`}>
         <span className="sr-only">Price range: </span>
         {formatMoney(priceRange.min, locale)}
         <span aria-hidden="true"> – </span>
@@ -39,7 +43,7 @@ export function ProductPrice({
     compareAtPrice && compareMoney(compareAtPrice, currentPrice) === 1;
 
   return (
-    <p className="type-small flex flex-wrap items-baseline gap-x-2 font-semibold tabular-nums text-foreground">
+    <p className={`${priceClassName} flex flex-wrap items-baseline gap-x-2 tabular-nums text-foreground`}>
       {showCompareAt ? <span className="sr-only">Current price: </span> : null}
       <span>{formatMoney(currentPrice, locale)}</span>
       {showCompareAt ? (

@@ -216,7 +216,7 @@ export const homepageCollections = {
         height: 916,
       },
       status: "active",
-      themeKey: "default",
+      themeKey: "pets",
     },
     {
       id: "limited-editions",

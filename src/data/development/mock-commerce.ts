@@ -3,6 +3,7 @@ import type {
   Money,
   Product,
   ProductImage,
+  ProductOption,
   ProductVariant,
 } from "@/lib/commerce";
 
@@ -22,6 +23,7 @@ interface DevelopmentVariantOptions {
   sizes?: readonly string[];
   isAvailable?: (context: DevelopmentVariantContext) => boolean;
   priceFor?: (context: DevelopmentVariantContext) => Money;
+  imageFor?: (context: DevelopmentVariantContext) => ProductImage | undefined;
 }
 
 function createDevelopmentVariants(
@@ -35,6 +37,7 @@ function createDevelopmentVariants(
   return variantColors.flatMap((color) =>
     variantSizes.map((size) => {
       const context = { color, size };
+      const variantImage = options.imageFor?.(context);
 
       return {
         id: `${productId}-${color.toLowerCase()}-${size.toLowerCase()}`,
@@ -47,9 +50,20 @@ function createDevelopmentVariants(
           { name: "Size", value: size },
         ],
         price: options.priceFor?.(context) ?? price,
+        ...(variantImage ? { image: variantImage } : {}),
       };
     }),
   );
+}
+
+function createDevelopmentOptions(
+  optionColors: readonly string[] = colors,
+  optionSizes: readonly string[] = sizes,
+): readonly ProductOption[] {
+  return [
+    { id: "colour", name: "Color", values: optionColors },
+    { id: "size", name: "Size", values: optionSizes },
+  ];
 }
 
 const chosenCompanionImage: ProductImage = {
@@ -132,12 +146,31 @@ export const developmentProducts = [
       },
       {
         isAvailable: ({ color, size }) =>
-          !(color === "White" && size === "M"),
+          !(color === "Black" && size === "M"),
+        priceFor: ({ color }) => ({
+          amount: color === "White" ? "40.00" : "39.00",
+          currencyCode: "EUR",
+        }),
+        imageFor: ({ color }) =>
+          color === "White"
+            ? chosenCompanionDetailImage
+            : chosenCompanionImage,
       },
     ),
+    options: createDevelopmentOptions(),
+    defaultSelectedOptions: [{ name: "Color", value: "Black" }],
     collectionHandles: ["pets"],
     productType: "T-Shirt",
     artworkPlacement: "Statement Print",
+    details: {
+      artworkPlacement: "Statement print — development classification",
+    },
+    relatedProductIds: [
+      "development-product-peeking-friend",
+      "development-product-loyal-line",
+      "development-product-pretzel-companion",
+      "development-product-city-companion-sold-out",
+    ],
     story: {
       eyebrow: "Development story",
       title: "Chosen by paws. Worn by love.",
@@ -163,10 +196,16 @@ export const developmentProducts = [
     shortDescription: "A development record for a minimal chest placement.",
     images: [peekingFriendImage],
     price: { amount: "36.00", currencyCode: "EUR" },
-    variants: createDevelopmentVariants("peeking-friend", {
-      amount: "36.00",
-      currencyCode: "EUR",
-    }),
+    variants: createDevelopmentVariants(
+      "peeking-friend",
+      {
+        amount: "36.00",
+        currencyCode: "EUR",
+      },
+      { colors: ["Black"] },
+    ),
+    options: createDevelopmentOptions(["Black"]),
+    defaultSelectedOptions: [{ name: "Color", value: "Black" }],
     collectionHandles: ["pets"],
     productType: "T-Shirt",
     artworkPlacement: "Small Chest Print",
@@ -176,6 +215,10 @@ export const developmentProducts = [
       shortStory:
         "A temporary story sample inspired by the familiar face waiting at the edge of the room.",
     },
+    relatedProductIds: [
+      "development-product-chosen-companion",
+      "development-product-loyal-line",
+    ],
     seo: {
       title: "Peeking Friend Tee — Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -197,6 +240,8 @@ export const developmentProducts = [
       amount: "38.00",
       currencyCode: "EUR",
     }),
+    options: createDevelopmentOptions(),
+    defaultSelectedOptions: [{ name: "Color", value: "White" }],
     collectionHandles: ["pets"],
     productType: "T-Shirt",
     artworkPlacement: "Small Chest Print",
@@ -206,6 +251,10 @@ export const developmentProducts = [
       shortStory:
         "A temporary story sample used to test concise artwork meaning without production claims.",
     },
+    relatedProductIds: [
+      "development-product-chosen-companion",
+      "development-product-peeking-friend",
+    ],
     seo: {
       title: "Loyal Line Tee — Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -230,6 +279,11 @@ export const developmentProducts = [
       { amount: "41.00", currencyCode: "EUR" },
       { colors: ["Black"], sizes: ["M"] },
     ),
+    options: createDevelopmentOptions(["Black"], ["M"]),
+    defaultSelectedOptions: [
+      { name: "Color", value: "Black" },
+      { name: "Size", value: "M" },
+    ],
     collectionHandles: ["pets"],
     productType: "T-Shirt",
     artworkPlacement: "Small Chest Print",
@@ -239,6 +293,7 @@ export const developmentProducts = [
       shortStory:
         "Temporary content used only to validate card wrapping and direct quick add.",
     },
+    relatedProductIds: ["development-product-chosen-companion"],
     seo: {
       title: "German-ready title product — Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -260,9 +315,12 @@ export const developmentProducts = [
       { amount: "37.00", currencyCode: "EUR" },
       { isAvailable: () => false },
     ),
+    options: createDevelopmentOptions(),
+    defaultSelectedOptions: [{ name: "Color", value: "Black" }],
     collectionHandles: ["pets"],
     productType: "T-Shirt",
     artworkPlacement: "Statement Print",
+    relatedProductIds: ["development-product-chosen-companion"],
     seo: {
       title: "City Companion Tee — Sold-out Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -282,9 +340,12 @@ export const developmentProducts = [
       amount: "35.00",
       currencyCode: "EUR",
     }),
+    options: createDevelopmentOptions(),
+    defaultSelectedOptions: [{ name: "Color", value: "Black" }],
     collectionHandles: ["pets"],
     productType: "T-Shirt",
     artworkPlacement: "Statement Print",
+    relatedProductIds: ["development-product-chosen-companion"],
     seo: {
       title: "Image Pending Tee — Development Mock",
       description: DEVELOPMENT_DATA_NOTICE,
@@ -313,3 +374,22 @@ export const developmentCollection = {
   },
   contentStatus: "development",
 } as const satisfies Collection;
+
+export function getDevelopmentProductByHandle(
+  handle: string,
+): Product | undefined {
+  return developmentProducts.find((product) => product.handle === handle);
+}
+
+export function getDevelopmentProductsByIds(
+  ids: readonly string[],
+): readonly Product[] {
+  const productById = new Map<string, Product>(
+    developmentProducts.map((product) => [product.id, product] as const),
+  );
+
+  return ids.flatMap((id) => {
+    const product = productById.get(id);
+    return product ? [product] : [];
+  });
+}

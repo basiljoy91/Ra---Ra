@@ -88,9 +88,11 @@ export function canonicalizeCollectionParams(
 export function buildCollectionHref(
   handle: string,
   state: CollectionQueryState,
-  overrides: Partial<
-    Pick<CollectionQueryState, "sort" | "page" | "priceMin" | "priceMax">
-  > & {
+  overrides: {
+    sort?: CollectionQueryState["sort"];
+    page?: number;
+    priceMin?: string | undefined;
+    priceMax?: string | undefined;
     selected?: CollectionQueryState["selected"];
   } = {},
 ): string {

@@ -1,5 +1,6 @@
 import type { Product } from "@/lib/commerce";
-import { getMoneyRange, isProductSoldOut } from "@/lib/commerce";
+import { isProductSoldOut } from "@/lib/commerce";
+import { getMoneyRange } from "@/lib/utilities";
 import type {
   CollectionFilter,
   CollectionFilterKey,
