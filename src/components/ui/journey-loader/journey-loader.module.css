@@ -1,0 +1,390 @@
+.root {
+  --journey-loader-width: 17.5rem;
+  display: grid;
+  inline-size: 100%;
+  place-items: center;
+  color: var(--loader-line);
+  isolation: isolate;
+}
+
+.root[data-size="small"] {
+  --journey-loader-width: 10rem;
+}
+
+.root[data-size="medium"] {
+  --journey-loader-width: 17.5rem;
+}
+
+.root[data-size="large"] {
+  --journey-loader-width: 25rem;
+}
+
+.root[data-background="surface"] {
+  background: var(--loader-background);
+}
+
+.root[data-fullscreen="false"][data-background="surface"] {
+  border-radius: var(--radius-panel);
+  padding: var(--space-6);
+}
+
+.root[data-fullscreen="true"] {
+  position: fixed;
+  z-index: var(--z-loader);
+  inset: 0;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+  padding:
+    max(var(--space-6), env(safe-area-inset-top))
+    max(var(--space-4), env(safe-area-inset-right))
+    max(var(--space-6), env(safe-area-inset-bottom))
+    max(var(--space-4), env(safe-area-inset-left));
+  overflow: hidden;
+  animation: loader-appearance-delay 200ms step-end both;
+}
+
+html:has(.root[data-fullscreen="true"]),
+body:has(.root[data-fullscreen="true"]) {
+  overflow: hidden;
+}
+
+.artwork {
+  inline-size: min(var(--journey-loader-width), calc(100vw - 2rem));
+  aspect-ratio: 18 / 7;
+}
+
+.illustration {
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+
+.characterGroup {
+  transform-origin: center;
+}
+
+.owner,
+.dog {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: body-walk 3.2s ease-in-out infinite;
+}
+
+.ownerFrontLeg,
+.ownerBackLeg,
+.ownerFreeArm,
+.ownerHair,
+.dogFrontLeg,
+.dogFrontBackLeg,
+.dogRearFrontLeg,
+.dogRearBackLeg,
+.dogHead,
+.dogEar,
+.dogTail,
+.leash {
+  transform-box: fill-box;
+}
+
+.ownerFrontLeg,
+.ownerBackLeg {
+  transform-origin: top center;
+}
+
+.ownerFrontLeg {
+  animation: owner-front-leg 3.2s ease-in-out infinite;
+}
+
+.ownerBackLeg {
+  animation: owner-back-leg 3.2s ease-in-out infinite;
+}
+
+.ownerFreeArm {
+  transform-origin: top center;
+  animation: owner-free-arm 3.2s ease-in-out infinite;
+}
+
+.ownerLeashArm {
+  animation: leash-hand 3.2s ease-in-out infinite;
+}
+
+.ownerHair {
+  transform-origin: right center;
+  animation: owner-hair 3.2s ease-in-out infinite;
+}
+
+.dogHead {
+  transform-origin: left bottom;
+  animation: dog-head 3.2s ease-in-out infinite;
+}
+
+.dogEar {
+  transform-origin: top center;
+  animation: dog-ear 3.2s ease-in-out infinite;
+}
+
+.dogFrontLeg,
+.dogFrontBackLeg,
+.dogRearFrontLeg,
+.dogRearBackLeg {
+  transform-origin: top center;
+}
+
+.dogFrontLeg,
+.dogRearBackLeg {
+  animation: dog-leg-forward 3.2s ease-in-out infinite;
+}
+
+.dogFrontBackLeg,
+.dogRearFrontLeg {
+  animation: dog-leg-back 3.2s ease-in-out infinite;
+}
+
+.dogTail {
+  transform-origin: right center;
+  animation: dog-tail 3.2s ease-in-out infinite;
+}
+
+.leash {
+  transform-origin: center;
+  animation: leash-sway 3.2s ease-in-out infinite;
+}
+
+.pawPrints {
+  fill: var(--loader-paw);
+}
+
+.paw {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: paw-step 3.2s ease-out infinite;
+}
+
+.paw1 {
+  animation-delay: -0.1s;
+}
+
+.paw2 {
+  animation-delay: -0.62s;
+}
+
+.paw3 {
+  animation-delay: -1.14s;
+}
+
+.paw4 {
+  animation-delay: -1.66s;
+}
+
+.paw5 {
+  animation-delay: -2.18s;
+}
+
+.paw6 {
+  animation-delay: -2.7s;
+}
+
+@keyframes loader-appearance-delay {
+  0%,
+  99% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes body-walk {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+
+  25%,
+  75% {
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes owner-front-leg {
+  0%,
+  100% {
+    transform: rotate(7deg);
+  }
+
+  50% {
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes owner-back-leg {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes owner-free-arm {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes leash-hand {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+
+  25%,
+  75% {
+    transform: translateY(-0.5px);
+  }
+}
+
+@keyframes owner-hair {
+  0%,
+  100% {
+    transform: rotate(-0.5deg);
+  }
+
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes dog-head {
+  0%,
+  50%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25%,
+  75% {
+    transform: rotate(-1deg) translateY(-1px);
+  }
+}
+
+@keyframes dog-ear {
+  0%,
+  100% {
+    transform: rotate(-1deg);
+  }
+
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes dog-leg-forward {
+  0%,
+  100% {
+    transform: rotate(6deg);
+  }
+
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes dog-leg-back {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes dog-tail {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes leash-sway {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0) rotate(-0.2deg);
+  }
+
+  25%,
+  75% {
+    transform: translateY(-1px) rotate(0.2deg);
+  }
+}
+
+@keyframes paw-step {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scale(0.86) rotate(-3deg);
+  }
+
+  9% {
+    opacity: 0.72;
+    transform: translateX(-2px) scale(1) rotate(0deg);
+  }
+
+  34% {
+    opacity: 0.3;
+    transform: translateX(-8px) scale(1) rotate(2deg);
+  }
+
+  48% {
+    opacity: 0;
+    transform: translateX(-12px) scale(1.02) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .owner,
+  .ownerFrontLeg,
+  .ownerBackLeg,
+  .ownerFreeArm,
+  .ownerLeashArm,
+  .ownerHair,
+  .dog,
+  .dogHead,
+  .dogEar,
+  .dogFrontLeg,
+  .dogFrontBackLeg,
+  .dogRearFrontLeg,
+  .dogRearBackLeg,
+  .dogTail,
+  .leash,
+  .paw {
+    animation: none;
+    transform: none;
+  }
+
+  .paw {
+    opacity: 0;
+  }
+
+  .paw3,
+  .paw4 {
+    opacity: 0.38;
+  }
+}

@@ -16,6 +16,10 @@
   --warning: #8c641f;
   --error: #9a3f38;
   --focus-ring: #145ea8;
+  --loader-background: #ffffff;
+  --loader-line: #171717;
+  --loader-leash: #8b5a3c;
+  --loader-paw: #d8c7b5;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -61,6 +65,7 @@
   --z-sticky: 20;
   --z-overlay: 40;
   --z-modal: 60;
+  --z-loader: 70;
   --z-toast: 80;
   --z-skip-link: 100;
 }
