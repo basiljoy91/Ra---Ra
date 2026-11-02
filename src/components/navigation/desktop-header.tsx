@@ -11,7 +11,8 @@ interface DesktopHeaderProps {
   cartCount: number;
   onSearch: () => void;
   onCart: () => void;
-  activeDialog: "search" | "cart" | null;
+  onAccount: () => void;
+  activeDialog: "search" | "cart" | "account" | null;
 }
 
 export function DesktopHeader({
@@ -21,10 +22,11 @@ export function DesktopHeader({
   cartCount,
   onSearch,
   onCart,
+  onAccount,
   activeDialog,
 }: DesktopHeaderProps) {
   return (
-    <Container className="hidden h-[var(--header-height-desktop)] min-[72rem]:grid min-[72rem]:grid-cols-[1fr_auto_1fr] min-[72rem]:items-center min-[72rem]:gap-6">
+    <Container className="hidden h-[var(--header-height-desktop)] min-[64rem]:grid min-[64rem]:grid-cols-[1fr_auto_1fr] min-[64rem]:items-center min-[64rem]:gap-5">
       <BrandLogo className="justify-self-start" />
       <DesktopNavigation items={navigation} />
       <HeaderActions
@@ -33,6 +35,7 @@ export function DesktopHeader({
         cartCount={cartCount}
         onSearch={onSearch}
         onCart={onCart}
+        onAccount={onAccount}
         activeDialog={activeDialog}
         className="justify-self-end"
       />

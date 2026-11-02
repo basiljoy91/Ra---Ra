@@ -6,13 +6,14 @@ import { HeaderActions } from "@/components/navigation/header-actions";
 
 interface MobileHeaderProps {
   menuOpen: boolean;
-  activeDialog: "search" | "cart" | null;
+  activeDialog: "search" | "cart" | "account" | null;
   searchEnabled: boolean;
   cartEnabled: boolean;
   cartCount: number;
   onMenu: () => void;
   onSearch: () => void;
   onCart: () => void;
+  onAccount: () => void;
 }
 
 export function MobileHeader({
@@ -24,9 +25,10 @@ export function MobileHeader({
   onMenu,
   onSearch,
   onCart,
+  onAccount,
 }: MobileHeaderProps) {
   return (
-    <Container className="grid h-[var(--header-height-mobile)] grid-cols-[1fr_auto_1fr] items-center gap-1 min-[72rem]:hidden">
+    <Container className="grid h-[var(--header-height-mobile)] grid-cols-[1fr_auto_1fr] items-center gap-1 min-[64rem]:hidden">
       <button
         type="button"
         aria-label="Open navigation menu"
@@ -47,6 +49,7 @@ export function MobileHeader({
         cartCount={cartCount}
         onSearch={onSearch}
         onCart={onCart}
+        onAccount={onAccount}
         compact
         activeDialog={activeDialog}
         className="justify-self-end"

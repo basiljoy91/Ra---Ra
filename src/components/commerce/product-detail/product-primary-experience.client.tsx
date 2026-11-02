@@ -224,7 +224,7 @@ export function ProductPrimaryExperience({
         <div className="lg:sticky lg:top-[calc(var(--header-height-desktop)+2rem)]">
           <div className="flow-space-sm">
             <p className="type-label text-accent">
-              {collectionTitle ?? product.productType ?? "Ra & Ra"}
+              {collectionTitle ?? product.productType ?? "ra&ra"}
             </p>
             <h1 className="font-serif text-[clamp(2.5rem,4.5vw,4rem)] font-medium leading-none tracking-[-0.025em]">
               {product.title}

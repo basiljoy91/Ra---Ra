@@ -8,7 +8,7 @@ type FooterLinkProps = {
 };
 
 const linkClassName =
-  "type-small inline-flex min-h-11 items-center py-2 text-primary-foreground/75 underline-offset-4 transition-colors duration-[var(--duration-base)] hover:text-primary-foreground hover:underline focus-visible:text-primary-foreground focus-visible:outline-primary-foreground";
+  "type-small inline-flex min-h-11 items-center py-2 text-foreground/68 underline-offset-4 transition-colors duration-[var(--duration-base)] hover:text-foreground hover:underline focus-visible:text-foreground focus-visible:outline-foreground";
 
 export function FooterLink({ link }: FooterLinkProps) {
   if (link.external) {

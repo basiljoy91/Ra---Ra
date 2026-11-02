@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "The Journal";
 const description =
-  "Development essays about meaningful design, quiet expression and the ideas behind Ra & Ra collections.";
+  "Development essays about meaningful design, quiet expression and the ideas behind ra&ra collections.";
 
 export const metadata: Metadata = {
   title,

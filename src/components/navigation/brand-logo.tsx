@@ -5,22 +5,32 @@ import { cn } from "@/lib/utilities";
 interface BrandLogoProps {
   className?: string;
   compact?: boolean;
+  large?: boolean;
   onClick?: () => void;
 }
 
-export function BrandLogo({ className, compact = false, onClick }: BrandLogoProps) {
+export function BrandLogo({
+  className,
+  compact = false,
+  large = false,
+  onClick,
+}: BrandLogoProps) {
   return (
     <Link
       href="/"
-      aria-label="Ra and Ra home"
+      aria-label="ra&ra home"
       {...(onClick ? { onClick } : {})}
       className={cn(
-        "inline-flex min-h-11 items-center whitespace-nowrap font-serif font-semibold leading-none tracking-[-0.035em] no-underline",
-        compact ? "text-[1.55rem]" : "text-[1.85rem]",
+        "inline-flex min-h-11 items-center whitespace-nowrap font-serif font-medium leading-none tracking-[0.055em] no-underline",
+        compact
+          ? "text-[1.6rem]"
+          : large
+            ? "text-[clamp(2.5rem,5vw,4.25rem)]"
+            : "text-[2rem]",
         className,
       )}
     >
-      Ra &amp; Ra
+      ra&amp;ra
     </Link>
   );
 }

@@ -8,7 +8,7 @@ export const developmentCommunityItems = [
     id: "development-dog-and-human",
     image: {
       url: "/discovery/dog-and-human.jpeg",
-      alt: "Dog-and-human themed artwork shown as part of a Ra & Ra campaign study",
+      alt: "Dog-and-human themed artwork shown as part of a ra&ra campaign study",
       width: 1254,
       height: 1254,
     },

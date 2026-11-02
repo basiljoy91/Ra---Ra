@@ -31,6 +31,26 @@ export const metadata: Metadata = {
   },
   description: siteConfig.siteDescription,
   category: "apparel",
+  openGraph: {
+    type: "website",
+    title: siteConfig.siteName,
+    description: siteConfig.siteDescription,
+    siteName: siteConfig.siteName,
+    images: [
+      {
+        url: "/hero/hero-dog-owner.png",
+        width: 1717,
+        height: 916,
+        alt: "ra&ra Dogs & Their Humans campaign imagery",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.siteName,
+    description: siteConfig.siteDescription,
+    images: ["/hero/hero-dog-owner.png"],
+  },
   robots: {
     index: false,
     follow: false,
@@ -40,7 +60,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "light",
+  colorScheme: "dark",
+  themeColor: "#0b0b0b",
 };
 
 export default function RootLayout({
@@ -57,6 +78,9 @@ export default function RootLayout({
       <body
         className={`${displayFont.variable} ${bodyFont.variable} flex min-h-full flex-col antialiased`}
       >
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <SkipLink href="#main-content" />
         <SiteHeader />
         <main id="main-content" tabIndex={-1} className="flex-1">

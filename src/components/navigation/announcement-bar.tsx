@@ -27,7 +27,7 @@ export function AnnouncementBar({ config }: AnnouncementBarProps) {
   return (
     <aside
       aria-label="Store announcement"
-      className="flex min-h-[var(--announcement-height)] items-center justify-center border-b border-border bg-surface-muted px-[var(--page-gutter)] py-1 text-center text-[0.6875rem] font-semibold tracking-[0.08em] text-foreground uppercase sm:text-xs"
+      className="relative z-[var(--z-sticky)] flex min-h-[var(--announcement-height)] items-center justify-center border-b border-white/8 bg-background px-[var(--page-gutter)] py-1 text-center text-[0.625rem] font-medium tracking-[0.18em] text-foreground/72 uppercase sm:text-[0.6875rem]"
     >
       {message.href ? (
         <Link

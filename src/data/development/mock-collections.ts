@@ -22,7 +22,7 @@ const developmentTravelCollection = {
   seo: {
     title: "Journeys & Keepsakes — Development Collection",
     description:
-      "A non-purchasable development fixture for the reusable Ra & Ra collection system.",
+      "A non-purchasable development fixture for the reusable ra&ra collection system.",
     canonicalPath: "/collections/travel-development",
     noIndex: true,
   },

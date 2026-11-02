@@ -45,7 +45,7 @@ function CollectionOverviewCardContent({
             )}
           >
             <div className="max-w-sm">
-              <p className="type-label opacity-75">Ra & Ra</p>
+              <p className="type-label opacity-75">ra&ra</p>
               <p className="mt-4 font-serif text-[clamp(1.75rem,5vw,3.5rem)] leading-none tracking-[-0.03em]">
                 A future story.
               </p>

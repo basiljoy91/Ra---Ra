@@ -10,7 +10,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "Explore Our Collections";
 const description =
-  "Each Ra & Ra collection begins with a theme, passion or connection that means something beyond the garment itself.";
+  "Each ra&ra collection begins with a theme, passion or connection that means something beyond the garment itself.";
 
 export const metadata: Metadata = {
   title,

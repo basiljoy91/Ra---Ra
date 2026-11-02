@@ -9,9 +9,12 @@ export function FooterBrand({
   socialLinks,
 }: FooterBrandProps) {
   return (
-    <div className="max-w-sm">
-      <BrandLogo className="text-primary-foreground focus-visible:outline-primary-foreground" />
-      <p className="type-body mt-[var(--space-5)] text-primary-foreground/70">
+    <div className="max-w-md">
+      <BrandLogo
+        large
+        className="text-foreground focus-visible:outline-foreground"
+      />
+      <p className="type-small mt-[var(--space-4)] max-w-[30ch] text-foreground-muted">
         {brandStatement}
       </p>
       {socialLinks.length > 0 ? (

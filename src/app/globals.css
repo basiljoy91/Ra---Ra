@@ -1,25 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  /* Provisional semantic colour tokens */
-  --background: #f7f3ec;
-  --surface: #fffcf7;
-  --surface-muted: #ede6dc;
-  --foreground: #28231f;
-  --foreground-muted: #6f655d;
-  --border: #d7cec3;
-  --primary: #2e2824;
-  --primary-foreground: #ffffff;
-  --accent: #8a5d3b;
-  --accent-soft: #e8d7c5;
-  --success: #3f6b50;
-  --warning: #8c641f;
-  --error: #9a3f38;
-  --focus-ring: #145ea8;
-  --loader-background: #ffffff;
-  --loader-line: #171717;
-  --loader-leash: #8b5a3c;
-  --loader-paw: #d8c7b5;
+  /* ra&ra editorial colour system */
+  --background: #0b0b0b;
+  --surface: #171615;
+  --surface-muted: #11100f;
+  --foreground: #e9e1d7;
+  --foreground-muted: #a8a098;
+  --border: #373330;
+  --primary: #0b0b0b;
+  --primary-foreground: #e9e1d7;
+  --button: #e9e1d7;
+  --button-foreground: #0b0b0b;
+  --accent: #b79b79;
+  --accent-soft: #2a251f;
+  --success: #a8bda8;
+  --warning: #d2ad74;
+  --error: #d49489;
+  --focus-ring: #d3b28d;
+  --loader-background: #0b0b0b;
+  --loader-line: #e9e1d7;
+  --loader-leash: #8b6a4d;
+  --loader-paw: #6d6154;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -36,16 +38,16 @@
   --space-24: 6rem;
 
   /* Layout */
-  --page-gutter: clamp(1rem, 3vw, 2rem);
+  --page-gutter: clamp(1.125rem, 3.2vw, 2.75rem);
   --container-content: 46rem;
-  --container-wide: 90rem;
+  --container-wide: 96rem;
   --section-space-sm: clamp(2rem, 5vw, 3rem);
   --section-space-md: clamp(3rem, 7vw, 5rem);
   --section-space-lg: clamp(4rem, 9vw, 7rem);
   --section-space-xl: clamp(5rem, 11vw, 9rem);
   --announcement-height: 2.125rem;
   --header-height-mobile: 4rem;
-  --header-height-desktop: 4.75rem;
+  --header-height-desktop: 5rem;
 
   /* Shape and elevation */
   --radius-control: 0.375rem;
@@ -79,6 +81,8 @@
   --color-border: var(--border);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-button: var(--button);
+  --color-button-foreground: var(--button-foreground);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-success: var(--success);
@@ -101,6 +105,7 @@
     overflow-x: clip;
     background: var(--background);
     color: var(--foreground);
+    color-scheme: dark;
     scroll-behavior: smooth;
     text-size-adjust: 100%;
   }
@@ -190,7 +195,7 @@
 
   ::selection {
     background: var(--accent-soft);
-    color: var(--foreground);
+    color: #fff8ef;
   }
 
   :where(
@@ -211,8 +216,8 @@
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(3rem, 8vw, 6.5rem);
   font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 0.94;
+  letter-spacing: -0.01em;
+  line-height: 0.96;
 }
 
 .type-page-heading {

@@ -46,10 +46,10 @@ const loyalArtworkImage = {
 } as const;
 
 export const aboutHero = {
-  eyebrow: "About Ra & Ra",
+  eyebrow: "About ra&ra",
   title: "Made for what stays with us.",
   lead:
-    "Ra & Ra creates theme-led apparel around the connections, rituals and passions that become part of who we are.",
+    "ra&ra creates theme-led apparel around the connections, rituals and passions that become part of who we are.",
   image: dogOwnerEditorialImage,
   imagePosition: "56% 50%",
   developmentNotice: EDITORIAL_DEVELOPMENT_NOTICE,
@@ -59,13 +59,13 @@ export const aboutContent = [
   {
     type: "heading",
     level: 2,
-    content: "Why Ra & Ra exists",
+    content: "Why ra&ra exists",
     id: "our-story",
   },
   {
     type: "paragraph",
     content:
-      "Some ideas stay close because they hold a memory, a routine or a shared identity. Ra & Ra begins there: with simple apparel that gives those ideas a quiet, everyday form.",
+      "Some ideas stay close because they hold a memory, a routine or a shared identity. ra&ra begins there: with simple apparel that gives those ideas a quiet, everyday form.",
   },
   {
     type: "paragraph",
@@ -87,7 +87,7 @@ export const aboutContent = [
       {
         type: "paragraph",
         content:
-          "Ra & Ra is built around reusable collections rather than one permanent category. A collection can begin with pets, travel, coffee, music or another community, while the wider brand remains consistent.",
+          "ra&ra is built around reusable collections rather than one permanent category. A collection can begin with pets, travel, coffee, music or another community, while the wider brand remains consistent.",
       },
     ],
     right: [
@@ -184,7 +184,7 @@ export const journalArticles = [
       {
         type: "paragraph",
         content:
-          "For Ra & Ra, a collection starts by identifying what people already feel connected to. The artwork comes later. This order matters because it keeps the design grounded in a recognizable experience rather than a visual trend.",
+          "For ra&ra, a collection starts by identifying what people already feel connected to. The artwork comes later. This order matters because it keeps the design grounded in a recognizable experience rather than a visual trend.",
       },
       {
         type: "quote",
@@ -236,7 +236,7 @@ export const journalArticles = [
       {
         type: "paragraph",
         content:
-          "The first Ra & Ra collection focuses on the relationship between dogs and their humans because it is made visible through ordinary routines: a walk at the same time each day, a glance toward the door, or a companion appearing in every room.",
+          "The first ra&ra collection focuses on the relationship between dogs and their humans because it is made visible through ordinary routines: a walk at the same time each day, a glance toward the door, or a companion appearing in every room.",
       },
       {
         type: "heading",
@@ -345,7 +345,7 @@ export const faqHero = {
   eyebrow: "Help",
   title: "Questions, answered honestly.",
   lead:
-    "Confirmed information and clearly marked development guidance for shopping with Ra & Ra.",
+    "Confirmed information and clearly marked development guidance for shopping with ra&ra.",
   developmentNotice:
     "Policies, timelines and production specifications remain pending until the relevant business and legal information is approved.",
 } as const satisfies EditorialHeroConfig;
@@ -375,7 +375,7 @@ export const faqCategories = [
     items: [
       {
         id: "shipping-destinations",
-        question: "Where will Ra & Ra ship?",
+        question: "Where will ra&ra ship?",
         answer:
           "Germany and the European Union are the intended launch market, but the exact eligible countries, carriers and delivery estimates are not yet confirmed.",
       },
@@ -411,7 +411,7 @@ export const faqCategories = [
       },
       {
         id: "collections",
-        question: "Will Ra & Ra always focus on dogs?",
+        question: "Will ra&ra always focus on dogs?",
         answer:
           "No. Dogs & Their Humans is the first collection concept. The wider brand is designed to support future theme-led collections without changing the storefront architecture.",
       },
