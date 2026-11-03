@@ -1,4 +1,8 @@
-import { ProductCard } from "@/components/commerce/product-card/product-card";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Heart } from "lucide-react";
+
+import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { productPageConfig } from "@/config/product-page";
@@ -14,35 +18,59 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
   }
 
   return (
-    <Section aria-labelledby="related-products-heading" spacing="lg">
+    <Section aria-labelledby="related-products-heading" className="pb-12 pt-8" spacing="sm">
       <Container>
-        <div className="max-w-2xl">
-          <p className="type-label text-accent">Related Designs</p>
-          <h2 className="type-section-heading mt-3" id="related-products-heading">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-xl font-bold tracking-[-0.025em]" id="related-products-heading">
             {productPageConfig.relatedProductsHeading}
           </h2>
-          <p className="type-body mt-4 text-foreground-muted">
-            {productPageConfig.relatedProductsDescription}
-          </p>
+          <Link className="inline-flex items-center gap-2 text-xs font-semibold no-underline" href="/collections/beyond">
+            View all
+            <ArrowRight aria-hidden="true" className="size-3.5" strokeWidth={1.7} />
+          </Link>
         </div>
         <ul
-          className="product-rail-scroll -mx-[var(--page-gutter)] mt-10 grid snap-x snap-mandatory grid-flow-col auto-cols-[minmax(16rem,82vw)] gap-5 overflow-x-auto px-[var(--page-gutter)] pb-5 sm:mx-0 sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
+          className="product-rail-scroll -mx-[var(--page-gutter)] mt-5 grid snap-x snap-mandatory grid-flow-col auto-cols-[minmax(13rem,72vw)] gap-4 overflow-x-auto px-[var(--page-gutter)] pb-5 sm:mx-0 sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
           role="list"
         >
-          {products.slice(0, 4).map((product) => (
-            <li className="min-w-0 snap-start" key={product.id}>
-              <ProductCard
-                headingLevel={3}
-                imageSizes="(min-width: 1024px) 22vw, (min-width: 640px) 46vw, 82vw"
-                product={product}
-                showAlternateImage={false}
-                showBadges={false}
-                showColourOptions={false}
-                showQuickAdd={false}
-                variant="compact"
-              />
-            </li>
-          ))}
+          {products.slice(0, 4).map((product) => {
+            const image = product.images[1] ?? product.images[0];
+
+            return (
+              <li className="min-w-0 snap-start" key={product.id}>
+                <article className="overflow-hidden rounded-xl border border-border bg-surface">
+                  <Link
+                    aria-label={`View ${product.title}`}
+                    className="relative block aspect-[4/5] overflow-hidden bg-[#eeece8] no-underline"
+                    href={`/products/${product.handle}`}
+                  >
+                    {image ? (
+                      <Image
+                        alt={image.alt}
+                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.02]"
+                        fill
+                        sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 72vw"
+                        src={image.url}
+                      />
+                    ) : null}
+                  </Link>
+                  <div className="grid grid-cols-[minmax(0,1fr)_2.75rem] gap-2 p-3">
+                    <div className="min-w-0">
+                      <h3 className="truncate text-sm font-semibold">
+                        <Link className="no-underline" href={`/products/${product.handle}`}>
+                          {product.title}
+                        </Link>
+                      </h3>
+                      <PricePlaceholder className="mt-2" size="small" />
+                    </div>
+                    <button aria-label={`Save ${product.title}`} className="grid size-11 place-items-center rounded-full" type="button">
+                      <Heart aria-hidden="true" className="size-4" strokeWidth={1.7} />
+                    </button>
+                  </div>
+                </article>
+              </li>
+            );
+          })}
         </ul>
       </Container>
     </Section>

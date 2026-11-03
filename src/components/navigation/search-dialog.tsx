@@ -1,8 +1,12 @@
 "use client";
 
-import { X } from "lucide-react";
+import { ArrowUpRight, Search, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useDeferredValue, useState } from "react";
 
 import { ModalDialog } from "@/components/ui/modal-dialog";
+import { developmentProducts } from "@/data/development/mock-commerce";
 
 interface SearchDialogProps {
   open: boolean;
@@ -10,6 +14,26 @@ interface SearchDialogProps {
 }
 
 export function SearchDialog({ open, onClose }: SearchDialogProps) {
+  const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query.trim().toLowerCase());
+  const results =
+    deferredQuery.length > 0
+      ? developmentProducts
+          .filter((product) =>
+            [
+              product.title,
+              product.shortDescription,
+              product.productType,
+              product.artworkPlacement,
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase()
+              .includes(deferredQuery),
+          )
+          .slice(0, 5)
+      : [];
+
   return (
     <ModalDialog
       open={open}
@@ -21,7 +45,7 @@ export function SearchDialog({ open, onClose }: SearchDialogProps) {
       <div className="p-6 sm:p-8">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <p className="type-label text-accent">Development foundation</p>
+            <p className="type-label text-accent">Find your piece</p>
             <h2 id="site-search-title" className="type-section-heading mt-2">
               Search
             </h2>
@@ -36,13 +60,89 @@ export function SearchDialog({ open, onClose }: SearchDialogProps) {
             <X aria-hidden="true" size={20} strokeWidth={1.7} />
           </button>
         </div>
-        <p
+        <label
+          htmlFor="site-search-input"
           id="site-search-description"
-          className="type-body mt-5 max-w-[42ch] text-foreground-muted"
+          className="sr-only"
         >
-          The accessible search panel is ready. Search fields and live results will
-          be introduced in their approved phase.
-        </p>
+          Search products by name or artwork
+        </label>
+        <div className="relative mt-6">
+          <Search
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-foreground-muted"
+            size={18}
+            strokeWidth={1.5}
+          />
+          <input
+            id="site-search-input"
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.currentTarget.value)}
+            placeholder="Search the collection"
+            autoComplete="off"
+            data-autofocus
+            className="min-h-13 w-full rounded-none border border-border bg-background pr-4 pl-11 text-sm text-foreground outline-none transition-colors placeholder:text-foreground-muted focus:border-foreground-muted"
+          />
+        </div>
+
+        <div className="mt-6 border-t border-border" aria-live="polite">
+          {deferredQuery.length === 0 ? (
+            <p className="type-caption py-5 text-foreground-muted">
+              Search the current ra&ra collection by name or artwork.
+            </p>
+          ) : results.length === 0 ? (
+            <p className="type-caption py-5 text-foreground-muted">
+              No pieces match “{query.trim()}”.
+            </p>
+          ) : (
+            <ul role="list" className="divide-y divide-border">
+              {results.map((product) => {
+                const image = product.images[0];
+                const title = product.title.replace(
+                  " — Development Mock",
+                  "",
+                );
+
+                return (
+                  <li key={product.id}>
+                    <Link
+                      href={`/products/${product.handle}`}
+                      onClick={onClose}
+                      className="group grid min-h-20 grid-cols-[3.25rem_1fr_auto] items-center gap-4 py-3 no-underline"
+                    >
+                      <span className="relative aspect-square overflow-hidden bg-surface-muted">
+                        {image ? (
+                          <Image
+                            alt=""
+                            fill
+                            sizes="52px"
+                            src={image.url}
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : null}
+                      </span>
+                      <span>
+                        <span className="block font-serif text-lg leading-tight">
+                          {title}
+                        </span>
+                        <span className="mt-1 block text-[0.6875rem] tracking-[0.12em] text-foreground-muted uppercase">
+                          {product.artworkPlacement ?? "T-Shirt"}
+                        </span>
+                      </span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        size={17}
+                        strokeWidth={1.4}
+                        className="text-foreground-muted transition-colors group-hover:text-foreground"
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
     </ModalDialog>
   );

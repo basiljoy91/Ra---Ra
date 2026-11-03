@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "Frequently Asked Questions";
 const description =
-  "Confirmed information and clearly labelled development guidance for Ra & Ra orders, shipping, products and sizing.";
+  "Confirmed information and clearly labelled development guidance for ra&ra orders, shipping, products and sizing.";
 
 export const metadata: Metadata = {
   title,

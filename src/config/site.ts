@@ -32,17 +32,22 @@ const primaryNavigation = [
     label: "Shop",
     enabled: true,
     children: [
-      { id: "all-products", label: "All Products", href: "/shop", enabled: true },
       {
-        id: "new-arrivals",
-        label: "New Arrivals",
-        href: "/shop?view=new-arrivals",
+        id: "all-products",
+        label: "All T-Shirts",
+        href: "/collections/beyond",
         enabled: true,
       },
       {
-        id: "best-sellers",
-        label: "Best Sellers",
-        href: "/shop?view=best-sellers",
+        id: "new-arrivals",
+        label: "New Arrivals",
+        href: "/collections/beyond?sort=newest",
+        enabled: true,
+      },
+      {
+        id: "limited-edition-preview",
+        label: "Limited Edition",
+        href: "/collections/beyond",
         enabled: true,
       },
     ],
@@ -53,36 +58,30 @@ const primaryNavigation = [
     enabled: true,
     children: [
       {
-        id: "pets-collection",
-        label: "Pets",
-        href: "/collections/pets",
+        id: "beyond-collection",
+        label: "Beyond",
+        href: "/collections/beyond",
         enabled: true,
       },
       {
         id: "limited-editions",
         label: "Limited Editions",
-        badge: "Coming Soon",
-        enabled: true,
-      },
-      {
-        id: "future-collections",
-        label: "Future Collections",
-        badge: "Coming Soon",
+        badge: "01",
+        href: "/collections/beyond",
         enabled: true,
       },
     ],
   },
-  { id: "our-story", label: "Our Story", href: "/about#our-story", enabled: true },
-  { id: "journal", label: "Journal", href: "/journal", enabled: true },
   { id: "about", label: "About", href: "/about", enabled: true },
+  { id: "journal", label: "Journal", href: "/journal", enabled: true },
   { id: "contact", label: "Contact", href: "/contact", enabled: true },
 ] as const satisfies readonly NavigationItem[];
 
 const mobileSecondaryLinks = [
   { id: "faq", label: "FAQ", href: "/faq", enabled: true },
   { id: "size-guide", label: "Size Guide", href: "/size-guide", enabled: true },
-  { id: "shipping", label: "Shipping", href: "/shipping", enabled: true },
-  { id: "returns", label: "Returns", href: "/returns", enabled: true },
+  { id: "shipping", label: "Shipping", href: "/faq#shipping", enabled: true },
+  { id: "returns", label: "Returns", href: "/faq#returns", enabled: true },
 ] as const satisfies readonly NavigationItem[];
 
 const headerConfig = {
@@ -96,8 +95,8 @@ const headerConfig = {
     messages: [
       {
         id: "launch-notice",
-        text: "New story-led collection launching soon",
-        shortText: "New collection launching soon",
+        text: "Free shipping on orders above €99 · Limited edition drops",
+        shortText: "Free shipping above €99",
       },
     ],
   },
@@ -106,9 +105,9 @@ const headerConfig = {
 } as const satisfies HeaderConfig;
 
 export const siteConfig = {
-  siteName: "Ra & Ra",
+  siteName: "ra&ra",
   siteDescription:
-    "Story-led lifestyle apparel inspired by meaningful everyday connections.",
+    "Limited-edition premium streetwear built around art, mindset and meaning.",
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],
@@ -125,7 +124,7 @@ export const siteConfig = {
   accountEnabled: false,
   wishlistEnabled: false,
   reviewsEnabled: false,
-  newsletterEnabled: false,
+  newsletterEnabled: true,
   communityEnabled: false,
   header: headerConfig,
   usesPlaceholderContactDetails: true,

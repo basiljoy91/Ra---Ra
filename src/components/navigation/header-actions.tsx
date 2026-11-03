@@ -1,4 +1,4 @@
-import { Search, ShoppingBag } from "lucide-react";
+import { Search, ShoppingBag, UserRound } from "lucide-react";
 
 import { cn } from "@/lib/utilities";
 
@@ -8,8 +8,9 @@ interface HeaderActionsProps {
   cartCount: number;
   onSearch: () => void;
   onCart: () => void;
+  onAccount: () => void;
   compact?: boolean;
-  activeDialog?: "search" | "cart" | null;
+  activeDialog?: "search" | "cart" | "account" | null;
   className?: string;
 }
 
@@ -22,6 +23,7 @@ export function HeaderActions({
   cartCount,
   onSearch,
   onCart,
+  onAccount,
   compact = false,
   activeDialog = null,
   className,
@@ -53,6 +55,18 @@ export function HeaderActions({
           <Search aria-hidden="true" size={20} strokeWidth={1.7} />
         </button>
       ) : null}
+
+      <button
+        type="button"
+        aria-label="Account access is not yet available"
+        aria-haspopup="dialog"
+        aria-controls="account-placeholder-dialog"
+        aria-expanded={activeDialog === "account"}
+        onClick={onAccount}
+        className={actionClassName}
+      >
+        <UserRound aria-hidden="true" size={20} strokeWidth={1.55} />
+      </button>
 
       {cartEnabled ? (
         <button

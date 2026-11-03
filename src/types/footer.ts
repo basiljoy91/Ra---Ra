@@ -15,6 +15,7 @@ export type FooterSocialLink = FooterLink;
 
 export type FooterConfig = {
   brandStatement: string;
+  tagline: string;
   navigationGroups: readonly FooterNavigationGroup[];
   socialLinks: readonly FooterSocialLink[];
   market: {

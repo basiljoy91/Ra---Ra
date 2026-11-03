@@ -57,10 +57,10 @@ export const ProductOptionSelector = forwardRef<
                 aria-label={`${displayName} ${value}, ${accessibleState}`}
                 aria-pressed={selected}
                 className={cn(
-                  "inline-flex min-h-11 items-center gap-2 rounded-full border px-3 text-sm font-semibold transition-colors",
+                  "grid size-11 place-items-center rounded-full border bg-surface p-1.5 transition-colors",
                   selected
-                    ? "border-foreground bg-surface-muted"
-                    : "border-border bg-surface",
+                    ? "border-foreground"
+                    : "border-transparent",
                   unavailable && "cursor-not-allowed opacity-45",
                 )}
                 disabled={unavailable}
@@ -70,9 +70,8 @@ export const ProductOptionSelector = forwardRef<
               >
                 <span
                   aria-hidden="true"
-                  className={cn("size-5 rounded-full border", swatch.swatchClassName)}
+                  className={cn("size-full rounded-full border", swatch.swatchClassName)}
                 />
-                {value}
               </button>
             );
           }

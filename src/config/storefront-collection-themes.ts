@@ -26,6 +26,14 @@ const storefrontCollectionThemes = {
     statusClassName: "border-accent/35 bg-surface/80 text-foreground",
     storyClassName: "border-border bg-surface",
   },
+  beyond: {
+    heroClassName: "border-border bg-background",
+    mediaClassName: "border-border bg-surface",
+    placeholderClassName: "bg-surface-muted text-foreground",
+    eyebrowClassName: "text-foreground-muted",
+    statusClassName: "border-border bg-surface/80 text-foreground",
+    storyClassName: "border-border bg-surface",
+  },
   "travel-development": {
     heroClassName: "border-border bg-surface-muted",
     mediaClassName: "border-border bg-surface",

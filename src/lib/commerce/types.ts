@@ -71,7 +71,11 @@ export interface SeoFields {
 export type ContentStatus = "development" | "production";
 
 /** Extend this union only after a collection theme has been approved. */
-export type CollectionThemeKey = "default" | "pets" | "travel-development";
+export type CollectionThemeKey =
+  | "default"
+  | "pets"
+  | "travel-development"
+  | "beyond";
 
 export interface Product {
   id: string;

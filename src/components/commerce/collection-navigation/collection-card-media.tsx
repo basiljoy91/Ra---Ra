@@ -40,7 +40,7 @@ export function CollectionCardMedia({
           )}
         >
           <div className="max-w-sm">
-            <p className="type-label text-accent">Ra & Ra</p>
+            <p className="type-label text-accent">ra&ra</p>
             <p className="mt-4 font-serif text-[clamp(1.75rem,5vw,3rem)] leading-tight tracking-[-0.025em]">
               {placeholderLabel ?? "A new story will begin here."}
             </p>

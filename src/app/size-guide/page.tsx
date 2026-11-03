@@ -16,7 +16,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "Size Guide";
 const description =
-  "Development structure for Ra & Ra garment measurements, fit guidance and care information.";
+  "Development structure for ra&ra garment measurements, fit guidance and care information.";
 
 export const metadata: Metadata = {
   title,

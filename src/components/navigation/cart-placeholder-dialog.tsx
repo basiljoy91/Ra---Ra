@@ -26,7 +26,7 @@ export function CartPlaceholderDialog({
       <div className="p-6 sm:p-8">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <p className="type-label text-accent">Development foundation</p>
+            <p className="type-label text-accent">Your selection</p>
             <h2 id="cart-placeholder-title" className="type-section-heading mt-2">
               Your bag
             </h2>
@@ -54,7 +54,8 @@ export function CartPlaceholderDialog({
               id="cart-placeholder-description"
               className="type-small text-foreground-muted"
             >
-              Cart functionality is intentionally reserved for a later phase.
+              The live cart and checkout will appear here once the commerce
+              provider is connected.
             </p>
           </div>
         </div>

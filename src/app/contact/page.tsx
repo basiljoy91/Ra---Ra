@@ -13,7 +13,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "Contact";
 const description =
-  "Contact Ra & Ra through a development-ready, accessible enquiry interface.";
+  "Contact ra&ra through a development-ready, accessible enquiry interface.";
 
 export const metadata: Metadata = {
   title,

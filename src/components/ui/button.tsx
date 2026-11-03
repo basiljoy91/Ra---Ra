@@ -17,7 +17,7 @@ interface ButtonStyleOptions {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "border-primary bg-primary text-primary-foreground hover:border-foreground hover:bg-foreground",
+    "border-button bg-button text-button-foreground hover:border-foreground hover:bg-foreground hover:text-background",
   secondary:
     "border-border bg-surface text-foreground hover:border-foreground hover:bg-surface-muted",
   quiet:

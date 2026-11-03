@@ -17,6 +17,11 @@ const collectionCardThemes = {
     placeholderClassName: "bg-accent-soft text-foreground",
     statusClassName: "border-border bg-surface text-foreground-muted",
   },
+  beyond: {
+    frameClassName: "border-border bg-surface",
+    placeholderClassName: "bg-surface-muted text-foreground",
+    statusClassName: "border-border bg-surface text-foreground-muted",
+  },
   "travel-development": {
     frameClassName: "border-border bg-surface",
     placeholderClassName: "bg-surface-muted text-foreground",

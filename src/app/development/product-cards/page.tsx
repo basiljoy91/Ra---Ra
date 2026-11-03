@@ -10,7 +10,7 @@ import { developmentQuickAdd } from "@/features/cart/development-quick-add";
 export const metadata: Metadata = {
   title: "Product Card Development Showcase",
   description:
-    "Development-only verification page for the Ra & Ra product-card system.",
+    "Development-only verification page for the ra&ra product-card system.",
   robots: { index: false, follow: false },
 };
 

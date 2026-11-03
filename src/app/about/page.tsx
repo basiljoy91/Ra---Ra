@@ -9,9 +9,9 @@ import { siteConfig } from "@/config/site";
 import { aboutContent, aboutHero, editorialCta } from "@/data/development/editorial-content";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
-const title = "About Ra & Ra";
+const title = "About ra&ra";
 const description =
-  "Discover the theme-led idea behind Ra & Ra and why stories, meaningful connections and quiet design shape each collection.";
+  "Discover the theme-led idea behind ra&ra and why stories, meaningful connections and quiet design shape each collection.";
 
 export const metadata: Metadata = {
   title,

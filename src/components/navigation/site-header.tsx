@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
+import { AccountPlaceholderDialog } from "@/components/navigation/account-placeholder-dialog";
 import { AnnouncementBar } from "@/components/navigation/announcement-bar";
 import { CartPlaceholderDialog } from "@/components/navigation/cart-placeholder-dialog";
 import { DesktopHeader } from "@/components/navigation/desktop-header";
@@ -12,7 +14,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utilities";
 import type { HeaderAppearance } from "@/types/navigation";
 
-type ActiveOverlay = "menu" | "search" | "cart" | null;
+type ActiveOverlay = "menu" | "search" | "cart" | "account" | null;
 
 interface SiteHeaderProps {
   appearance?: HeaderAppearance;
@@ -21,22 +23,41 @@ interface SiteHeaderProps {
 export function SiteHeader({
   appearance = siteConfig.header.appearance,
 }: SiteHeaderProps) {
+  const pathname = usePathname();
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlay>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const isHomepage = pathname === "/";
+  const resolvedAppearance =
+    isHomepage && !hasScrolled ? "overlay" : appearance;
   const searchEnabled =
     siteConfig.header.searchEnabled && siteConfig.navigationFeatureFlags.search;
   const cartEnabled =
     siteConfig.header.cartEnabled && siteConfig.navigationFeatureFlags.cart;
 
+  useEffect(() => {
+    if (!isHomepage) {
+      return;
+    }
+
+    const updateHeader = () => setHasScrolled(window.scrollY > 24);
+    const updateFrame = window.requestAnimationFrame(updateHeader);
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(updateFrame);
+      window.removeEventListener("scroll", updateHeader);
+    };
+  }, [isHomepage]);
+
   return (
     <>
       <AnnouncementBar config={siteConfig.header.announcementBar} />
       <header
-        data-appearance={appearance}
+        data-appearance={resolvedAppearance}
         className={cn(
-          "relative z-[var(--z-sticky)] w-full border-b transition-colors duration-[var(--duration-base)]",
+          "z-[var(--z-sticky)] w-full border-b transition-[background-color,border-color,backdrop-filter] duration-[var(--duration-base)]",
           siteConfig.header.sticky && "sticky top-0",
-          appearance === "solid"
-            ? "border-border bg-surface/95"
+          resolvedAppearance === "solid"
+            ? "border-border bg-background/92 backdrop-blur-md"
             : "border-transparent bg-transparent",
         )}
       >
@@ -47,8 +68,11 @@ export function SiteHeader({
           cartCount={siteConfig.header.developmentCartCount}
           onSearch={() => setActiveOverlay("search")}
           onCart={() => setActiveOverlay("cart")}
+          onAccount={() => setActiveOverlay("account")}
           activeDialog={
-            activeOverlay === "search" || activeOverlay === "cart"
+            activeOverlay === "search" ||
+            activeOverlay === "cart" ||
+            activeOverlay === "account"
               ? activeOverlay
               : null
           }
@@ -66,6 +90,7 @@ export function SiteHeader({
           onMenu={() => setActiveOverlay("menu")}
           onSearch={() => setActiveOverlay("search")}
           onCart={() => setActiveOverlay("cart")}
+          onAccount={() => setActiveOverlay("account")}
         />
       </header>
 
@@ -85,6 +110,10 @@ export function SiteHeader({
         open={activeOverlay === "cart"}
         onClose={() => setActiveOverlay(null)}
         itemCount={siteConfig.header.developmentCartCount}
+      />
+      <AccountPlaceholderDialog
+        open={activeOverlay === "account"}
+        onClose={() => setActiveOverlay(null)}
       />
     </>
   );

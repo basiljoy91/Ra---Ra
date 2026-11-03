@@ -53,7 +53,7 @@ export const homepageDiscovery = {
     {
       id: "all-t-shirts",
       title: "All T-Shirts",
-      href: "/shop",
+      href: "/collections/pets",
       description: "The complete first-story edit.",
       image: {
         src: "/discovery/all-t-shirts.jpeg",
@@ -66,7 +66,7 @@ export const homepageDiscovery = {
     {
       id: "minimal-dog-art",
       title: "Minimal Dog Art",
-      href: "/shop?style=minimal-dog-art",
+      href: "/collections/pets?style=minimal-dog-art",
       description: "Quiet linework with everyday meaning.",
       image: {
         src: "/discovery/minimal-dog-art.jpeg",
@@ -92,7 +92,7 @@ export const homepageDiscovery = {
     {
       id: "small-chest-prints",
       title: "Small Chest Prints",
-      href: "/shop?placement=small-chest",
+      href: "/collections/pets?placement=small-chest",
       description: "Subtle artwork, close to the heart.",
       image: {
         src: "/discovery/small-chest-prints.jpeg",
@@ -105,7 +105,7 @@ export const homepageDiscovery = {
     {
       id: "statement-prints",
       title: "Statement Prints",
-      href: "/shop?placement=statement",
+      href: "/collections/pets?placement=statement",
       description: "Larger illustrations with a clear story.",
       image: {
         src: "/discovery/statement-prints.jpeg",
@@ -118,7 +118,7 @@ export const homepageDiscovery = {
     {
       id: "gifts-for-dog-lovers",
       title: "Gifts for Dog Lovers",
-      href: "/shop?category=gifts",
+      href: "/collections/pets?category=gifts",
       description: "Thoughtful pieces for meaningful bonds.",
       image: {
         src: "/discovery/gifts-for-dog-lovers.jpeg",
@@ -156,7 +156,7 @@ export const homepageNewArrivals = {
     "The latest minimal designs inspired by the connections and everyday moments that matter.",
   cta: {
     label: "View All New Arrivals",
-    href: "/shop?sort=newest",
+    href: "/collections/pets?sort=newest",
   },
   collectionLabel: "Development Pet Stories",
   productLimit: 4,
@@ -167,10 +167,10 @@ export const homepageNewArrivals = {
 } as const satisfies HomepageProductSectionConfig;
 
 export const homepageBrandPromise = {
-  eyebrow: "Why Ra & Ra",
+  eyebrow: "Why ra&ra",
   heading: "Created Around What Matters.",
   description:
-    "Ra & Ra starts with meaning, then translates it into restrained everyday apparel—one collection and one community at a time.",
+    "ra&ra starts with meaning, then translates it into restrained everyday apparel—one collection and one community at a time.",
   principles: [
     {
       id: "meaningful-design",
@@ -197,7 +197,7 @@ export const homepageCollections = {
   eyebrow: "Collection Stories",
   heading: "Shop by Collection",
   description:
-    "Each Ra & Ra collection begins with a theme that connects people through shared passions, rituals and everyday meaning.",
+    "Each ra&ra collection begins with a theme that connects people through shared passions, rituals and everyday meaning.",
   activeStatusLabel: "Current Collection",
   comingSoonStatusLabel: "Coming Soon",
   activeCtaLabel: "Explore the Collection",
@@ -296,7 +296,7 @@ export const developmentReviewShowcase = {
 
 export const homepageNewsletter = {
   id: "homepage-newsletter",
-  eyebrow: "From Ra & Ra",
+  eyebrow: "From ra&ra",
   heading: "Stories Worth Wearing",
   description:
     "Join us for new collections, meaningful designs and limited releases.",
@@ -322,10 +322,10 @@ export const developmentNewsletterShowcase = {
 
 export const homepageCommunity = {
   id: "homepage-community",
-  eyebrow: "Ra & Ra Stories",
+  eyebrow: "ra&ra Stories",
   heading: "Worn in Everyday Moments",
   description:
-    "Approved campaign and community imagery will appear here as the Ra & Ra story grows.",
+    "Approved campaign and community imagery will appear here as the ra&ra story grows.",
   itemLimit: 8,
   hideWhenEmpty: true,
   emptyMessage:
