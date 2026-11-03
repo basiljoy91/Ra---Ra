@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
 import { Button } from "@/components/ui/button";
-import type { Money } from "@/lib/commerce";
-import { formatMoney } from "@/lib/utilities";
 
 interface MobileStickyPurchaseActionProps {
   productTitle: string;
-  price: Money;
   actionLabel: string;
   disabled: boolean;
   pending: boolean;
@@ -17,7 +15,6 @@ interface MobileStickyPurchaseActionProps {
 
 export function MobileStickyPurchaseAction({
   productTitle,
-  price,
   actionLabel,
   disabled,
   pending,
@@ -72,9 +69,7 @@ export function MobileStickyPurchaseAction({
       <div className="mx-auto flex max-w-[var(--container-wide)] items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold">{productTitle}</p>
-          <p className="type-caption tabular-nums text-foreground-muted">
-            {formatMoney(price)}
-          </p>
+          <PricePlaceholder className="mt-1" size="small" />
         </div>
         <Button
           aria-label={`${actionLabel} for ${productTitle}`}

@@ -348,6 +348,27 @@
   background: var(--border);
 }
 
+body:has(.product-detail-page) {
+  --background: #f7f6f3;
+  --surface: #ffffff;
+  --surface-muted: #eeece8;
+  --foreground: #111111;
+  --foreground-muted: #68645f;
+  --border: #d9d6d1;
+  --primary: #111111;
+  --primary-foreground: #ffffff;
+  --button: #111111;
+  --button-foreground: #ffffff;
+  --accent: #6d6257;
+  --accent-soft: #e8e3dc;
+  --focus-ring: #62584e;
+  color-scheme: light;
+}
+
+.product-detail-page {
+  min-height: 100vh;
+}
+
 .featured-collection-media-image {
   object-position: var(--collection-media-position-mobile, 50% 50%);
 }

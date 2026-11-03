@@ -20,6 +20,12 @@ const featuredCollectionThemes = {
     campaignFrameClassName: "border-border bg-surface",
     productFrameClassName: "border-border bg-surface",
   },
+  beyond: {
+    sectionTone: "muted",
+    eyebrowClassName: "text-foreground-muted",
+    campaignFrameClassName: "border-border bg-surface",
+    productFrameClassName: "border-border bg-surface",
+  },
   "travel-development": {
     sectionTone: "muted",
     eyebrowClassName: "text-accent",

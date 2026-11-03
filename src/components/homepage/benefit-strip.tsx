@@ -1,10 +1,9 @@
 import {
+  Feather,
   Gem,
-  Layers3,
-  MapPin,
-  PenTool,
+  Recycle,
   ShieldCheck,
-  Sparkles,
+  Truck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -12,10 +11,10 @@ import styles from "@/components/homepage/homepage.module.css";
 import { Container } from "@/components/layout/container";
 
 const iconById: Record<string, LucideIcon> = {
-  meaningful: Sparkles,
-  artwork: PenTool,
-  collections: Layers3,
-  market: MapPin,
+  meaningful: Recycle,
+  artwork: Feather,
+  collections: Gem,
+  market: Truck,
   checkout: ShieldCheck,
 };
 

@@ -38,10 +38,10 @@ export const metadata: Metadata = {
     siteName: siteConfig.siteName,
     images: [
       {
-        url: "/hero/hero-dog-owner.png",
-        width: 1717,
-        height: 916,
-        alt: "ra&ra Dogs & Their Humans campaign imagery",
+        url: "/campaign/beyond-limits-hero.png",
+        width: 1536,
+        height: 1024,
+        alt: "ra&ra Beyond Limits campaign imagery",
       },
     ],
   },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.siteName,
     description: siteConfig.siteDescription,
-    images: ["/hero/hero-dog-owner.png"],
+    images: ["/campaign/beyond-limits-hero.png"],
   },
   robots: {
     index: false,

@@ -1,15 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import {
+  Heart,
+  PackageCheck,
+  Ruler,
+  ShieldCheck,
+  ShoppingBag,
+  Truck,
+} from "lucide-react";
 import { useMemo, useRef, useState, useTransition } from "react";
 
-import { ProductPrice } from "@/components/commerce/product-card/product-price";
 import { MobileStickyPurchaseAction } from "@/components/commerce/product-detail/mobile-sticky-purchase-action.client";
 import { ProductGallery } from "@/components/commerce/product-detail/product-gallery.client";
 import { ProductOptionSelector } from "@/components/commerce/product-detail/product-option-selector";
-import { QuantitySelector } from "@/components/commerce/product-detail/quantity-selector";
+import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
 import { Button } from "@/components/ui/button";
-import { productPageConfig } from "@/config/product-page";
 import type { Product, ProductImage, ProductVariant } from "@/lib/commerce";
 import {
   getInitialProductSelections,
@@ -19,7 +25,7 @@ import {
   resolveProductVariant,
   selectedOptionsToRecord,
 } from "@/lib/commerce";
-import { cn, getMoneyRange } from "@/lib/utilities";
+import { cn } from "@/lib/utilities";
 import type { AddToCartHandler } from "@/types/product-detail";
 
 interface ProductPrimaryExperienceProps {
@@ -83,7 +89,6 @@ export function ProductPrimaryExperience({
     [product],
   );
   const [selections, setSelections] = useState(initialSelections);
-  const [quantity, setQuantity] = useState(1);
   const [activeImageUrl, setActiveImageUrl] = useState<string | null>(() =>
     getInitialImageUrl(product, initialSelections),
   );
@@ -94,20 +99,6 @@ export function ProductPrimaryExperience({
   const galleryImages = getGalleryImages(product);
   const resolution = resolveProductVariant(product, selections);
   const soldOut = isProductSoldOut(product);
-  const matchingAvailableVariants = product.variants.filter(
-    (variant) => variant.available && matchesSelections(variant, selections),
-  );
-  const priceRange = getMoneyRange(
-    matchingAvailableVariants.map((variant) => variant.price),
-  );
-  const currentPrice =
-    resolution.status === "available" || resolution.status === "unavailable"
-      ? resolution.variant.price
-      : priceRange?.min ?? product.price;
-  const currentCompareAtPrice =
-    resolution.status === "available" || resolution.status === "unavailable"
-      ? resolution.variant.compareAtPrice
-      : product.compareAtPrice;
   const hasSizeOption = options.some(
     (option) => getOptionSelectionKey(option.name) === "size",
   );
@@ -190,7 +181,7 @@ export function ProductPrimaryExperience({
         const result = await addToCartAction({
           productId: product.id,
           variantId: resolution.variant.id,
-          quantity,
+          quantity: 1,
         });
         setFeedback({ kind: result.status, message: result.message });
       } catch {
@@ -214,41 +205,32 @@ export function ProductPrimaryExperience({
 
   return (
     <>
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:items-start lg:gap-16">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(20rem,0.8fr)] lg:items-start lg:gap-10 xl:gap-14">
         <ProductGallery
           activeImageUrl={activeImageUrl}
           images={galleryImages}
           onImageChange={setActiveImageUrl}
           productTitle={product.title}
         />
-        <div className="lg:sticky lg:top-[calc(var(--header-height-desktop)+2rem)]">
-          <div className="flow-space-sm">
-            <p className="type-label text-accent">
-              {collectionTitle ?? product.productType ?? "ra&ra"}
+        <div className="lg:sticky lg:top-[calc(var(--header-height-desktop)+1.25rem)]">
+          <div>
+            <p className="inline-flex rounded-full bg-surface-muted px-3 py-1 text-[0.7rem] font-semibold tracking-wide text-foreground-muted">
+              {product.isNew ? "New arrival" : "Limited edition"}
             </p>
-            <h1 className="font-serif text-[clamp(2.5rem,4.5vw,4rem)] font-medium leading-none tracking-[-0.025em]">
+            <h1 className="mt-4 max-w-[13ch] text-[clamp(2.25rem,4vw,3.5rem)] font-bold leading-[0.98] tracking-[-0.04em]">
               {product.title}
             </h1>
-            <ProductPrice
-              compareAtPrice={currentCompareAtPrice}
-              price={currentPrice}
-              priceRange={
-                resolution.status === "incomplete" ? priceRange : undefined
-              }
-              size="large"
-            />
+            <p className="mt-3 text-sm font-medium text-foreground-muted">
+              {collectionTitle ?? product.productType ?? "Ra & Ra"} · Unisex
+            </p>
+            <PricePlaceholder className="mt-5" />
           </div>
 
-          <p className="type-body mt-6 text-foreground-muted">
+          <p className="mt-5 max-w-md text-sm leading-6 text-foreground-muted">
             {product.shortDescription ?? product.description}
           </p>
-          {product.contentStatus === "development" ? (
-            <p className="type-caption mt-4 rounded-[var(--radius-control)] border border-warning/35 bg-accent-soft/45 px-4 py-3 text-foreground">
-              {productPageConfig.developmentNotice}
-            </p>
-          ) : null}
 
-          <div className="mt-8 grid gap-6">
+          <div className="mt-6 grid gap-5 border-t border-border pt-5">
             {options.map((option) => {
               const isSize = getOptionSelectionKey(option.name) === "size";
 
@@ -265,44 +247,31 @@ export function ProductPrimaryExperience({
             })}
 
             {hasSizeOption ? (
-              <Link className="w-fit text-sm font-semibold" href="/size-guide">
-                View size guide
+              <Link
+                className="inline-flex w-fit items-center gap-2 text-xs font-semibold"
+                href="/size-guide"
+              >
+                <Ruler aria-hidden="true" className="size-4" strokeWidth={1.7} />
+                Size guide
               </Link>
             ) : null}
 
-            <p
-              className={cn(
-                "text-sm font-semibold",
-                soldOut || resolution.status === "unavailable"
-                  ? "text-error"
-                  : "text-success",
-              )}
-            >
-              {soldOut
-                ? "Sold out — the product page remains available to view."
-                : resolution.status === "available"
-                  ? "Selected variant available in this development fixture."
-                  : resolution.status === "unavailable"
-                    ? "This combination is currently unavailable."
-                    : "Choose the required options to confirm availability."}
-            </p>
-
-            <QuantitySelector
-              disabled={soldOut || isPending}
-              onChange={setQuantity}
-              quantity={quantity}
-            />
-
-            <Button
-              aria-describedby="product-purchase-status"
-              className="w-full"
-              data-main-purchase-action
-              disabled={soldOut || isPending}
-              onClick={handleAddToCart}
-              size="lg"
-            >
-              {soldOut ? "Sold Out" : isPending ? "Adding…" : "Add to Cart"}
-            </Button>
+            <div className="grid grid-cols-[minmax(0,1fr)_3.5rem] gap-3">
+              <Button
+                aria-describedby="product-purchase-status"
+                className="w-full"
+                data-main-purchase-action
+                disabled={soldOut || isPending}
+                onClick={handleAddToCart}
+                size="lg"
+              >
+                <ShoppingBag aria-hidden="true" className="size-5" strokeWidth={1.6} />
+                {soldOut ? "Sold Out" : isPending ? "Adding…" : "Add to Cart"}
+              </Button>
+              <Button aria-label="Save product" className="px-0" size="lg" variant="secondary">
+                <Heart aria-hidden="true" className="size-5" strokeWidth={1.6} />
+              </Button>
+            </div>
             <p
               aria-live="polite"
               className={cn(
@@ -317,25 +286,21 @@ export function ProductPrimaryExperience({
             </p>
           </div>
 
-          <div className="mt-8 grid gap-4 border-t border-border pt-6 text-sm">
-            <div>
-              <p className="font-semibold">Shipping</p>
-              <p className="mt-1 text-foreground-muted">
-                {product.details?.shippingSummary ??
-                  productPageConfig.shippingSummary}
-              </p>
-              <Link className="mt-2 inline-block font-semibold" href="/shipping">
-                Shipping information
-              </Link>
+          <div className="mt-6 grid grid-cols-3 gap-2 border-t border-border pt-5 text-center">
+            <div className="grid justify-items-center gap-1.5">
+              <Truck aria-hidden="true" className="size-5" strokeWidth={1.5} />
+              <p className="text-[0.68rem] font-semibold">Free shipping</p>
+              <p className="text-[0.6rem] text-foreground-muted">On launch orders</p>
             </div>
-            <div>
-              <p className="font-semibold">Returns</p>
-              <p className="mt-1 text-foreground-muted">
-                {product.details?.returnSummary ?? productPageConfig.returnSummary}
-              </p>
-              <Link className="mt-2 inline-block font-semibold" href="/returns">
-                Return information
-              </Link>
+            <div className="grid justify-items-center gap-1.5">
+              <PackageCheck aria-hidden="true" className="size-5" strokeWidth={1.5} />
+              <p className="text-[0.68rem] font-semibold">Easy returns</p>
+              <p className="text-[0.6rem] text-foreground-muted">Policy coming soon</p>
+            </div>
+            <div className="grid justify-items-center gap-1.5">
+              <ShieldCheck aria-hidden="true" className="size-5" strokeWidth={1.5} />
+              <p className="text-[0.68rem] font-semibold">Secure checkout</p>
+              <p className="text-[0.6rem] text-foreground-muted">Protected payment</p>
             </div>
           </div>
         </div>
@@ -350,7 +315,6 @@ export function ProductPrimaryExperience({
         }
         onAction={handleAddToCart}
         pending={isPending}
-        price={currentPrice}
         productTitle={product.title}
       />
     </>

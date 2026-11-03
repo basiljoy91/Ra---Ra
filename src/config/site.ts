@@ -35,19 +35,19 @@ const primaryNavigation = [
       {
         id: "all-products",
         label: "All T-Shirts",
-        href: "/collections/pets",
+        href: "/collections/beyond",
         enabled: true,
       },
       {
         id: "new-arrivals",
         label: "New Arrivals",
-        href: "/collections/pets?sort=newest",
+        href: "/collections/beyond?sort=newest",
         enabled: true,
       },
       {
         id: "limited-edition-preview",
-        label: "Limited Edition Preview",
-        href: "/products/development-loyal-line-tee",
+        label: "Limited Edition",
+        href: "/collections/beyond",
         enabled: true,
       },
     ],
@@ -58,23 +58,16 @@ const primaryNavigation = [
     enabled: true,
     children: [
       {
-        id: "pets-collection",
-        label: "Pets",
-        href: "/collections/pets",
+        id: "beyond-collection",
+        label: "Beyond",
+        href: "/collections/beyond",
         enabled: true,
       },
       {
         id: "limited-editions",
         label: "Limited Editions",
-        badge: "Preview",
-        href: "/products/development-loyal-line-tee",
-        enabled: true,
-      },
-      {
-        id: "future-collections",
-        label: "Future Collections",
-        badge: "Coming Soon",
-        href: "/collections/travel-development",
+        badge: "01",
+        href: "/collections/beyond",
         enabled: true,
       },
     ],
@@ -102,8 +95,8 @@ const headerConfig = {
     messages: [
       {
         id: "launch-notice",
-        text: "Discover Dogs & Their Humans · A ra&ra collection story",
-        shortText: "Dogs & Their Humans · The first story",
+        text: "Free shipping on orders above €99 · Limited edition drops",
+        shortText: "Free shipping above €99",
       },
     ],
   },
@@ -114,7 +107,7 @@ const headerConfig = {
 export const siteConfig = {
   siteName: "ra&ra",
   siteDescription:
-    "Story-led lifestyle apparel inspired by meaningful everyday connections.",
+    "Limited-edition premium streetwear built around art, mindset and meaning.",
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],

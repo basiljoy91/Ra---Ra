@@ -1,7 +1,5 @@
-import { ProductBreadcrumbs } from "@/components/commerce/product-detail/product-breadcrumbs";
-import { ProductInformation } from "@/components/commerce/product-detail/product-information";
+import { ProductDetailTabs } from "@/components/commerce/product-detail/product-detail-tabs.client";
 import { ProductPrimaryExperience } from "@/components/commerce/product-detail/product-primary-experience.client";
-import { ProductStorySection } from "@/components/commerce/product-detail/product-story-section";
 import { RelatedProducts } from "@/components/commerce/product-detail/related-products";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -22,29 +20,17 @@ export function ProductPageTemplate({
   addToCartAction,
 }: ProductPageTemplateProps) {
   return (
-    <article>
-      <Section as="div" spacing="sm">
+    <article className="product-detail-page">
+      <Section as="div" className="pb-6 pt-5 sm:pb-8 sm:pt-7" spacing="sm">
         <Container>
-          <ProductBreadcrumbs
-            productTitle={product.title}
-            {...(collection
-              ? {
-                  collectionHandle: collection.handle,
-                  collectionTitle: collection.title,
-                }
-              : {})}
+          <ProductPrimaryExperience
+            addToCartAction={addToCartAction}
+            product={product}
+            {...(collection ? { collectionTitle: collection.title } : {})}
           />
-          <div className="mt-6 md:mt-8">
-            <ProductPrimaryExperience
-              addToCartAction={addToCartAction}
-              product={product}
-              {...(collection ? { collectionTitle: collection.title } : {})}
-            />
-          </div>
         </Container>
       </Section>
-      <ProductStorySection product={product} />
-      <ProductInformation product={product} />
+      <ProductDetailTabs product={product} />
       <RelatedProducts products={relatedProducts} />
       <div aria-hidden="true" className="h-20 lg:hidden" />
     </article>

@@ -3,8 +3,8 @@ import type { FooterConfig } from "@/types/footer";
 
 export const footerConfig = {
   brandStatement:
-    "Story-led apparel for the connections, rituals and passions that stay with us.",
-  tagline: "WEAR WHAT STAYS WITH YOU",
+    "Limited-edition apparel for the ideas that move us beyond.",
+  tagline: "WEAR BEYOND LIMITS",
   navigationGroups: [
     {
       id: "explore",
@@ -13,7 +13,7 @@ export const footerConfig = {
         {
           id: "all-products",
           label: "Shop",
-          href: "/collections/pets",
+          href: "/collections/beyond",
         },
         { id: "about", label: "About", href: "/about" },
         { id: "faq", label: "FAQ", href: "/faq" },

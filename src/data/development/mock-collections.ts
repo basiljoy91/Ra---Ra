@@ -1,86 +1,44 @@
-import type { Collection } from "@/lib/commerce";
+import type { CollectionCatalogEntry, CollectionSummary } from "@/types/collection";
 import { developmentCollection } from "@/data/development/mock-commerce";
-import type {
-  CollectionCatalogEntry,
-  CollectionSummary,
-} from "@/types/collection";
 
 export const COLLECTION_DEVELOPMENT_NOTICE =
-  "Development collection content only. Product availability, prices and merchandising are not approved for production.";
-
-const developmentTravelCollection = {
-  id: "development-collection-travel-reuse-test",
-  handle: "travel-development",
-  title: "Journeys & Keepsakes",
-  subtitle: "Development Collection — Not Available for Purchase",
-  description:
-    "An intentionally empty coming-soon fixture used to verify that the reusable collection template can support a different theme without fabricating inventory.",
-  story:
-    "This development-only record tests a future collection mood, alternate hero orientation and an empty catalogue state.",
-  themeKey: "travel-development",
-  products: [],
-  seo: {
-    title: "Journeys & Keepsakes — Development Collection",
-    description:
-      "A non-purchasable development fixture for the reusable ra&ra collection system.",
-    canonicalPath: "/collections/travel-development",
-    noIndex: true,
-  },
-  contentStatus: "development",
-} as const satisfies Collection;
+  "Product photography is based on the supplied ra&ra garment and artwork references. Final pricing and availability are still being prepared.";
 
 export const collectionCatalog: readonly CollectionCatalogEntry[] = [
   {
     collection: developmentCollection,
     status: "active",
-    href: "/collections/pets",
+    href: "/collections/beyond",
     heroLayout: "story-left",
     developmentNotice: COLLECTION_DEVELOPMENT_NOTICE,
     story: {
-      eyebrow: "Collection One",
-      title: "Dogs & Their Humans",
+      eyebrow: "Limited Edition 01",
+      title: "Beyond",
       introduction:
-        "Minimal apparel inspired by the companionship, rituals and quiet moments shared between dogs and the people who love them.",
+        "Four original artworks expressed across four premium tee constructions—from sculptural boxy black to washed charcoal, off-white and chocolate brown.",
       longDescription:
-        "The collection turns familiar glances, daily walks and the comfort of always having a companion nearby into restrained, story-led artwork.",
-      campaignLine: "Chosen by paws. Worn by love.",
-      quote: "A familiar bond, translated into something you can carry.",
+        "Beyond explores courage, perception, time and human limits through classical forms, celestial geometry and tactile streetwear finishes.",
+      campaignLine: "More than a T-shirt. A statement of mindset.",
+      quote: "Wear beyond limits.",
       heroMedia: {
         desktop: {
-          url: "/featured-collection/dogs-and-humans-campaign.jpeg",
-          alt: "Black and white T-shirts featuring a small dog illustration beneath a heart",
-          width: 1402,
-          height: 1122,
+          url: "/campaign/beyond-limits-hero.png",
+          alt: "Model wearing a washed charcoal Beyond Limits oversized tee in directional light",
+          width: 1536,
+          height: 1024,
         },
         focalPoint: {
-          desktop: "50% 50%",
-          tablet: "50% 50%",
-          mobile: "50% 50%",
+          desktop: "66% 50%",
+          tablet: "64% 50%",
+          mobile: "68% 50%",
         },
       },
       editorialBlocks: [
         {
           type: "quote",
-          quote:
-            "The artwork is small. The relationship behind it is anything but.",
+          quote: "Once it’s gone, it’s gone.",
         },
       ],
-    },
-  },
-  {
-    collection: developmentTravelCollection,
-    status: "coming-soon",
-    heroLayout: "story-right",
-    developmentNotice:
-      "Development Collection — Not Available for Purchase",
-    story: {
-      eyebrow: "Reusable Template Test",
-      title: "Journeys & Keepsakes",
-      introduction:
-        "Development Collection — Not Available for Purchase. This intentionally empty story verifies a second collection theme without suggesting a launch or available inventory.",
-      longDescription:
-        "No travel products, dates or production claims are attached to this fixture. It exists only to validate the collection architecture and coming-soon state.",
-      campaignLine: "A future story, intentionally unstocked.",
     },
   },
 ];
@@ -89,8 +47,7 @@ export function getCollectionCatalogEntry(
   handle: string,
 ): CollectionCatalogEntry | undefined {
   return collectionCatalog.find(
-    (entry) =>
-      entry.status !== "hidden" && entry.collection.handle === handle,
+    (entry) => entry.status !== "hidden" && entry.collection.handle === handle,
   );
 }
 
@@ -101,20 +58,12 @@ export function getVisibleCollectionSummaries(): readonly CollectionSummary[] {
       id: entry.collection.id,
       handle: entry.collection.handle,
       title: entry.collection.title,
-      ...(entry.collection.subtitle
-        ? { subtitle: entry.collection.subtitle }
-        : {}),
+      ...(entry.collection.subtitle ? { subtitle: entry.collection.subtitle } : {}),
       description: entry.story.introduction,
-      ...(entry.story.heroMedia?.desktop
-        ? { image: entry.story.heroMedia.desktop }
-        : {}),
-      ...(entry.status === "active" && entry.href
-        ? { href: entry.href }
-        : {}),
+      ...(entry.story.heroMedia?.desktop ? { image: entry.story.heroMedia.desktop } : {}),
+      ...(entry.status === "active" && entry.href ? { href: entry.href } : {}),
       status: entry.status,
       themeKey: entry.collection.themeKey,
-      ...(entry.developmentNotice
-        ? { developmentNotice: entry.developmentNotice }
-        : {}),
+      ...(entry.developmentNotice ? { developmentNotice: entry.developmentNotice } : {}),
     }));
 }

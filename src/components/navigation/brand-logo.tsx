@@ -18,10 +18,10 @@ export function BrandLogo({
   return (
     <Link
       href="/"
-      aria-label="ra&ra home"
+      aria-label="Ra & Ra home"
       {...(onClick ? { onClick } : {})}
       className={cn(
-        "inline-flex min-h-11 items-center whitespace-nowrap font-serif font-medium leading-none tracking-[0.055em] no-underline",
+        "inline-flex min-h-11 items-center whitespace-nowrap font-serif font-semibold leading-none tracking-[-0.015em] no-underline",
         compact
           ? "text-[1.6rem]"
           : large
@@ -30,7 +30,7 @@ export function BrandLogo({
         className,
       )}
     >
-      ra&amp;ra
+      Ra &amp; Ra
     </Link>
   );
 }

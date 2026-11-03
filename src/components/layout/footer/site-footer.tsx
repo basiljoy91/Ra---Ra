@@ -1,10 +1,9 @@
 import { CreditCard } from "lucide-react";
+import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { BackToTop } from "@/components/layout/footer/back-to-top.client";
-import { FooterBrand } from "@/components/layout/footer/footer-brand";
-import { FooterMarketInformation } from "@/components/layout/footer/footer-market-information";
-import { FooterNavigation } from "@/components/layout/footer/footer-navigation";
+import { BrandLogo } from "@/components/navigation/brand-logo";
 import type { FooterConfig } from "@/types/footer";
 
 type SiteFooterProps = {
@@ -18,24 +17,30 @@ export function SiteFooter({ config }: SiteFooterProps) {
       data-site-footer
     >
       <Container>
-        <div className="grid gap-10 py-[clamp(2.75rem,6vw,5rem)] md:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.6fr)_auto] md:items-center md:gap-[clamp(2rem,6vw,7rem)]">
-          <FooterBrand
-            brandStatement={config.brandStatement}
-            socialLinks={config.socialLinks}
-          />
-          <FooterNavigation groups={config.navigationGroups} />
-          <div className="flex items-center gap-3 text-foreground-muted md:flex-col md:items-end md:gap-2">
-            <CreditCard aria-hidden="true" size={22} strokeWidth={1.2} />
-            <p className="max-w-32 text-[0.625rem] leading-relaxed tracking-[0.08em] uppercase">
-              Payment options shown at checkout launch
-            </p>
+        <div className="grid items-center gap-8 py-8 md:grid-cols-[auto_1fr_auto]">
+          <BrandLogo className="text-foreground" />
+          <nav aria-label="Footer navigation">
+            <ul className="m-0 flex list-none flex-wrap gap-x-7 gap-y-3 p-0 md:justify-center" role="list">
+              {config.navigationGroups.flatMap((group) => group.links).map((link) => (
+                <li key={link.id}>
+                  <Link className="text-[0.6875rem] text-foreground-muted no-underline transition-colors hover:text-foreground" href={link.href}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="flex items-center gap-3 text-foreground-muted">
+            <span className="text-[0.6875rem] font-semibold italic text-foreground">VISA</span>
+            <span className="text-[0.6875rem] font-semibold text-foreground">Mastercard</span>
+            <span className="text-[0.6875rem] font-semibold italic text-foreground">PayPal</span>
+            <CreditCard aria-hidden="true" size={20} strokeWidth={1.2} />
           </div>
         </div>
-        <div className="flex flex-col gap-5 border-t border-border py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 border-t border-border py-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.6875rem] text-foreground-muted">
             {config.copyrightNotice}
           </p>
-          <FooterMarketInformation market={config.market} />
           <div className="flex items-center justify-between gap-8">
             <p className="text-[0.625rem] tracking-[0.18em] text-foreground-muted uppercase">
               {config.tagline}
