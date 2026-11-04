@@ -30,8 +30,8 @@ export function DesktopNavigation({ items }: DesktopNavigationProps) {
                 aria-current={
                   isNavigationHrefCurrent(pathname, item.href) ? "page" : undefined
                 }
-                className={cn(
-                  "inline-flex min-h-11 items-center rounded-sm px-2 text-[0.8125rem] font-semibold tracking-[0.015em] no-underline transition-colors duration-[var(--duration-fast)] hover:text-accent",
+              className={cn(
+                  "inline-flex min-h-11 items-center rounded-sm px-3 text-[0.6875rem] font-medium tracking-[0.1em] uppercase no-underline transition-colors duration-[var(--duration-fast)] hover:text-accent",
                   isNavigationHrefCurrent(pathname, item.href) && "text-accent",
                 )}
               >

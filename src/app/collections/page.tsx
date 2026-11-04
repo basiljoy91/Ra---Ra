@@ -8,9 +8,9 @@ import { siteConfig } from "@/config/site";
 import { getVisibleCollectionSummaries } from "@/data/development/mock-collections";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
-const title = "Explore Our Collections";
+const title = "Explore the Editions";
 const description =
-  "Each ra&ra collection begins with a theme, passion or connection that means something beyond the garment itself.";
+  "Each ra&ra edition begins with one connected idea, then explores it through artwork, fabric weight, proportion and placement.";
 
 export const metadata: Metadata = {
   title,
@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     url: buildAbsoluteUrl("/collections", siteConfig.siteUrl),
     images: [
       {
-        url: "/featured-collection/dogs-and-humans-campaign.jpeg",
-        width: 1402,
-        height: 1122,
-        alt: "Black and white dog-illustrated T-shirts from the development pet collection",
+        url: "/campaign/hero-beyond-limits.png",
+        width: 1672,
+        height: 941,
+        alt: "Beyond Limits campaign with two models and a fractured Atlas sculpture",
       },
     ],
   },
@@ -45,7 +45,7 @@ export default function CollectionsOverviewPage() {
       <Container>
         <CollectionBreadcrumbs />
         <header className="mt-8 max-w-3xl">
-          <p className="type-label text-accent">Stories to Wear</p>
+          <p className="type-label text-accent">Limited-edition chapters</p>
           <h1 className="type-page-heading mt-3">{title}</h1>
           <p className="type-subheading mt-5 text-foreground-muted">
             {description}

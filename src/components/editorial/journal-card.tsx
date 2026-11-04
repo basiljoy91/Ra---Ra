@@ -60,8 +60,8 @@ export function JournalCard({
         <Heading
           className={
             featured
-              ? "mt-4 font-serif text-3xl font-semibold leading-tight sm:text-4xl"
-              : "mt-3 font-serif text-2xl font-semibold leading-tight"
+              ? "mt-4 font-serif text-3xl font-normal leading-tight sm:text-4xl"
+              : "mt-3 font-serif text-2xl font-medium leading-tight"
           }
         >
           <Link className="no-underline hover:underline" href={href}>

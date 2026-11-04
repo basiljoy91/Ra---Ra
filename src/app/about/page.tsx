@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "About ra&ra";
 const description =
-  "Discover the theme-led idea behind ra&ra and why stories, meaningful connections and quiet design shape each collection.";
+  "Discover how ra&ra turns questions about courage, perception, time and limitation into considered limited-edition apparel.";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: buildAbsoluteUrl("/about", siteConfig.siteUrl),
-    images: [{ url: "/hero/hero-dog-owner.png", width: 1717, height: 916, alt: "Golden retriever presenting a dog-illustrated T-shirt to its owner in a warm home" }],
+    images: [{ url: "/campaign/hero-beyond-limits.png", width: 1672, height: 941, alt: "Two models in Beyond Limits T-shirts beside a fractured Atlas sculpture" }],
   },
 };
 

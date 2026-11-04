@@ -27,20 +27,28 @@ export function AnnouncementBar({ config }: AnnouncementBarProps) {
   return (
     <aside
       aria-label="Store announcement"
-      className="relative z-[var(--z-sticky)] flex min-h-[var(--announcement-height)] items-center justify-center border-b border-white/8 bg-background px-[var(--page-gutter)] py-1 text-center text-[0.625rem] font-medium tracking-[0.18em] text-foreground/72 uppercase sm:text-[0.6875rem]"
+      className="relative z-[var(--z-sticky)] grid min-h-[var(--announcement-height)] grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-[#111] px-[var(--page-gutter)] py-1 text-center text-[0.5625rem] font-medium tracking-[0.16em] text-[#f6f1ea] uppercase sm:text-[0.625rem]"
     >
-      {message.href ? (
-        <Link
-          href={message.href}
-          target={message.external ? "_blank" : undefined}
-          rel={message.external ? "noreferrer" : undefined}
-          className="rounded-sm"
-        >
-          {text}
-        </Link>
-      ) : (
-        <p>{text}</p>
-      )}
+      <span aria-hidden="true" />
+      <span>
+        {message.href ? (
+          <Link
+            href={message.href}
+            target={message.external ? "_blank" : undefined}
+            rel={message.external ? "noreferrer" : undefined}
+            className="rounded-sm"
+          >
+            {text}
+          </Link>
+        ) : (
+          <span>{text}</span>
+        )}
+      </span>
+      <span className="hidden justify-self-end tracking-[0.14em] min-[64rem]:inline-flex">
+        <Link href="/faq#shipping">Track order</Link>
+        <span aria-hidden="true" className="mx-3 opacity-50">·</span>
+        <Link href="/faq">Help</Link>
+      </span>
     </aside>
   );
 }

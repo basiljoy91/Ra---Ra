@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Check, Ruler, Shirt, Sparkles } from "lucide-react";
 import { useState } from "react";
 
+import { SizeGuideDrawer } from "@/components/commerce/product-detail/size-guide-drawer.client";
 import { Container } from "@/components/layout/container";
 import { productPageConfig } from "@/config/product-page";
 import type { Product } from "@/lib/commerce";
@@ -23,6 +23,7 @@ function getTabId(tab: Tab): string {
 
 export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>("Details");
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const details = product.details;
   const detailImage = product.images[4] ?? product.images[1] ?? product.images[0];
 
@@ -130,9 +131,14 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                     </p>
                   </div>
                 </div>
-                <Link className="mt-6 inline-flex font-semibold underline" href="/size-guide">
-                  Open the complete size guide
-                </Link>
+                <button
+                  className="mt-6 inline-flex items-center gap-2 border-b border-foreground pb-1 font-medium"
+                  onClick={() => setSizeGuideOpen(true)}
+                  type="button"
+                >
+                  <Ruler aria-hidden="true" className="size-4" strokeWidth={1.6} />
+                  View this product’s size chart
+                </button>
               </div>
             ) : null}
 
@@ -167,6 +173,12 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
           </div>
         </div>
       </Container>
+      <SizeGuideDrawer
+        instanceId="details-tab"
+        onClose={() => setSizeGuideOpen(false)}
+        open={sizeGuideOpen}
+        productType={product.productType}
+      />
     </section>
   );
 }

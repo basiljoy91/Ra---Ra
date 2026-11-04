@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   Heart,
   PackageCheck,
@@ -15,6 +14,7 @@ import { MobileStickyPurchaseAction } from "@/components/commerce/product-detail
 import { ProductGallery } from "@/components/commerce/product-detail/product-gallery.client";
 import { ProductOptionSelector } from "@/components/commerce/product-detail/product-option-selector";
 import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
+import { SizeGuideDrawer } from "@/components/commerce/product-detail/size-guide-drawer.client";
 import { Button } from "@/components/ui/button";
 import type { Product, ProductImage, ProductVariant } from "@/lib/commerce";
 import {
@@ -93,6 +93,7 @@ export function ProductPrimaryExperience({
     getInitialImageUrl(product, initialSelections),
   );
   const [feedback, setFeedback] = useState<PurchaseFeedback | null>(null);
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const sizeSelectorRef = useRef<HTMLFieldSetElement>(null);
   const options = getProductOptions(product);
@@ -217,7 +218,7 @@ export function ProductPrimaryExperience({
             <p className="inline-flex rounded-full bg-surface-muted px-3 py-1 text-[0.7rem] font-semibold tracking-wide text-foreground-muted">
               {product.isNew ? "New arrival" : "Limited edition"}
             </p>
-            <h1 className="mt-4 max-w-[13ch] text-[clamp(2.25rem,4vw,3.5rem)] font-bold leading-[0.98] tracking-[-0.04em]">
+            <h1 className="mt-4 max-w-[14ch] font-serif text-[clamp(2.45rem,4.5vw,4rem)] font-medium leading-[0.94] tracking-[-0.025em]">
               {product.title}
             </h1>
             <p className="mt-3 text-sm font-medium text-foreground-muted">
@@ -247,13 +248,14 @@ export function ProductPrimaryExperience({
             })}
 
             {hasSizeOption ? (
-              <Link
-                className="inline-flex w-fit items-center gap-2 text-xs font-semibold"
-                href="/size-guide"
+              <button
+                className="inline-flex w-fit items-center gap-2 border-b border-foreground/60 pb-1 text-xs font-medium"
+                onClick={() => setSizeGuideOpen(true)}
+                type="button"
               >
                 <Ruler aria-hidden="true" className="size-4" strokeWidth={1.7} />
-                Size guide
-              </Link>
+                View size chart
+              </button>
             ) : null}
 
             <div className="grid grid-cols-[minmax(0,1fr)_3.5rem] gap-3">
@@ -305,6 +307,15 @@ export function ProductPrimaryExperience({
           </div>
         </div>
       </div>
+
+      <SizeGuideDrawer
+        instanceId="primary-product"
+        onClose={() => setSizeGuideOpen(false)}
+        onSelectSize={(size) => handleOptionSelect("Size", size)}
+        open={sizeGuideOpen}
+        productType={product.productType}
+        selectedSize={selections.size}
+      />
 
       <MobileStickyPurchaseAction
         actionLabel={stickyActionLabel}

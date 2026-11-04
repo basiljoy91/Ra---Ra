@@ -107,7 +107,7 @@ const headerConfig = {
 export const siteConfig = {
   siteName: "ra&ra",
   siteDescription:
-    "Limited-edition premium streetwear built around art, mindset and meaning.",
+    "Limited-edition apparel built around researched artwork, considered materials and ideas that reward a second look.",
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],

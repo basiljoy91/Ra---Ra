@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "The Journal";
 const description =
-  "Development essays about meaningful design, quiet expression and the ideas behind ra&ra collections.";
+  "Read the myths, material decisions and visual histories behind the ra&ra Beyond collection.";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: buildAbsoluteUrl("/journal", siteConfig.siteUrl),
-    images: [{ url: "/development-products/chosen-companion-detail.jpeg", width: 1254, height: 1254, alt: "Development golden retriever artwork detail" }],
+    images: [{ url: "/campaign/hero-beyond-time.png", width: 1672, height: 941, alt: "Models wearing the Past Present Beyond artwork beside a fractured classical portrait" }],
   },
 };
 
@@ -37,9 +37,9 @@ export default function JournalIndexPage() {
         <Container>
           {featured ? <JournalCard article={featured} featured headingLevel={2} /> : null}
           <section aria-labelledby="journal-more-heading" className="mt-16 sm:mt-20">
-            <p className="type-label text-accent">More ideas</p>
+            <p className="type-label text-accent">Continue looking</p>
             <h2 className="type-section-heading mt-3" id="journal-more-heading">
-              From the development journal
+              More from the collection journal
             </h2>
             <div className="mt-8">
               <JournalGrid articles={remaining} headingLevel={3} />

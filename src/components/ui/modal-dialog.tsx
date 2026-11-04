@@ -18,7 +18,7 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(",");
 
-type ModalPlacement = "center" | "left";
+type ModalPlacement = "center" | "left" | "right";
 
 export interface ModalDialogProps extends HTMLAttributes<HTMLDivElement> {
   open: boolean;
@@ -130,6 +130,7 @@ export function ModalDialog({
       className={cn(
         "fixed inset-0 z-[var(--z-modal)]",
         placement === "center" && "grid place-items-center p-[var(--page-gutter)]",
+        placement === "right" && "flex justify-end",
         className,
       )}
       {...props}
@@ -153,6 +154,8 @@ export function ModalDialog({
           "relative z-10 border-border bg-surface text-foreground shadow-[var(--shadow-raised)] outline-none",
           placement === "left"
             ? "drawer-panel h-dvh w-[min(90vw,25rem)] border-r"
+            : placement === "right"
+              ? "drawer-panel-right h-dvh w-[min(100vw,38rem)] border-l"
             : "dialog-panel max-h-[min(42rem,calc(100dvh-2rem))] w-full max-w-[34rem] overflow-y-auto rounded-[var(--radius-panel)] border",
           panelClassName,
         )}
