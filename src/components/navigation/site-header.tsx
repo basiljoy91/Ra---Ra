@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { AccountPlaceholderDialog } from "@/components/navigation/account-placeholder-dialog";
 import { AnnouncementBar } from "@/components/navigation/announcement-bar";
@@ -25,28 +25,11 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const pathname = usePathname();
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlay>(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const isHomepage = pathname === "/";
-  const resolvedAppearance =
-    isHomepage && !hasScrolled ? "overlay" : appearance;
+  const resolvedAppearance = appearance;
   const searchEnabled =
     siteConfig.header.searchEnabled && siteConfig.navigationFeatureFlags.search;
   const cartEnabled =
     siteConfig.header.cartEnabled && siteConfig.navigationFeatureFlags.cart;
-
-  useEffect(() => {
-    if (!isHomepage) {
-      return;
-    }
-
-    const updateHeader = () => setHasScrolled(window.scrollY > 24);
-    const updateFrame = window.requestAnimationFrame(updateHeader);
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => {
-      window.cancelAnimationFrame(updateFrame);
-      window.removeEventListener("scroll", updateHeader);
-    };
-  }, [isHomepage]);
 
   return (
     <>

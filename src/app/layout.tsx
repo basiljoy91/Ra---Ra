@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 
 import { SkipLink } from "@/components/layout/skip-link";
 import { SiteFooter } from "@/components/layout/footer/site-footer";
@@ -12,11 +12,12 @@ import "./globals.css";
 const displayFont = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin", "latin-ext"],
-  weight: ["500", "600"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
-const bodyFont = Manrope({
+const bodyFont = DM_Sans({
   variable: "--font-body",
   subsets: ["latin", "latin-ext"],
   display: "swap",
@@ -31,6 +32,10 @@ export const metadata: Metadata = {
   },
   description: siteConfig.siteDescription,
   category: "apparel",
+  icons: {
+    icon: "/brand/ra-ra-monogram-embroidered.png",
+    apple: "/brand/ra-ra-monogram-embroidered.png",
+  },
   openGraph: {
     type: "website",
     title: siteConfig.siteName,

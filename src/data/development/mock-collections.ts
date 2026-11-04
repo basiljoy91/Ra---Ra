@@ -15,11 +15,11 @@ export const collectionCatalog: readonly CollectionCatalogEntry[] = [
       eyebrow: "Limited Edition 01",
       title: "Beyond",
       introduction:
-        "Four original artworks expressed across four premium tee constructions—from sculptural boxy black to washed charcoal, off-white and chocolate brown.",
+        "Four original artworks expressed across four unisex constructions—from a structured 280 GSM boxy tee to washed charcoal, off-white and relaxed chocolate forms.",
       longDescription:
-        "Beyond explores courage, perception, time and human limits through classical forms, celestial geometry and tactile streetwear finishes.",
-      campaignLine: "More than a T-shirt. A statement of mindset.",
-      quote: "Wear beyond limits.",
+        "Beyond explores courage, perception, time and human limits through classical forms, celestial geometry and considered front-to-back artwork placement.",
+      campaignLine: "Four questions. Four artworks. One connected edition.",
+      quote: "The first look should be immediate. The second should reveal something new.",
       heroMedia: {
         desktop: {
           url: "/campaign/beyond-limits-hero.png",
@@ -36,7 +36,7 @@ export const collectionCatalog: readonly CollectionCatalogEntry[] = [
       editorialBlocks: [
         {
           type: "quote",
-          quote: "Once it’s gone, it’s gone.",
+          quote: "An edition, not an endless restock.",
         },
       ],
     },

@@ -109,7 +109,7 @@ export function NavigationDropdown({ item, pathname }: NavigationDropdownProps) 
         onClick={() => setOpen((currentOpen) => !currentOpen)}
         onKeyDown={handleTriggerKeyDown}
         className={cn(
-          "group inline-flex min-h-11 items-center gap-1 rounded-sm px-2 text-[0.8125rem] font-semibold tracking-[0.015em] no-underline transition-colors duration-[var(--duration-fast)] hover:text-accent",
+          "group inline-flex min-h-11 items-center gap-1 rounded-sm px-3 text-[0.6875rem] font-medium tracking-[0.1em] uppercase no-underline transition-colors duration-[var(--duration-fast)] hover:text-accent",
           childIsCurrent && "text-accent",
         )}
       >

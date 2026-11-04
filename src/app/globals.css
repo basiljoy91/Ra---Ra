@@ -22,6 +22,7 @@
   --loader-line: #e9e1d7;
   --loader-leash: #8b6a4d;
   --loader-paw: #6d6154;
+  --brand-logo-filter: invert(1) brightness(1.45);
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -215,25 +216,25 @@
 .type-display {
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 0.96;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.94;
 }
 
 .type-page-heading {
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
 }
 
 .type-section-heading {
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
 }
 
 .type-subheading {
@@ -253,8 +254,8 @@
 
 .type-label {
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -267,7 +268,7 @@
 .type-price {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-variant-numeric: tabular-nums lining-nums;
-  font-weight: 650;
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
@@ -362,11 +363,40 @@ body:has(.product-detail-page) {
   --accent: #6d6257;
   --accent-soft: #e8e3dc;
   --focus-ring: #62584e;
+  --brand-logo-filter: none;
+  color-scheme: light;
+}
+
+body:has([data-editorial-homepage]) {
+  --background: #f4efe8;
+  --surface: #f8f4ee;
+  --surface-muted: #e7e0d7;
+  --foreground: #111111;
+  --foreground-muted: #625d57;
+  --border: #c9c1b7;
+  --primary: #111111;
+  --primary-foreground: #f7f1e8;
+  --button: #111111;
+  --button-foreground: #f7f1e8;
+  --accent: #111111;
+  --accent-soft: #ddd5cb;
+  --brand-logo-filter: none;
+  --header-height-desktop: 3.5rem;
+  --announcement-height: 1.6rem;
   color-scheme: light;
 }
 
 .product-detail-page {
   min-height: 100vh;
+}
+
+.brand-logo__image {
+  filter: var(--brand-logo-filter);
+  transition: filter var(--duration-fast) ease, opacity var(--duration-fast) ease;
+}
+
+.brand-logo:hover .brand-logo__image {
+  opacity: 0.72;
 }
 
 .featured-collection-media-image {
@@ -503,6 +533,11 @@ body:has(.product-detail-page) {
     both;
 }
 
+.drawer-panel-right {
+  animation: drawer-enter-right var(--duration-slow)
+    cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @keyframes overlay-enter {
   from {
     opacity: 0;
@@ -528,6 +563,16 @@ body:has(.product-detail-page) {
 @keyframes drawer-enter {
   from {
     transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-enter-right {
+  from {
+    transform: translateX(100%);
   }
 
   to {

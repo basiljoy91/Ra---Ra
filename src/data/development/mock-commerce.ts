@@ -20,10 +20,10 @@ const garmentTypes = [
 ] as const;
 
 const designs = [
-  { slug: "beyond-fear", name: "Beyond Fear", shortStory: "Time changes everything except courage.", meaning: "Chronos and the hourglass turn change into a reminder that fear fades while courage remains." },
-  { slug: "beyond-reality", name: "Beyond Reality", shortStory: "A journey beyond the visible world.", meaning: "A hooded celestial figure and flowing teal forms explore the unknown, hidden dimensions and infinite possibility." },
-  { slug: "past-present-beyond", name: "Past Present Beyond", shortStory: "Same soul. Different time.", meaning: "A fractured classical portrait joins past and present through distressed geometry and a vivid red interruption." },
-  { slug: "beyond-limits", name: "Beyond Limits", shortStory: "Push further. Discover more.", meaning: "Atlas carries a breaking world as a symbol of strength beyond physical, mental and imagined limits." },
+  { slug: "beyond-fear", name: "Beyond Fear", shortStory: "Courage is movement, not the absence of fear.", meaning: "A weathered figure and hourglass place courage inside the passage of time. Fear may remain; the choice to move can still be made." },
+  { slug: "beyond-reality", name: "Beyond Reality", shortStory: "The visible world is only one version of what exists.", meaning: "A hooded celestial figure, orbital lines and flowing teal forms explore the edge between perception, imagination and the unknown." },
+  { slug: "past-present-beyond", name: "Past Present Beyond", shortStory: "The past arrives edited by everything that followed.", meaning: "A classical portrait is interrupted by red, grids and distressed geometry—an image of identity inherited, altered and carried forward." },
+  { slug: "beyond-limits", name: "Beyond Limits", shortStory: "Strength can mean questioning the burden itself.", meaning: "In classical myth Atlas carries the heavens, not the Earth. A fractured celestial sphere turns endurance into a question about release, possibility and imagined limits." },
 ] as const;
 
 function createOptions(color: string): readonly ProductOption[] {
@@ -90,7 +90,7 @@ function createProduct(design: (typeof designs)[number], garment: (typeof garmen
     handle: `${design.slug}-${garment.slug}`,
     title: `${design.name} — ${garment.name}`,
     description: `${design.meaning} ${DEVELOPMENT_DATA_NOTICE}`,
-    shortDescription: `${design.shortStory} ${garment.color} · ${garment.fit} fit · ${garment.gsm}.`,
+    shortDescription: `${design.shortStory} ${garment.color} · ${garment.fit} fit.`,
     images: galleryImages,
     price,
     variants: createVariants(id, garment.color, price, image),

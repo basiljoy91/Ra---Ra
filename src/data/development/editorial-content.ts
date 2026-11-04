@@ -10,48 +10,48 @@ import type {
 export const EDITORIAL_DEVELOPMENT_NOTICE =
   "Development editorial content. Final brand, founder and production details remain subject to approval.";
 
-const dogOwnerEditorialImage = {
-  url: "/hero/hero-dog-owner.png",
-  alt: "Golden retriever presenting a dog-illustrated T-shirt to its owner in a warm home",
-  width: 1717,
-  height: 916,
-} as const;
-
-const dogOwnerHeroImage = {
-  url: "/hero/hero-dog-owner.png",
-  alt: "Golden retriever presenting a dog-illustrated T-shirt to its owner in a warm home",
-  width: 1717,
-  height: 916,
+const aboutEditorialImage = {
+  url: "/campaign/hero-beyond-limits.png",
+  alt: "Two models in black Beyond Limits T-shirts beside a fractured Atlas sculpture",
+  width: 1672,
+  height: 941,
 } as const;
 
 const collectionImage = {
-  url: "/featured-collection/dogs-and-humans-campaign.jpeg",
-  alt: "Black and white T-shirts featuring a restrained dog illustration beneath a heart",
-  width: 1402,
-  height: 1122,
+  url: "/products/beyond-limits/sculptural-boxy-black/side-couple-black.png",
+  alt: "Two models wearing black Beyond Limits T-shirts from different angles",
+  width: 1536,
+  height: 2048,
 } as const;
 
-const chosenArtworkImage = {
-  url: "/development-products/chosen-companion-detail.jpeg",
-  alt: "Development artwork detail of a seated golden retriever beneath a heart",
-  width: 1254,
-  height: 1254,
+const atlasArtworkImage = {
+  url: "/products/beyond-limits/sculptural-boxy-black/lifestyle-back.png",
+  alt: "Beyond Limits back artwork showing Atlas beneath a fractured celestial sphere",
+  width: 1536,
+  height: 2048,
 } as const;
 
-const loyalArtworkImage = {
-  url: "/development-products/loyal-line-detail.jpeg",
-  alt: "Development artwork detail of a German Shepherd line illustration",
-  width: 1254,
-  height: 1254,
+const timeArtworkImage = {
+  url: "/products/past-present-beyond/signature-regular-off-white/lifestyle-back.png",
+  alt: "Past Present Beyond artwork with a fractured classical portrait and vivid red marks",
+  width: 1536,
+  height: 2048,
+} as const;
+
+const fabricEditorialImage = {
+  url: "/editorial/washed-cotton-macro.png",
+  alt: "Macro view of dense washed cotton jersey",
+  width: 1536,
+  height: 864,
 } as const;
 
 export const aboutHero = {
   eyebrow: "About ra&ra",
-  title: "Made for what stays with us.",
+  title: "An idea should survive the first glance.",
   lead:
-    "ra&ra creates theme-led apparel around the connections, rituals and passions that become part of who we are.",
-  image: dogOwnerEditorialImage,
-  imagePosition: "56% 50%",
+    "ra&ra builds limited-edition apparel around questions that stay with us—about courage, perception, time and the limits we inherit or imagine.",
+  image: aboutEditorialImage,
+  imagePosition: "50% 50%",
   developmentNotice: EDITORIAL_DEVELOPMENT_NOTICE,
 } as const satisfies EditorialHeroConfig;
 
@@ -59,22 +59,22 @@ export const aboutContent = [
   {
     type: "heading",
     level: 2,
-    content: "Why ra&ra exists",
+    content: "The idea behind the garment",
     id: "our-story",
   },
   {
     type: "paragraph",
     content:
-      "Some ideas stay close because they hold a memory, a routine or a shared identity. ra&ra begins there: with simple apparel that gives those ideas a quiet, everyday form.",
+      "A graphic can decorate a surface, or it can open a question. ra&ra begins with the question. The image comes next; the garment gives it a form that can move through everyday life.",
   },
   {
     type: "paragraph",
     content:
-      "The garment is the surface, not the whole story. Each collection is designed to make room for the meaning behind an image while keeping the product clear, useful and easy to wear.",
+      "That order matters. It keeps each collection connected by an idea instead of a trend, while allowing every piece to stand on its own as clothing: considered in weight, proportion, placement and wear.",
   },
   {
     type: "quote",
-    quote: "The artwork can be minimal while the meaning behind it is not.",
+    quote: "The first look should be immediate. The second should reveal something new.",
   },
   {
     type: "two-column",
@@ -82,24 +82,24 @@ export const aboutContent = [
       {
         type: "heading",
         level: 2,
-        content: "Theme-led by design",
+        content: "Artwork with something to say",
       },
       {
         type: "paragraph",
         content:
-          "ra&ra is built around reusable collections rather than one permanent category. A collection can begin with pets, travel, coffee, music or another community, while the wider brand remains consistent.",
+          "Myth, memory, sculpture and imagined worlds become visual material. Symbols are chosen for what they add to the story—not simply because they fill the print area.",
       },
     ],
     right: [
       {
         type: "heading",
         level: 2,
-        content: "Quiet enough to feel personal",
+        content: "Garments with a reason",
       },
       {
         type: "paragraph",
         content:
-          "Minimal artwork keeps the expression considered rather than novelty-led. It allows the person wearing the piece to recognize the story without asking the design to explain everything at once.",
+          "Fabric weight changes the way a T-shirt falls. Fit changes the way the artwork is read. Front and back placement create a reveal. These are design decisions, not specifications added after the image is finished.",
       },
     ],
   },
@@ -107,183 +107,180 @@ export const aboutContent = [
     type: "image",
     image: collectionImage,
     caption:
-      "Development campaign imagery for the first collection. Final product specifications are not represented here.",
+      "The Beyond collection pairs restrained chest symbols with full narrative artwork across the back.",
   },
   {
     type: "heading",
     level: 2,
-    content: "The first story",
+    content: "Edition 01: Beyond",
   },
   {
     type: "paragraph",
     content:
-      "Dogs & Their Humans explores companionship through familiar glances, daily walks, waiting at the door and the small routines that quietly shape a home. The designs translate those moments into restrained illustrations rather than loud pet merchandise.",
+      "Beyond is built around four recurring human questions: what we carry, what we fear, what we perceive and what time changes. Beyond Limits, Beyond Fear, Beyond Reality and Past Present Beyond answer them differently, but belong to one visual world.",
   },
   {
     type: "callout",
-    title: "A broader future",
+    title: "Four artworks, four constructions",
     body:
-      "Future collections may explore new communities and everyday passions. No launch dates or future inventory have been announced.",
+      "Each artwork is planned across Sculptural Boxy, Washed Art, Signature Regular and Relaxed Essential silhouettes. Final prices, quantities and launch availability remain to be confirmed.",
     tone: "notice",
   },
 ] as const satisfies readonly EditorialBlock[];
 
 export const editorialCta = {
-  eyebrow: "Collection One",
-  heading: "Ready to wear the story?",
+  eyebrow: "Edition 01 · Beyond",
+  heading: "Choose the idea that stays with you.",
   description:
-    "Explore the development collection inspired by dogs and the people who love them.",
-  label: "Explore the Collection",
-  href: "/collections/pets",
+    "Explore four connected artworks across four distinct unisex T-shirt constructions.",
+  label: "Explore Beyond",
+  href: "/collections/beyond",
 } as const satisfies EditorialCtaConfig;
 
 export const journalIndexHero = {
   eyebrow: "The Journal",
-  title: "Ideas behind the artwork.",
+  title: "Look once. Then look closer.",
   lead:
-    "Development essays about meaningful design, quiet expression and the stories that shape each collection.",
-  image: chosenArtworkImage,
-  imagePosition: "50% 44%",
+    "Short readings on the myths, materials and visual histories behind the Beyond collection.",
+  image: timeArtworkImage,
+  imagePosition: "50% 30%",
   developmentNotice:
     "Development journal content. No publication history or named authors are being claimed.",
 } as const satisfies EditorialHeroConfig;
 
 export const journalArticles = [
   {
-    slug: "why-stories-belong-in-what-we-wear",
-    title: "Why Stories Belong in What We Wear",
+    slug: "atlas-and-the-weight-of-heaven",
+    title: "Atlas and the Weight of Heaven",
     excerpt:
-      "A development essay about the difference between decoration and an image that carries personal meaning.",
-    category: "Brand Notes",
+      "The figure known for carrying the world was originally condemned to support the sky. That difference changes the story.",
+    category: "Artwork Notes",
     readingTime: "4 min read",
-    heroImage: dogOwnerEditorialImage,
+    heroImage: atlasArtworkImage,
     featured: true,
     contentStatus: "development",
     relatedSlugs: [
-      "behind-the-first-story",
-      "the-quiet-language-of-minimal-artwork",
+      "when-marble-was-never-white",
+      "what-250-gsm-really-means",
     ],
     content: [
       {
         type: "callout",
-        title: "Development article",
+        title: "The detail most people miss",
         body:
-          "This editorial fixture validates the journal template. It is not part of a claimed publication archive.",
+          "In Greek mythology, Atlas supports the heavens or celestial sphere—not the planet Earth. Later images gradually turned that sky into the globe most people recognise today.",
         tone: "notice",
       },
       {
         type: "paragraph",
         content:
-          "Clothing can be practical and still carry an idea. A familiar image may recall a person, a place, a ritual or a companion without needing to announce the entire story to everyone who sees it.",
+          "That distinction makes Atlas more than a symbol of physical strength. His burden is cosmic and permanent: the structure above him depends on his refusal to let it fall.",
       },
       {
         type: "heading",
         level: 2,
-        content: "Meaning before decoration",
+        content: "From endurance to possibility",
       },
       {
         type: "paragraph",
         content:
-          "For ra&ra, a collection starts by identifying what people already feel connected to. The artwork comes later. This order matters because it keeps the design grounded in a recognizable experience rather than a visual trend.",
+          "Beyond Limits keeps the familiar pose but fractures the sphere. The break changes the question. Strength is no longer only the ability to carry more; it can also be the decision to challenge the shape of the burden itself.",
       },
       {
         type: "quote",
-        quote: "Wear what matters, without having to explain it loudly.",
+        quote: "A limit can be a weight, a horizon—or simply an idea that has not been questioned yet.",
       },
       {
         type: "heading",
         level: 2,
-        content: "A framework for future stories",
+        content: "Why the artwork sits on the back",
       },
       {
-        type: "list",
-        items: [
-          "Begin with a real theme or community.",
-          "Find the moments that make the theme emotionally specific.",
-          "Reduce the artwork until it remains expressive without becoming novelty-led.",
-          "Keep practical product information close to the decision to purchase.",
-        ],
+        type: "paragraph",
+        content:
+          "The front carries a small celestial mark; the full scene appears only when the wearer turns. That delay is intentional. The piece introduces itself quietly, then reveals the scale of its story.",
       },
       {
         type: "image",
-        image: dogOwnerEditorialImage,
+        image: atlasArtworkImage,
         caption:
-          "Campaign imagery used to establish the emotional tone of the first collection.",
+          "Beyond Limits turns the celestial burden into a fractured, open-ended composition.",
       },
     ],
   },
   {
-    slug: "behind-the-first-story",
-    title: "Behind the First Story: Dogs & Their Humans",
+    slug: "when-marble-was-never-white",
+    title: "When Marble Was Never Simply White",
     excerpt:
-      "How quiet routines and familiar companionship became the emotional framework for the first collection.",
-    category: "Collection Notes",
+      "Ancient sculpture was once painted, gilded and vivid. Past Present Beyond uses colour to disturb the version history left behind.",
+    category: "Visual History",
     readingTime: "5 min read",
-    heroImage: dogOwnerHeroImage,
+    heroImage: timeArtworkImage,
     contentStatus: "development",
     relatedSlugs: [
-      "why-stories-belong-in-what-we-wear",
-      "the-quiet-language-of-minimal-artwork",
+      "atlas-and-the-weight-of-heaven",
+      "what-250-gsm-really-means",
     ],
     content: [
       {
         type: "callout",
-        title: "Development article",
+        title: "The colour that time removed",
         body:
-          "This copy is a collection-story fixture and does not represent a founder or customer account.",
+          "Greek and Roman sculpture was often richly painted, gilded and inlaid. Much of that colour disappeared through burial, weathering, cleaning and the passage of time.",
         tone: "notice",
       },
       {
         type: "paragraph",
         content:
-          "The first ra&ra collection focuses on the relationship between dogs and their humans because it is made visible through ordinary routines: a walk at the same time each day, a glance toward the door, or a companion appearing in every room.",
+          "The white marble ideal is partly a modern inheritance. When ancient sculpture was rediscovered, its surviving surfaces often appeared colourless; later taste turned that loss into an aesthetic rule.",
       },
       {
         type: "heading",
         level: 2,
-        content: "Choosing the everyday moments",
+        content: "A portrait interrupted",
       },
       {
         type: "paragraph",
         content:
-          "Rather than illustrate the whole relationship, each design isolates one recognizable detail. The result is intended to feel familiar to the wearer while remaining visually restrained for everyone else.",
+          "Past Present Beyond begins with the authority of a classical face, then cuts through it with red, grids and distressed geometry. The red is not simply an accent. It restores colour as evidence of change and makes the portrait feel unfinished in the present tense.",
       },
       {
         type: "image",
-        image: collectionImage,
+        image: timeArtworkImage,
         caption:
-          "Development product imagery showing the restrained illustration direction.",
+          "A classical portrait, fragmented and reassembled as an image about continuity rather than nostalgia.",
       },
       {
         type: "quote",
-        quote: "Chosen by paws. Worn by love.",
+        quote: "The past does not arrive intact. It arrives edited by everything that happened after it.",
       },
     ],
   },
   {
-    slug: "the-quiet-language-of-minimal-artwork",
-    title: "The Quiet Language of Minimal Artwork",
+    slug: "what-250-gsm-really-means",
+    title: "What 250–280 GSM Really Changes",
     excerpt:
-      "A development design note about reducing an illustration without removing the feeling behind it.",
-    category: "Design Notes",
-    heroImage: loyalArtworkImage,
+      "Fabric weight is not a quality score, but it changes density, drape and the way an oversized silhouette holds its shape.",
+    category: "Material Notes",
+    readingTime: "4 min read",
+    heroImage: fabricEditorialImage,
     contentStatus: "development",
     relatedSlugs: [
-      "why-stories-belong-in-what-we-wear",
-      "behind-the-first-story",
+      "atlas-and-the-weight-of-heaven",
+      "when-marble-was-never-white",
     ],
     content: [
       {
         type: "callout",
-        title: "Development article",
+        title: "Start with the unit",
         body:
-          "This design note exists to test optional metadata, imagery and related-content behavior.",
+          "GSM means grams per square metre. It describes fabric weight and density—not softness, sustainability or quality on its own.",
         tone: "notice",
       },
       {
         type: "paragraph",
         content:
-          "Minimal artwork is not simply artwork with fewer lines. The remaining marks have to carry proportion, expression and enough character for the subject to feel recognizable.",
+          "The Beyond development specifications range from 250 to 280 GSM. That places the collection on the more substantial side of everyday T-shirt fabric, chosen to support a structured silhouette and the visual weight of the back artwork.",
       },
       {
         type: "two-column",
@@ -291,31 +288,31 @@ export const journalArticles = [
           {
             type: "heading",
             level: 2,
-            content: "What remains",
+            content: "What weight changes",
           },
           {
             type: "paragraph",
             content:
-              "A posture, silhouette or glance can communicate more than added decoration when it is chosen carefully.",
+              "More mass can create a denser hand, reduce cling and help a boxy or oversized shape fall away from the body. Double-knit structures also tend to be more stable and curl less than single knits.",
           },
         ],
         right: [
           {
             type: "heading",
             level: 2,
-            content: "What is removed",
+            content: "What weight cannot tell you",
           },
           {
             type: "paragraph",
             content:
-              "Unnecessary slogans, novelty details and visual noise are reduced so the wearer can bring their own meaning to the design.",
+              "GSM does not explain fiber quality, finishing, print durability or fit. Those details have to be considered together; a heavier number alone is not a promise of a better garment.",
           },
         ],
       },
       {
         type: "image",
-        image: loyalArtworkImage,
-        caption: "Development artwork detail; final print production is unconfirmed.",
+        image: fabricEditorialImage,
+        caption: "The washed cotton surface is designed to feel substantial without losing the ease of a daily T-shirt.",
       },
     ],
   },
@@ -411,9 +408,9 @@ export const faqCategories = [
       },
       {
         id: "collections",
-        question: "Will ra&ra always focus on dogs?",
+        question: "Will every ra&ra edition explore the same theme?",
         answer:
-          "No. Dogs & Their Humans is the first collection concept. The wider brand is designed to support future theme-led collections without changing the storefront architecture.",
+          "No. Beyond is Edition 01. Future editions can begin with a different question or visual world while keeping the same approach: one connected idea, considered artwork and clearly explained garment construction.",
       },
     ],
   },

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: buildAbsoluteUrl("/size-guide", siteConfig.siteUrl),
-    images: [{ url: "/featured-collection/dogs-and-humans-campaign.jpeg", width: 1402, height: 1122, alt: "Development dog-illustrated T-shirt campaign image" }],
+    images: [{ url: "/products/beyond-limits/sculptural-boxy-black/side-couple-black.png", width: 1536, height: 2048, alt: "Two models showing the fit of black Beyond Limits T-shirts" }],
   },
 };
 

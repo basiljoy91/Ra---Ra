@@ -21,7 +21,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
     <Section aria-labelledby="related-products-heading" className="pb-12 pt-8" spacing="sm">
       <Container>
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-xl font-bold tracking-[-0.025em]" id="related-products-heading">
+          <h2 className="font-serif text-3xl font-medium tracking-[-0.02em]" id="related-products-heading">
             {productPageConfig.relatedProductsHeading}
           </h2>
           <Link className="inline-flex items-center gap-2 text-xs font-semibold no-underline" href="/collections/beyond">
@@ -56,7 +56,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
                   </Link>
                   <div className="grid grid-cols-[minmax(0,1fr)_2.75rem] gap-2 p-3">
                     <div className="min-w-0">
-                      <h3 className="truncate text-sm font-semibold">
+                      <h3 className="truncate text-sm font-medium">
                         <Link className="no-underline" href={`/products/${product.handle}`}>
                           {product.title}
                         </Link>

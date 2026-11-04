@@ -1,8 +1,7 @@
-import { CreditCard } from "lucide-react";
+import { Camera, CreditCard, Music2, Radio, Video } from "lucide-react";
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
-import { BackToTop } from "@/components/layout/footer/back-to-top.client";
 import { BrandLogo } from "@/components/navigation/brand-logo";
 import type { FooterConfig } from "@/types/footer";
 
@@ -17,35 +16,51 @@ export function SiteFooter({ config }: SiteFooterProps) {
       data-site-footer
     >
       <Container>
-        <div className="grid items-center gap-8 py-8 md:grid-cols-[auto_1fr_auto]">
-          <BrandLogo className="text-foreground" />
-          <nav aria-label="Footer navigation">
-            <ul className="m-0 flex list-none flex-wrap gap-x-7 gap-y-3 p-0 md:justify-center" role="list">
-              {config.navigationGroups.flatMap((group) => group.links).map((link) => (
-                <li key={link.id}>
-                  <Link className="text-[0.6875rem] text-foreground-muted no-underline transition-colors hover:text-foreground" href={link.href}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className="grid gap-8 py-8 md:grid-cols-[12rem_1fr_14rem] md:gap-10">
+          <div>
+            <BrandLogo large className="justify-start" />
+            <p className="mt-3 text-[0.625rem] font-medium tracking-[0.16em] uppercase">{config.tagline}</p>
+          </div>
+          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-7 border-border md:grid-cols-3 md:border-x md:px-10">
+            {config.navigationGroups.map((group) => (
+              <div key={group.id}>
+                <h2 className="mb-2 font-serif text-[1rem] font-medium tracking-[0.06em] uppercase">{group.label}</h2>
+                <ul className="m-0 list-none space-y-1 p-0" role="list">
+                  {group.links.map((link) => (
+                    <li key={link.id}>
+                      <Link className="text-[0.6875rem] text-foreground no-underline transition-opacity hover:opacity-55" href={link.href}>{link.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </nav>
-          <div className="flex items-center gap-3 text-foreground-muted">
-            <span className="text-[0.6875rem] font-semibold italic text-foreground">VISA</span>
-            <span className="text-[0.6875rem] font-semibold text-foreground">Mastercard</span>
-            <span className="text-[0.6875rem] font-semibold italic text-foreground">PayPal</span>
-            <CreditCard aria-hidden="true" size={20} strokeWidth={1.2} />
+          <div className="flex flex-col gap-5">
+            <div className="flex items-center gap-4" aria-label="Social links">
+              <Link href="/journal" aria-label="Instagram"><Camera size={19} strokeWidth={1.7} /></Link>
+              <Link href="/journal" aria-label="TikTok"><Music2 size={19} strokeWidth={1.7} /></Link>
+              <Link href="/journal" aria-label="YouTube"><Video size={20} strokeWidth={1.7} /></Link>
+              <Link href="/journal" aria-label="Spotify"><Radio size={19} strokeWidth={1.7} /></Link>
+            </div>
+            <Link href="/faq" className="inline-flex w-max min-h-8 items-center rounded-full border border-foreground/50 px-4 text-[0.625rem] font-medium tracking-[0.08em] no-underline uppercase">
+              {config.market.marketLabel} / {config.market.currencyLabel}
+            </Link>
+            <div className="flex items-center gap-4">
+              <span className="text-[0.6875rem] font-bold italic">VISA</span>
+              <span className="text-[0.6875rem] font-bold">●●</span>
+              <span className="text-[0.6875rem] font-bold italic">PayPal</span>
+              <CreditCard aria-hidden="true" size={20} strokeWidth={1.2} />
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 border-t border-border py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 border-t border-border py-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.6875rem] text-foreground-muted">
             {config.copyrightNotice}
           </p>
-          <div className="flex items-center justify-between gap-8">
-            <p className="text-[0.625rem] tracking-[0.18em] text-foreground-muted uppercase">
-              {config.tagline}
-            </p>
-            <BackToTop />
+          <div className="flex flex-wrap items-center gap-5 text-[0.625rem]">
+            <Link href="/faq">Privacy Policy</Link><span aria-hidden="true">|</span>
+            <Link href="/faq">Terms &amp; Conditions</Link><span aria-hidden="true">|</span>
+            <Link href="/faq">Cookie Settings</Link>
           </div>
         </div>
       </Container>

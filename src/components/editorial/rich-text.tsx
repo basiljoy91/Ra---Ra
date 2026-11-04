@@ -28,7 +28,7 @@ export function RichText({ blocks, className }: RichTextProps) {
                 className={
                   block.level === 2
                     ? "type-section-heading editorial-heading"
-                    : "editorial-subheading font-serif text-2xl font-semibold leading-tight sm:text-3xl"
+                    : "editorial-subheading font-serif text-2xl font-medium leading-tight sm:text-3xl"
                 }
                 id={block.id}
                 key={key}
@@ -80,7 +80,7 @@ export function RichText({ blocks, className }: RichTextProps) {
                 className="editorial-quote border-y border-border py-8 text-center sm:py-10"
                 key={key}
               >
-                <blockquote className="mx-auto max-w-3xl font-serif text-3xl font-medium leading-tight sm:text-4xl">
+                <blockquote className="mx-auto max-w-3xl font-serif text-3xl font-normal leading-tight sm:text-4xl">
                   “{block.quote}”
                 </blockquote>
                 {block.attribution ? (
@@ -102,7 +102,7 @@ export function RichText({ blocks, className }: RichTextProps) {
                 key={key}
               >
                 {block.title ? (
-                  <p className="font-semibold text-foreground">{block.title}</p>
+                  <p className="font-medium text-foreground">{block.title}</p>
                 ) : null}
                 <p className={cn("text-foreground-muted", block.title && "mt-2")}>
                   {block.body}

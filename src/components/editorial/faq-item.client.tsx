@@ -20,7 +20,7 @@ export function FaqItem({ item }: FaqItemProps) {
         <button
           aria-controls={panelId}
           aria-expanded={isOpen}
-          className="flex min-h-14 w-full items-center justify-between gap-6 py-5 text-left font-semibold"
+          className="flex min-h-14 w-full items-center justify-between gap-6 py-5 text-left font-medium"
           id={buttonId}
           onClick={() => setIsOpen((current) => !current)}
           type="button"
