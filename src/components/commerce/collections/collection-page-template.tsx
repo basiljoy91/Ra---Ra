@@ -39,7 +39,7 @@ export function CollectionPageTemplate({
       {active ? (
         <CollectionResults
           collectionHandle={entry.collection.handle}
-          collectionLabel={`${entry.collection.title} — Development`}
+          collectionLabel={entry.collection.title}
           filters={filters}
           query={query}
           state={state}

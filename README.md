@@ -9,14 +9,24 @@ TypeScript, and Tailwind CSS.
   quality story, limited-edition banner, image gallery, and newsletter section
 - Responsive desktop, tablet, and mobile navigation
 - Local catalogue search and direct product links
-- Responsive collection and product pages backed by development fixtures
-- Honest account, cart, newsletter, and checkout availability states
+- Responsive collection and product pages backed by Shopify when configured,
+  with local ₹699 test fixtures as a safe fallback
+- Persistent Shopify cart, quantity controls, inventory-aware variants, and
+  Shopify-hosted checkout
 - Accessible dialogs, focus management, reduced-motion support, and responsive
   image loading
 
-The catalogue, prices, availability, newsletter delivery, cart, checkout, and
-legal policies remain development fixtures until an approved commerce and email
-provider is connected.
+Newsletter delivery, customer accounts, production legal policies, and the EU
+launch configuration remain intentionally disabled. Commerce uses the Shopify
+Storefront API only when all required Shopify environment variables are set.
+
+## Shopify test connection
+
+Copy `.env.example` to `.env.local` and provide the test store's
+`*.myshopify.com` domain and private Storefront token. Keep the token server-only
+and never prefix it with `NEXT_PUBLIC_`. Products must be active, included in the
+India market, and published to the Headless sales channel. The expected
+collection handle is `beyond`.
 
 ## Local scripts
 

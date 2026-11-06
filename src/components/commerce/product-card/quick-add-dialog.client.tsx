@@ -11,6 +11,7 @@ import {
 import { ProductColourOptions } from "@/components/commerce/product-card/product-colour-options.client";
 import { Button } from "@/components/ui/button";
 import { ModalDialog } from "@/components/ui/modal-dialog";
+import { publishCartUpdated } from "@/lib/commerce/cart-events";
 import { cn } from "@/lib/utilities";
 import type {
   ProductCardActionVariant,
@@ -115,12 +116,15 @@ export function QuickAddDialog({
           kind: result.status,
           message:
             result.message ??
-            "Development selection confirmed. No cart was updated.",
+            "Added to your bag.",
         });
+        if (result.status === "success" && result.cartCount !== undefined) {
+          publishCartUpdated(result.cartCount);
+        }
       } catch {
         setFeedback({
           kind: "error",
-          message: "The development action could not be completed. Try again.",
+          message: "The item could not be added. Try again.",
         });
       }
     });
@@ -140,7 +144,7 @@ export function QuickAddDialog({
       <form className="p-6 sm:p-8" onSubmit={handleSubmit}>
         <div className="flex items-start justify-between gap-5">
           <div>
-            <p className="type-label text-accent">Development quick add</p>
+            <p className="type-label text-accent">Quick add</p>
             <h2 className="type-section-heading mt-2" id={titleId}>
               Choose your options
             </h2>
@@ -160,8 +164,7 @@ export function QuickAddDialog({
           className="type-small mt-2 text-foreground-muted"
           id={descriptionId}
         >
-          This validates product selection only. No live cart is connected or
-          updated.
+          Choose the available colour and size for this product.
         </p>
 
         {colourOptions.length > 1 ? (
@@ -222,7 +225,7 @@ export function QuickAddDialog({
           size="lg"
           type="submit"
         >
-          {isPending ? "Adding…" : "Add development selection"}
+          {isPending ? "Adding…" : "Add to bag"}
         </Button>
 
         <p

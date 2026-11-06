@@ -13,7 +13,7 @@ import { useMemo, useRef, useState, useTransition } from "react";
 import { MobileStickyPurchaseAction } from "@/components/commerce/product-detail/mobile-sticky-purchase-action.client";
 import { ProductGallery } from "@/components/commerce/product-detail/product-gallery.client";
 import { ProductOptionSelector } from "@/components/commerce/product-detail/product-option-selector";
-import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
+import { ProductPrice } from "@/components/commerce/product-card/product-price";
 import { SizeGuideDrawer } from "@/components/commerce/product-detail/size-guide-drawer.client";
 import { Button } from "@/components/ui/button";
 import type { Product, ProductImage, ProductVariant } from "@/lib/commerce";
@@ -25,6 +25,7 @@ import {
   resolveProductVariant,
   selectedOptionsToRecord,
 } from "@/lib/commerce";
+import { publishCartUpdated } from "@/lib/commerce/cart-events";
 import { cn } from "@/lib/utilities";
 import type { AddToCartHandler } from "@/types/product-detail";
 
@@ -139,7 +140,7 @@ export function ProductPrimaryExperience({
     if (soldOut) {
       setFeedback({
         kind: "error",
-        message: "This development product is currently sold out.",
+        message: "This product is currently sold out.",
       });
       return;
     }
@@ -185,10 +186,13 @@ export function ProductPrimaryExperience({
           quantity: 1,
         });
         setFeedback({ kind: result.status, message: result.message });
+        if (result.status === "success" && result.cartCount !== undefined) {
+          publishCartUpdated(result.cartCount);
+        }
       } catch {
         setFeedback({
           kind: "error",
-          message: "The development action could not be completed. Try again.",
+          message: "The item could not be added. Try again.",
         });
       }
     });
@@ -203,6 +207,14 @@ export function ProductPrimaryExperience({
       : resolution.status === "available"
         ? "Add to Cart"
         : "Unavailable";
+  const selectedPrice =
+    resolution.status === "available" || resolution.status === "unavailable"
+      ? resolution.variant.price
+      : product.price;
+  const selectedCompareAt =
+    resolution.status === "available" || resolution.status === "unavailable"
+      ? resolution.variant.compareAtPrice
+      : product.compareAtPrice;
 
   return (
     <>
@@ -224,7 +236,13 @@ export function ProductPrimaryExperience({
             <p className="mt-3 text-sm font-medium text-foreground-muted">
               {collectionTitle ?? product.productType ?? "Ra & Ra"} · Unisex
             </p>
-            <PricePlaceholder className="mt-5" />
+            <div className="mt-5">
+              <ProductPrice
+                compareAtPrice={selectedCompareAt}
+                price={selectedPrice}
+                size="large"
+              />
+            </div>
           </div>
 
           <p className="mt-5 max-w-md text-sm leading-6 text-foreground-muted">
@@ -327,6 +345,8 @@ export function ProductPrimaryExperience({
         onAction={handleAddToCart}
         pending={isPending}
         productTitle={product.title}
+        price={selectedPrice}
+        compareAtPrice={selectedCompareAt}
       />
     </>
   );

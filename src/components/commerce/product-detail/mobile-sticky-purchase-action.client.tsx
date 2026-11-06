@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
+import { ProductPrice } from "@/components/commerce/product-card/product-price";
 import { Button } from "@/components/ui/button";
+import type { Money } from "@/lib/commerce";
 
 interface MobileStickyPurchaseActionProps {
   productTitle: string;
@@ -11,6 +12,8 @@ interface MobileStickyPurchaseActionProps {
   disabled: boolean;
   pending: boolean;
   onAction: () => void;
+  price: Money;
+  compareAtPrice?: Money | undefined;
 }
 
 export function MobileStickyPurchaseAction({
@@ -19,6 +22,8 @@ export function MobileStickyPurchaseAction({
   disabled,
   pending,
   onAction,
+  price,
+  compareAtPrice,
 }: MobileStickyPurchaseActionProps) {
   const [visible, setVisible] = useState(false);
 
@@ -69,7 +74,9 @@ export function MobileStickyPurchaseAction({
       <div className="mx-auto flex max-w-[var(--container-wide)] items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold">{productTitle}</p>
-          <PricePlaceholder className="mt-1" size="small" />
+          <div className="mt-1">
+            <ProductPrice price={price} compareAtPrice={compareAtPrice} />
+          </div>
         </div>
         <Button
           aria-label={`${actionLabel} for ${productTitle}`}

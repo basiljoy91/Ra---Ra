@@ -3,10 +3,11 @@
 import { ArrowUpRight, Search, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useDeferredValue, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 
 import { ModalDialog } from "@/components/ui/modal-dialog";
-import { developmentProducts } from "@/data/development/mock-commerce";
+import { searchProductsAction } from "@/features/search/commerce-search";
+import type { Product } from "@/lib/commerce";
 
 interface SearchDialogProps {
   open: boolean;
@@ -15,24 +16,37 @@ interface SearchDialogProps {
 
 export function SearchDialog({ open, onClose }: SearchDialogProps) {
   const [query, setQuery] = useState("");
+  const [results, setResults] = useState<readonly Product[]>([]);
+  const [completedQuery, setCompletedQuery] = useState("");
+  const [searchError, setSearchError] = useState(false);
   const deferredQuery = useDeferredValue(query.trim().toLowerCase());
-  const results =
-    deferredQuery.length > 0
-      ? developmentProducts
-          .filter((product) =>
-            [
-              product.title,
-              product.shortDescription,
-              product.productType,
-              product.artworkPlacement,
-            ]
-              .filter(Boolean)
-              .join(" ")
-              .toLowerCase()
-              .includes(deferredQuery),
-          )
-          .slice(0, 5)
-      : [];
+  const searching = deferredQuery.length >= 2 && completedQuery !== deferredQuery;
+
+  useEffect(() => {
+    if (deferredQuery.length < 2) {
+      return;
+    }
+
+    let active = true;
+    searchProductsAction(deferredQuery)
+      .then((products) => {
+        if (active) {
+          setResults(products);
+          setCompletedQuery(deferredQuery);
+          setSearchError(false);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setResults([]);
+          setCompletedQuery(deferredQuery);
+          setSearchError(true);
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, [deferredQuery]);
 
   return (
     <ModalDialog
@@ -87,9 +101,15 @@ export function SearchDialog({ open, onClose }: SearchDialogProps) {
         </div>
 
         <div className="mt-6 border-t border-border" aria-live="polite">
-          {deferredQuery.length === 0 ? (
+          {deferredQuery.length < 2 ? (
             <p className="type-caption py-5 text-foreground-muted">
-              Search the current ra&ra collection by name or artwork.
+              Enter at least two characters to search the collection.
+            </p>
+          ) : searching ? (
+            <p className="type-caption py-5 text-foreground-muted">Searching…</p>
+          ) : searchError ? (
+            <p className="type-caption py-5 text-error">
+              Search is temporarily unavailable. Try again.
             </p>
           ) : results.length === 0 ? (
             <p className="type-caption py-5 text-foreground-muted">

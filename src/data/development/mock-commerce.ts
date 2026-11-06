@@ -6,17 +6,22 @@ import type {
   ProductOption,
   ProductVariant,
 } from "@/lib/commerce";
+import {
+  TEST_PRODUCT_PRICE_INR,
+  testInventoryByProductHandle,
+  type TestSize,
+} from "@/data/development/inventory";
 
 export const DEVELOPMENT_DATA_NOTICE =
-  "Product imagery reflects the supplied ra&ra design and garment references. Pricing remains a launch placeholder.";
+  "Test catalogue content for the Shopify connection. Final EU launch details remain subject to approval.";
 
 const sizes = ["S", "M", "L", "XL", "XXL"] as const;
 
 const garmentTypes = [
-  { slug: "sculptural-boxy-black", name: "Sculptural Boxy Tee", category: "Premium Streetwear", color: "Black", fit: "Boxy", gsm: "280 GSM", finish: "Screen print · Bio/enzyme wash · Compacted", price: "49.00" },
-  { slug: "washed-art-charcoal", name: "Washed Art Tee", category: "Premium Streetwear", color: "Washed Charcoal", fit: "Oversized", gsm: "250 GSM", finish: "Soft-hand screen print · Vintage garment wash", price: "52.00" },
-  { slug: "signature-regular-off-white", name: "Signature Regular Tee", category: "Premium Casual Fashion", color: "Off-White", fit: "Regular", gsm: "250 GSM", finish: "Screen print · Bio/enzyme wash · Compacted", price: "46.00" },
-  { slug: "relaxed-essential-chocolate", name: "Relaxed Essential Tee", category: "Premium Casual Fashion", color: "Chocolate Brown", fit: "Relaxed", gsm: "260 GSM", finish: "Screen print · Bio/enzyme wash · Compacted", price: "48.00" },
+  { slug: "sculptural-boxy-black", name: "Sculptural Boxy Tee", category: "Premium Streetwear", color: "Black", fit: "Boxy", gsm: "280 GSM", finish: "Screen print · Bio/enzyme wash · Compacted" },
+  { slug: "washed-art-charcoal", name: "Washed Art Tee", category: "Premium Streetwear", color: "Washed Charcoal", fit: "Oversized", gsm: "250 GSM", finish: "Soft-hand screen print · Vintage garment wash" },
+  { slug: "signature-regular-off-white", name: "Signature Regular Tee", category: "Premium Casual Fashion", color: "Off-White", fit: "Regular", gsm: "250 GSM", finish: "Screen print · Bio/enzyme wash · Compacted" },
+  { slug: "relaxed-essential-chocolate", name: "Relaxed Essential Tee", category: "Premium Casual Fashion", color: "Chocolate Brown", fit: "Relaxed", gsm: "260 GSM", finish: "Screen print · Bio/enzyme wash · Compacted" },
 ] as const;
 
 const designs = [
@@ -33,11 +38,15 @@ function createOptions(color: string): readonly ProductOption[] {
   ];
 }
 
-function createVariants(productId: string, color: string, price: Money, image: ProductImage): readonly ProductVariant[] {
+function createVariants(productId: string, productHandle: string, color: string, price: Money, image: ProductImage): readonly ProductVariant[] {
+  const inventory = testInventoryByProductHandle[productHandle];
+
   return sizes.map((size) => ({
     id: `${productId}-${size.toLowerCase()}`,
     title: `${color} / ${size}`,
-    available: true,
+    available: (inventory?.[size as TestSize] ?? 0) > 0,
+    quantityAvailable: inventory?.[size as TestSize] ?? 0,
+    sku: `${productHandle}-${size}`.toUpperCase(),
     size,
     color,
     selectedOptions: [{ name: "Color", value: color }, { name: "Size", value: size }],
@@ -48,6 +57,7 @@ function createVariants(productId: string, color: string, price: Money, image: P
 
 function createProduct(design: (typeof designs)[number], garment: (typeof garmentTypes)[number]): Product {
   const id = `product-${design.slug}-${garment.slug}`;
+  const handle = `${design.slug}-${garment.slug}`;
   const productImagePath = `/products/${design.slug}/${garment.slug}`;
   const image: ProductImage = {
     url: `${productImagePath}/lifestyle-back.png`,
@@ -83,17 +93,17 @@ function createProduct(design: (typeof designs)[number], garment: (typeof garmen
       height: 2048,
     },
   ];
-  const price = { amount: garment.price, currencyCode: "EUR" } as const;
+  const price = { amount: TEST_PRODUCT_PRICE_INR, currencyCode: "INR" } as const;
 
   return {
     id,
-    handle: `${design.slug}-${garment.slug}`,
+    handle,
     title: `${design.name} — ${garment.name}`,
     description: `${design.meaning} ${DEVELOPMENT_DATA_NOTICE}`,
     shortDescription: `${design.shortStory} ${garment.color} · ${garment.fit} fit.`,
     images: galleryImages,
     price,
-    variants: createVariants(id, garment.color, price, image),
+    variants: createVariants(id, handle, garment.color, price, image),
     options: createOptions(garment.color),
     defaultSelectedOptions: [{ name: "Color", value: garment.color }, { name: "Size", value: "M" }],
     collectionHandles: ["beyond"],

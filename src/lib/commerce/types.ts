@@ -24,6 +24,7 @@ export interface ProductVariant {
   title: string;
   sku?: string;
   available: boolean;
+  quantityAvailable?: number;
   size?: string;
   color?: string;
   selectedOptions: readonly SelectedOption[];
@@ -124,4 +125,21 @@ export interface Market {
   currencyCode: string;
   defaultLocale: string;
   supportedLocales: readonly string[];
+}
+
+export interface CartLine {
+  id: string;
+  quantity: number;
+  variant: ProductVariant;
+  product: Pick<Product, "id" | "handle" | "title">;
+  total: Money;
+}
+
+export interface Cart {
+  id: string;
+  checkoutUrl: string;
+  totalQuantity: number;
+  lines: readonly CartLine[];
+  subtotal: Money;
+  total: Money;
 }

@@ -9,6 +9,7 @@ interface MobileHeaderProps {
   activeDialog: "search" | "cart" | "account" | null;
   searchEnabled: boolean;
   cartEnabled: boolean;
+  accountEnabled: boolean;
   cartCount: number;
   onMenu: () => void;
   onSearch: () => void;
@@ -21,6 +22,7 @@ export function MobileHeader({
   activeDialog,
   searchEnabled,
   cartEnabled,
+  accountEnabled,
   cartCount,
   onMenu,
   onSearch,
@@ -46,6 +48,7 @@ export function MobileHeader({
       <HeaderActions
         searchEnabled={searchEnabled}
         cartEnabled={cartEnabled}
+        accountEnabled={accountEnabled}
         cartCount={cartCount}
         onSearch={onSearch}
         onCart={onCart}

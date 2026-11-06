@@ -1,5 +1,15 @@
 # Ra & Ra — Project Context and Migration Handoff
 
+> **Shopify test update — 2026-11-06:** The repository now contains an optional
+> server-only Shopify Storefront API adapter, Shopify-backed product/collection
+> reads, inventory-aware variants, a persistent HTTP-only-cookie cart, live bag
+> controls, Storefront search, and Shopify-hosted checkout redirection. When the
+> Shopify environment variables are absent, the site falls back to a local INR
+> 699 test catalogue using the 300-unit quantity plan from the supplied RFQ
+> workbook. Customer accounts remain disabled and global prelaunch noindex rules
+> remain active. Treat older statements below that say Shopify/cart is entirely
+> unimplemented as historical status preceding this update.
+
 > **Audit snapshot:** 2026-11-01, working tree at commit `40eae4d28c5205f07cffa5715a5f60e6353739ee` on `main` before this document was added.  
 > **Purpose:** give a replacement Codex instance enough verified context to continue safely. This is a development storefront, **not** a launch-ready ecommerce system.
 

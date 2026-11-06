@@ -27,8 +27,8 @@ export function CollectionEmptyState({
       </h2>
       <p className="type-body mx-auto mt-4 max-w-xl text-foreground-muted">
         {noMatches
-          ? "Remove one or more filters to return to the complete development collection."
-          : "The reusable story and theme are ready, but no future inventory has been fabricated for this development collection."}
+          ? "Remove one or more filters to return to the complete collection."
+          : "No products are currently available in this collection."}
       </p>
       <div className="mt-7 flex flex-wrap justify-center gap-3">
         {noMatches && clearHref ? (

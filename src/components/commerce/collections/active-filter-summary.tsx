@@ -42,7 +42,7 @@ export function ActiveFilterSummary({
   const priceFilter = filters.find(
     (filter): filter is CollectionPriceFilter => filter.type === "range",
   );
-  const currencyCode = priceFilter?.min.currencyCode ?? "EUR";
+  const currencyCode = priceFilter?.min.currencyCode ?? "INR";
 
   if (state.priceMin) {
     tokens.push({

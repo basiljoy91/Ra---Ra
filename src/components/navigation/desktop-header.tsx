@@ -9,6 +9,7 @@ interface DesktopHeaderProps {
   navigation: readonly NavigationItem[];
   searchEnabled: boolean;
   cartEnabled: boolean;
+  accountEnabled: boolean;
   cartCount: number;
   onSearch: () => void;
   onCart: () => void;
@@ -20,6 +21,7 @@ export function DesktopHeader({
   navigation,
   searchEnabled,
   cartEnabled,
+  accountEnabled,
   cartCount,
   onSearch,
   onCart,
@@ -40,6 +42,7 @@ export function DesktopHeader({
         <HeaderActions
           searchEnabled={searchEnabled}
           cartEnabled={cartEnabled}
+          accountEnabled={accountEnabled}
           cartCount={cartCount}
           onSearch={onSearch}
           onCart={onCart}

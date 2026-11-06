@@ -79,7 +79,7 @@ export function getMoneyRange(values: readonly Money[]): MoneyRange | undefined 
   return { min, max };
 }
 
-export function formatMoney(money: Money, locale = "en-DE"): string {
+export function formatMoney(money: Money, locale = "en-IN"): string {
   if (!DECIMAL_MONEY_PATTERN.test(money.amount)) {
     return `${money.amount} ${money.currencyCode}`;
   }

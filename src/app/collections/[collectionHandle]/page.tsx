@@ -8,7 +8,9 @@ import {
   collectionCatalog,
   getCollectionCatalogEntry,
 } from "@/data/development/mock-collections";
-import { developmentQuickAdd } from "@/features/cart/development-quick-add";
+import { commerceQuickAdd } from "@/features/cart/commerce-cart";
+import { isShopifyConfigured } from "@/lib/commerce/shopify/config";
+import { getCollectionByHandle } from "@/lib/commerce/shopify/provider";
 import {
   buildCollectionFilters,
   buildCollectionHref,
@@ -36,7 +38,13 @@ export async function generateMetadata({
 }: CollectionRouteProps): Promise<Metadata> {
   const { collectionHandle } = await params;
   const resolvedSearchParams = await searchParams;
-  const entry = getCollectionCatalogEntry(collectionHandle);
+  const localEntry = getCollectionCatalogEntry(collectionHandle);
+  const commerceCollection = await getCollectionByHandle(collectionHandle);
+  const entry = localEntry && commerceCollection
+    ? { ...localEntry, collection: { ...commerceCollection, themeKey: localEntry.collection.themeKey } }
+    : isShopifyConfigured()
+      ? undefined
+      : localEntry;
 
   if (!entry) {
     return {};
@@ -83,7 +91,13 @@ export default async function CollectionDetailPage({
 }: CollectionRouteProps) {
   const { collectionHandle } = await params;
   const resolvedSearchParams = await searchParams;
-  const entry = getCollectionCatalogEntry(collectionHandle);
+  const localEntry = getCollectionCatalogEntry(collectionHandle);
+  const commerceCollection = await getCollectionByHandle(collectionHandle);
+  const entry = localEntry && commerceCollection
+    ? { ...localEntry, collection: { ...commerceCollection, themeKey: localEntry.collection.themeKey } }
+    : isShopifyConfigured()
+      ? undefined
+      : localEntry;
 
   if (!entry) {
     notFound();
@@ -114,7 +128,7 @@ export default async function CollectionDetailPage({
         query={query}
         state={{ ...state, page: query.page }}
         {...(entry.status === "active"
-          ? { quickAddAction: developmentQuickAdd }
+          ? { quickAddAction: commerceQuickAdd }
           : {})}
       />
     </>

@@ -14,7 +14,8 @@ import { FavoriteButton } from "@/components/homepage/favorite-button.client";
 import { HeroCarousel } from "@/components/homepage/hero-carousel.client";
 import styles from "@/components/homepage/homepage.module.css";
 import { editorialHomepage } from "@/config/editorial-homepage";
-import { developmentProducts } from "@/data/development/mock-commerce";
+import type { Product } from "@/lib/commerce";
+import { formatMoney } from "@/lib/utilities";
 import type { NewsletterFormAction } from "@/types/newsletter";
 
 const storyCards = [
@@ -90,26 +91,40 @@ const socialImages = [
   "/editorial/washed-cotton-macro.png",
 ] as const;
 
-function productsByIds(ids: readonly string[]) {
-  const idSet = new Set(ids);
-  return ids.flatMap((id) => {
-    const product = developmentProducts.find((candidate) => candidate.id === id);
-    return product && idSet.has(product.id) ? [product] : [];
+function productsByIds(
+  ids: readonly string[],
+  allProducts: readonly Product[],
+) {
+  const selected = ids.flatMap((id) => {
+    const expectedHandle = id.replace(/^product-/, "");
+    const product = allProducts.find(
+      (candidate) =>
+        candidate.id === id || candidate.handle === expectedHandle,
+    );
+    return product ? [product] : [];
   });
+  const selectedIds = new Set(selected.map((product) => product.id));
+
+  return [
+    ...selected,
+    ...allProducts.filter((product) => !selectedIds.has(product.id)),
+  ].slice(0, ids.length);
 }
 
 function ProductRail({
   id,
   title,
   productIds,
+  allProducts,
   compact = false,
 }: {
   id: string;
   title: string;
   productIds: readonly string[];
+  allProducts: readonly Product[];
   compact?: boolean;
 }) {
-  const products = productsByIds(productIds);
+  const products = productsByIds(productIds, allProducts);
 
   return (
     <section className={styles.productRailSection} aria-labelledby={id}>
@@ -138,7 +153,7 @@ function ProductRail({
               <FavoriteButton productName={displayName} />
               <Link className={styles.productMeta} href={`/products/${product.handle}`}>
                 <span>{displayName} T-Shirt</span>
-                <span className={styles.priceHolder} aria-label="Price to be announced">€—.—</span>
+                <span className={styles.priceHolder}>{formatMoney(product.price)}</span>
               </Link>
             </article>
           );
@@ -150,8 +165,10 @@ function ProductRail({
 
 export function EditorialStorefront({
   newsletterAction,
+  products,
 }: {
   newsletterAction: NewsletterFormAction;
+  products: readonly Product[];
 }) {
   return (
     <div className={styles.page} data-editorial-homepage>
@@ -194,7 +211,7 @@ export function EditorialStorefront({
         ))}
       </ul>
 
-      <ProductRail id="best-of-ra-ra" title="The four stories" productIds={bestProductIds} />
+      <ProductRail id="best-of-ra-ra" title="The four stories" productIds={bestProductIds} allProducts={products} />
 
       <section className={styles.qualityMosaic} aria-labelledby="quality-title">
         <div className={styles.qualityCopy}>
@@ -235,7 +252,7 @@ export function EditorialStorefront({
         </div>
       </section>
 
-      <ProductRail id="new-arrivals" title="Different cuts, same idea" productIds={newProductIds} compact />
+      <ProductRail id="new-arrivals" title="Different cuts, same idea" productIds={newProductIds} allProducts={products} compact />
 
       <section className={styles.scarcityBanner} aria-labelledby="scarcity-title">
         <Image alt="Back artwork of a limited ra&ra T-shirt" fill sizes="100vw" src="/products/beyond-reality/washed-art-charcoal/lifestyle-back.png" />

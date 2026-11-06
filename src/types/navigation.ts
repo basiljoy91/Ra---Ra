@@ -28,7 +28,6 @@ export interface HeaderConfig {
   sticky: boolean;
   searchEnabled: boolean;
   cartEnabled: boolean;
-  developmentCartCount: number;
   announcementBar: AnnouncementBarConfig;
   primaryNavigation: readonly NavigationItem[];
   mobileSecondaryLinks: readonly NavigationItem[];

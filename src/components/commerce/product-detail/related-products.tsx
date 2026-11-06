@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 
-import { PricePlaceholder } from "@/components/commerce/product-detail/price-placeholder";
+import { ProductPrice } from "@/components/commerce/product-card/product-price";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { productPageConfig } from "@/config/product-page";
@@ -61,7 +61,12 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
                           {product.title}
                         </Link>
                       </h3>
-                      <PricePlaceholder className="mt-2" size="small" />
+                      <div className="mt-2">
+                        <ProductPrice
+                          compareAtPrice={product.compareAtPrice}
+                          price={product.price}
+                        />
+                      </div>
                     </div>
                     <button aria-label={`Save ${product.title}`} className="grid size-11 place-items-center rounded-full" type="button">
                       <Heart aria-hidden="true" className="size-4" strokeWidth={1.7} />

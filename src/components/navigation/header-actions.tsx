@@ -5,6 +5,7 @@ import { cn } from "@/lib/utilities";
 interface HeaderActionsProps {
   searchEnabled: boolean;
   cartEnabled: boolean;
+  accountEnabled: boolean;
   cartCount: number;
   onSearch: () => void;
   onCart: () => void;
@@ -20,6 +21,7 @@ const actionClassName =
 export function HeaderActions({
   searchEnabled,
   cartEnabled,
+  accountEnabled,
   cartCount,
   onSearch,
   onCart,
@@ -28,7 +30,7 @@ export function HeaderActions({
   activeDialog = null,
   className,
 }: HeaderActionsProps) {
-  if (!searchEnabled && !cartEnabled) {
+  if (!searchEnabled && !cartEnabled && !accountEnabled) {
     return null;
   }
 
@@ -56,17 +58,19 @@ export function HeaderActions({
         </button>
       ) : null}
 
-      <button
-        type="button"
-        aria-label="Account access is not yet available"
-        aria-haspopup="dialog"
-        aria-controls="account-placeholder-dialog"
-        aria-expanded={activeDialog === "account"}
-        onClick={onAccount}
-        className={actionClassName}
-      >
-        <UserRound aria-hidden="true" size={20} strokeWidth={1.55} />
-      </button>
+      {accountEnabled ? (
+        <button
+          type="button"
+          aria-label="Open account"
+          aria-haspopup="dialog"
+          aria-controls="account-placeholder-dialog"
+          aria-expanded={activeDialog === "account"}
+          onClick={onAccount}
+          className={actionClassName}
+        >
+          <UserRound aria-hidden="true" size={20} strokeWidth={1.55} />
+        </button>
+      ) : null}
 
       {cartEnabled ? (
         <button

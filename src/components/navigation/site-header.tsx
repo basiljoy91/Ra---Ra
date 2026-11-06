@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { AccountPlaceholderDialog } from "@/components/navigation/account-placeholder-dialog";
 import { AnnouncementBar } from "@/components/navigation/announcement-bar";
@@ -11,6 +10,8 @@ import { MobileHeader } from "@/components/navigation/mobile-header";
 import { MobileNavigationDrawer } from "@/components/navigation/mobile-navigation-drawer";
 import { SearchDialog } from "@/components/navigation/search-dialog";
 import { siteConfig } from "@/config/site";
+import { getCartAction } from "@/features/cart/commerce-cart";
+import { CART_UPDATED_EVENT } from "@/lib/commerce/cart-events";
 import { cn } from "@/lib/utilities";
 import type { HeaderAppearance } from "@/types/navigation";
 
@@ -23,13 +24,36 @@ interface SiteHeaderProps {
 export function SiteHeader({
   appearance = siteConfig.header.appearance,
 }: SiteHeaderProps) {
-  const pathname = usePathname();
   const [activeOverlay, setActiveOverlay] = useState<ActiveOverlay>(null);
+  const [cartCount, setCartCount] = useState(0);
   const resolvedAppearance = appearance;
   const searchEnabled =
     siteConfig.header.searchEnabled && siteConfig.navigationFeatureFlags.search;
   const cartEnabled =
     siteConfig.header.cartEnabled && siteConfig.navigationFeatureFlags.cart;
+  const accountEnabled =
+    siteConfig.accountEnabled && siteConfig.navigationFeatureFlags.account;
+
+  useEffect(() => {
+    let active = true;
+    getCartAction()
+      .then((result) => {
+        if (active && result.status === "success") {
+          setCartCount(result.cart?.totalQuantity ?? 0);
+        }
+      })
+      .catch(() => undefined);
+
+    const handleCartUpdated = (event: Event) => {
+      const detail = (event as CustomEvent<{ cartCount?: number }>).detail;
+      setCartCount(detail?.cartCount ?? 0);
+    };
+    window.addEventListener(CART_UPDATED_EVENT, handleCartUpdated);
+    return () => {
+      active = false;
+      window.removeEventListener(CART_UPDATED_EVENT, handleCartUpdated);
+    };
+  }, []);
 
   return (
     <>
@@ -48,7 +72,8 @@ export function SiteHeader({
           navigation={siteConfig.header.primaryNavigation}
           searchEnabled={searchEnabled}
           cartEnabled={cartEnabled}
-          cartCount={siteConfig.header.developmentCartCount}
+          accountEnabled={accountEnabled}
+          cartCount={cartCount}
           onSearch={() => setActiveOverlay("search")}
           onCart={() => setActiveOverlay("cart")}
           onAccount={() => setActiveOverlay("account")}
@@ -69,7 +94,8 @@ export function SiteHeader({
           }
           searchEnabled={searchEnabled}
           cartEnabled={cartEnabled}
-          cartCount={siteConfig.header.developmentCartCount}
+          accountEnabled={accountEnabled}
+          cartCount={cartCount}
           onMenu={() => setActiveOverlay("menu")}
           onSearch={() => setActiveOverlay("search")}
           onCart={() => setActiveOverlay("cart")}
@@ -92,12 +118,13 @@ export function SiteHeader({
       <CartPlaceholderDialog
         open={activeOverlay === "cart"}
         onClose={() => setActiveOverlay(null)}
-        itemCount={siteConfig.header.developmentCartCount}
       />
-      <AccountPlaceholderDialog
-        open={activeOverlay === "account"}
-        onClose={() => setActiveOverlay(null)}
-      />
+      {accountEnabled ? (
+        <AccountPlaceholderDialog
+          open={activeOverlay === "account"}
+          onClose={() => setActiveOverlay(null)}
+        />
+      ) : null}
     </>
   );
 }

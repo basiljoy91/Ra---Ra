@@ -60,9 +60,6 @@ export function CollectionResults({
           state={state}
           totalProducts={query.totalProducts}
         />
-        <p className="type-caption mt-4 max-w-3xl border-l-2 border-accent pl-3 text-foreground-muted">
-          Development fixture: pagination uses four records per page to verify URL and navigation behavior.
-        </p>
         <div className="mt-8 grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start">
           <DesktopFilterPanel
             activeCount={activeCount}
