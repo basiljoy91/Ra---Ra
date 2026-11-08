@@ -68,7 +68,7 @@ export function CollectionHero({ entry, productCount }: CollectionHeroProps) {
             ) : null}
             {productCount !== undefined ? (
               <p className="type-caption mt-5 text-foreground-muted">
-                {productCount} development {productCount === 1 ? "product" : "products"}
+                {productCount} {productCount === 1 ? "product" : "products"}
               </p>
             ) : null}
           </div>
@@ -100,7 +100,7 @@ export function CollectionHero({ entry, productCount }: CollectionHeroProps) {
                 )}
               >
                 <div className="max-w-sm">
-                  <p className="type-label opacity-75">Development Theme</p>
+                  <p className="type-label opacity-75">Future collection</p>
                   <p className="mt-4 font-serif text-[clamp(2rem,6vw,4.5rem)] leading-none tracking-[-0.035em]">
                     A story still to come.
                   </p>

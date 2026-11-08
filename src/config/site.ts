@@ -17,11 +17,11 @@ function resolveSiteUrl(value: string | undefined): string {
   }
 }
 
-const developmentMarket = {
-  code: "DE",
-  name: "Germany",
-  countryCode: "DE",
-  currencyCode: "EUR",
+const testMarket = {
+  code: "IN",
+  name: "India",
+  countryCode: "IN",
+  currencyCode: "INR",
   defaultLocale: "en",
   supportedLocales: ["en"],
 } as const satisfies Market;
@@ -89,14 +89,13 @@ const headerConfig = {
   sticky: true,
   searchEnabled: true,
   cartEnabled: true,
-  developmentCartCount: 0,
   announcementBar: {
     enabled: true,
     messages: [
       {
         id: "launch-notice",
-        text: "Free shipping on orders above €99 · Limited edition drops",
-        shortText: "Free shipping above €99",
+        text: "Shopify checkout testing · Beyond Edition 01",
+        shortText: "Shopify checkout testing",
       },
     ],
   },
@@ -111,8 +110,8 @@ export const siteConfig = {
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],
-  defaultCurrency: "EUR",
-  market: developmentMarket,
+  defaultCurrency: "INR",
+  market: testMarket,
   socialLinks: {},
   contactEmail: "hello@example.invalid",
   navigationFeatureFlags: {

@@ -32,14 +32,14 @@ export function CollectionToolbar({
           className="type-subheading mt-1 font-semibold"
           id="collection-products-heading"
         >
-          Development Products
+          Products
         </h2>
         <p
           aria-live="polite"
           className="type-small mt-2 text-foreground-muted"
           role="status"
         >
-          Showing {filteredTotal} of {totalProducts} development {totalProducts === 1 ? "product" : "products"}
+          Showing {filteredTotal} of {totalProducts} {totalProducts === 1 ? "product" : "products"}
         </p>
       </div>
       <div className="grid grid-cols-2 items-end gap-3 sm:flex sm:justify-end">

@@ -6,6 +6,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { siteConfig } from "@/config/site";
 import { getVisibleCollectionSummaries } from "@/data/development/mock-collections";
+import { getCollectionByHandle } from "@/lib/commerce/shopify/provider";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "Explore the Editions";
@@ -37,8 +38,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CollectionsOverviewPage() {
-  const collections = getVisibleCollectionSummaries();
+export default async function CollectionsOverviewPage() {
+  const summaries = getVisibleCollectionSummaries();
+  const beyond = await getCollectionByHandle("beyond");
+  const collections = summaries.map((summary) =>
+    summary.handle === "beyond" && beyond
+      ? {
+          ...summary,
+          productCount: beyond.products.length,
+          ...(beyond.heroImage ? { image: beyond.heroImage } : {}),
+        }
+      : summary,
+  );
 
   return (
     <Section spacing="lg" tone="background">

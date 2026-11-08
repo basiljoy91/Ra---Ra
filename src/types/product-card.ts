@@ -31,7 +31,7 @@ export interface QuickAddInput {
 }
 
 export type QuickAddResult =
-  | { status: "success"; message?: string }
+  | { status: "success"; message?: string; cartCount?: number }
   | { status: "error"; message: string };
 
 export type ProductCardQuickAddHandler = (

@@ -28,7 +28,7 @@ export function CollectionFilterFields({
                 {filter.label}
               </legend>
               <p className="type-caption mt-2 text-foreground-muted">
-                Development range: {formatMoney(filter.min)}–{formatMoney(filter.max)}
+                Price range: {formatMoney(filter.min)}–{formatMoney(filter.max)}
               </p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <label

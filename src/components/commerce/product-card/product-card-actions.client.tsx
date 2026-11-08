@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { ProductColourOptions } from "@/components/commerce/product-card/product-colour-options.client";
 import { QuickAddDialog } from "@/components/commerce/product-card/quick-add-dialog.client";
 import { Button, buttonStyles } from "@/components/ui/button";
+import { publishCartUpdated } from "@/lib/commerce/cart-events";
 import { cn } from "@/lib/utilities";
 import type {
   ProductCardActionVariant,
@@ -73,12 +74,15 @@ export function ProductCardActions({
           kind: result.status,
           message:
             result.message ??
-            "Development selection confirmed. No cart was updated.",
+            "Added to your bag.",
         });
+        if (result.status === "success" && result.cartCount !== undefined) {
+          publishCartUpdated(result.cartCount);
+        }
       } catch {
         setFeedback({
           kind: "error",
-          message: "The development action could not be completed. Try again.",
+          message: "The item could not be added. Try again.",
         });
       }
     });

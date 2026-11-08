@@ -2,7 +2,7 @@ import type { CollectionCatalogEntry, CollectionSummary } from "@/types/collecti
 import { developmentCollection } from "@/data/development/mock-commerce";
 
 export const COLLECTION_DEVELOPMENT_NOTICE =
-  "Product photography is based on the supplied ra&ra garment and artwork references. Final pricing and availability are still being prepared.";
+  "Shopify test catalogue for the India checkout connection. EU launch settings remain separate.";
 
 export const collectionCatalog: readonly CollectionCatalogEntry[] = [
   {

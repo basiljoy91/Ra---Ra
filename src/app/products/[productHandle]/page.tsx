@@ -5,29 +5,22 @@ import { ProductPageTemplate } from "@/components/commerce/product-detail/produc
 import { ProductStructuredData } from "@/components/commerce/product-detail/product-structured-data";
 import { siteConfig } from "@/config/site";
 import { getCollectionCatalogEntry } from "@/data/development/mock-collections";
+import { commerceAddToCart } from "@/features/cart/commerce-cart";
 import {
-  developmentProducts,
-  getDevelopmentProductByHandle,
-  getDevelopmentProductsByIds,
-} from "@/data/development/mock-commerce";
-import { developmentAddToCart } from "@/features/cart/development-add-to-cart";
+  getProductByHandle,
+  getProducts,
+} from "@/lib/commerce/shopify/provider";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
 interface ProductRouteProps {
   params: Promise<{ productHandle: string }>;
 }
 
-export function generateStaticParams() {
-  return developmentProducts.map((product) => ({
-    productHandle: product.handle,
-  }));
-}
-
 export async function generateMetadata({
   params,
 }: ProductRouteProps): Promise<Metadata> {
   const { productHandle } = await params;
-  const product = getDevelopmentProductByHandle(productHandle);
+  const product = await getProductByHandle(productHandle);
 
   if (!product) {
     return {};
@@ -68,7 +61,7 @@ export async function generateMetadata({
 
 export default async function ProductDetailPage({ params }: ProductRouteProps) {
   const { productHandle } = await params;
-  const product = getDevelopmentProductByHandle(productHandle);
+  const product = await getProductByHandle(productHandle);
 
   if (!product) {
     notFound();
@@ -84,21 +77,12 @@ export default async function ProductDetailPage({ params }: ProductRouteProps) {
         title: collectionEntry.collection.title,
       }
     : undefined;
-  const explicitRelatedProducts = getDevelopmentProductsByIds(
-    product.relatedProductIds ?? [],
-  ).filter((candidate) => candidate.id !== product.id);
-  const relatedProducts =
-    explicitRelatedProducts.length > 0
-      ? explicitRelatedProducts
-      : developmentProducts
-          .filter(
-            (candidate) =>
-              candidate.id !== product.id &&
-              candidate.collectionHandles.some((handle) =>
-                product.collectionHandles.includes(handle),
-              ),
-          )
-          .slice(0, 4);
+  const relatedProducts = (await getProducts({
+    collectionHandle: collectionHandle ?? "beyond",
+    limit: 16,
+  }))
+    .filter((candidate) => candidate.id !== product.id)
+    .slice(0, 4);
 
   return (
     <>
@@ -107,7 +91,7 @@ export default async function ProductDetailPage({ params }: ProductRouteProps) {
         {...(collection ? { collection } : {})}
       />
       <ProductPageTemplate
-        addToCartAction={developmentAddToCart}
+        addToCartAction={commerceAddToCart}
         product={product}
         relatedProducts={relatedProducts}
         {...(collection ? { collection } : {})}
