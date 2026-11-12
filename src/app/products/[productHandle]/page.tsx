@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { ProductPageTemplate } from "@/components/commerce/product-detail/product-page-template";
 import { ProductStructuredData } from "@/components/commerce/product-detail/product-structured-data";
@@ -8,11 +9,7 @@ import {
   commerceAddToCart,
   commerceBuyNow,
 } from "@/features/cart/commerce-cart";
-import {
-  getCollectionByHandle,
-  getProductByHandle,
-  getProducts,
-} from "@/lib/commerce/shopify/provider";
+import { getProducts } from "@/lib/commerce/shopify/provider";
 import { getCommerceRequestContext } from "@/lib/commerce/shopify/request-context";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
@@ -20,12 +17,45 @@ interface ProductRouteProps {
   params: Promise<{ productHandle: string }>;
 }
 
+const getCatalogProducts = cache(
+  async (countryCode: string | undefined, buyerIp: string | undefined) =>
+    getProducts(
+      { limit: 50 },
+      {
+        ...(countryCode ? { countryCode } : {}),
+        ...(buyerIp ? { buyerIp } : {}),
+      },
+    ),
+);
+
+async function getProductRouteData(productHandle: string) {
+  const context = await getCommerceRequestContext();
+  const catalogProducts = await getCatalogProducts(
+    context.countryCode,
+    context.buyerIp,
+  );
+  const product =
+    catalogProducts.find((candidate) => candidate.handle === productHandle) ??
+    null;
+
+  return { catalogProducts, product };
+}
+
+function formatCollectionTitle(handle: string | undefined): string | undefined {
+  if (!handle) return undefined;
+
+  return handle
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 export async function generateMetadata({
   params,
 }: ProductRouteProps): Promise<Metadata> {
   const { productHandle } = await params;
-  const context = await getCommerceRequestContext();
-  const product = await getProductByHandle(productHandle, context);
+  const { product } = await getProductRouteData(productHandle);
 
   if (!product) {
     return {};
@@ -66,24 +96,20 @@ export async function generateMetadata({
 
 export default async function ProductDetailPage({ params }: ProductRouteProps) {
   const { productHandle } = await params;
-  const context = await getCommerceRequestContext();
-  const product = await getProductByHandle(productHandle, context);
+  const { catalogProducts, product } = await getProductRouteData(productHandle);
 
   if (!product) {
     notFound();
   }
 
   const collectionHandle = product.collectionHandles[0];
-  const commerceCollection = collectionHandle
-    ? await getCollectionByHandle(collectionHandle, context)
-    : null;
-  const collection = commerceCollection
+  const collectionTitle = formatCollectionTitle(collectionHandle);
+  const collection = collectionHandle && collectionTitle
     ? {
-        handle: commerceCollection.handle,
-        title: commerceCollection.title,
+        handle: collectionHandle,
+        title: collectionTitle,
       }
     : undefined;
-  const catalogProducts = await getProducts({ limit: 50 }, context);
   const relatedProducts = catalogProducts
     .filter((candidate) => candidate.id !== product.id)
     .slice(0, 4);

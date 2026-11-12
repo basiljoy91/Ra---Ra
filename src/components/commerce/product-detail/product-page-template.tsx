@@ -41,6 +41,7 @@ export function ProductPageTemplate({
                 ...(productType ? { productType } : {}),
               }),
             )}
+            key={product.id}
             product={product}
             {...(collection ? { collectionTitle: collection.title } : {})}
           />

@@ -77,6 +77,7 @@ const shopifyProvider: CommerceProvider = {
       products: { nodes: readonly ShopifyProduct[] };
     }>({
       query: PRODUCTS_QUERY,
+      revalidate: 60,
       variables: {
         first: Math.min(query.limit ?? 50, 250),
         query: query.search?.trim() || null,
@@ -90,6 +91,7 @@ const shopifyProvider: CommerceProvider = {
     const config = getShopifyConfig();
     const data = await shopifyFetch<{ product: ShopifyProduct | null }>({
       query: PRODUCT_BY_HANDLE_QUERY,
+      revalidate: 60,
       variables: {
         handle,
         country: context.countryCode ?? config?.countryCode ?? "IN",
@@ -104,6 +106,7 @@ const shopifyProvider: CommerceProvider = {
       collections: { nodes: readonly ShopifyCollection[] };
     }>({
       query: COLLECTIONS_QUERY,
+      revalidate: 60,
       variables: {
         first: 50,
         country: context.countryCode ?? config?.countryCode ?? "IN",
@@ -118,6 +121,7 @@ const shopifyProvider: CommerceProvider = {
       collection: ShopifyCollection | null;
     }>({
       query: COLLECTION_BY_HANDLE_QUERY,
+      revalidate: 60,
       variables: {
         handle,
         first: 250,

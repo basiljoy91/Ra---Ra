@@ -3,6 +3,7 @@
 import {
   Heart,
   CreditCard,
+  LoaderCircle,
   PackageCheck,
   Ruler,
   ShieldCheck,
@@ -10,7 +11,14 @@ import {
   Truck,
 } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import {
+  type MouseEvent,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 
 import { MobileStickyPurchaseAction } from "@/components/commerce/product-detail/mobile-sticky-purchase-action.client";
 import { ProductGallery } from "@/components/commerce/product-detail/product-gallery.client";
@@ -105,6 +113,11 @@ function ProductFamilySelector({
   currentProduct: Product;
   familyProducts: ProductPrimaryExperienceProps["familyProducts"];
 }) {
+  const router = useRouter();
+  const [pendingProductHandle, setPendingProductHandle] = useState<
+    string | null
+  >(null);
+  const [isNavigating, startNavigation] = useTransition();
   const currentDesign = getProductDesign(currentProduct.title);
   const currentFit = getProductFit(currentProduct);
   const artworkProducts = uniqueByLabel(
@@ -133,11 +146,47 @@ function ProductFamilySelector({
       ),
     getProductFit,
   );
+  const pendingProduct = familyProducts.find(
+    (candidate) => candidate.handle === pendingProductHandle,
+  );
+
+  function handleProductNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    candidate: ProductPrimaryExperienceProps["familyProducts"][number],
+  ) {
+    if (candidate.id === currentProduct.id) {
+      event.preventDefault();
+      return;
+    }
+
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    setPendingProductHandle(candidate.handle);
+    startNavigation(() => {
+      router.push(`/products/${candidate.handle}`, { scroll: false });
+    });
+  }
 
   if (artworkProducts.length < 2 && fitProducts.length < 2) return null;
 
   return (
-    <div className="grid gap-5 border-t border-border pt-5">
+    <div
+      aria-busy={isNavigating}
+      className={cn(
+        "grid gap-5 border-t border-border pt-5 transition-opacity",
+        isNavigating && "pointer-events-none opacity-75",
+      )}
+    >
       {artworkProducts.length > 1 ? (
         <fieldset>
           <legend className="text-sm font-medium">
@@ -159,7 +208,19 @@ function ProductFamilySelector({
                   )}
                   href={`/products/${candidate.handle}`}
                   key={candidate.id}
+                  onClick={(event) =>
+                    handleProductNavigation(event, candidate)
+                  }
+                  prefetch
+                  scroll={false}
                 >
+                  {pendingProductHandle === candidate.handle && isNavigating ? (
+                    <LoaderCircle
+                      aria-hidden="true"
+                      className="mr-1.5 size-3.5 animate-spin"
+                      strokeWidth={1.8}
+                    />
+                  ) : null}
                   {label}
                 </Link>
               );
@@ -189,7 +250,19 @@ function ProductFamilySelector({
                   )}
                   href={`/products/${candidate.handle}`}
                   key={candidate.id}
+                  onClick={(event) =>
+                    handleProductNavigation(event, candidate)
+                  }
+                  prefetch
+                  scroll={false}
                 >
+                  {pendingProductHandle === candidate.handle && isNavigating ? (
+                    <LoaderCircle
+                      aria-hidden="true"
+                      className="mr-1.5 size-3.5 animate-spin"
+                      strokeWidth={1.8}
+                    />
+                  ) : null}
                   {label}
                 </Link>
               );
@@ -197,6 +270,30 @@ function ProductFamilySelector({
           </div>
         </fieldset>
       ) : null}
+
+      <div
+        aria-live="polite"
+        className={cn(
+          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-200",
+          isNavigating
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0",
+        )}
+        role="status"
+      >
+        <div className="min-h-0">
+          <div className="flex items-center gap-2 rounded-sm bg-surface-muted px-3 py-2.5 text-xs text-foreground-muted">
+            <LoaderCircle
+              aria-hidden="true"
+              className="size-4 shrink-0 animate-spin text-foreground"
+              strokeWidth={1.7}
+            />
+            <span>
+              Updating to {pendingProduct?.title ?? "your selection"}…
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

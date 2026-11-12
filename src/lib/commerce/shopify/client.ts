@@ -20,10 +20,12 @@ export async function shopifyFetch<TData>({
   query,
   variables,
   buyerIp,
+  revalidate,
 }: {
   query: string;
   variables?: Readonly<Record<string, unknown>>;
   buyerIp?: string | undefined;
+  revalidate?: number;
 }): Promise<TData> {
   const config = getShopifyConfig();
   if (!config) {
@@ -40,7 +42,9 @@ export async function shopifyFetch<TData>({
         ...(buyerIp ? { "Shopify-Storefront-Buyer-IP": buyerIp } : {}),
       },
       body: JSON.stringify({ query, variables }),
-      cache: "no-store",
+      ...(revalidate === undefined
+        ? { cache: "no-store" as const }
+        : { next: { revalidate } }),
     },
   );
 
