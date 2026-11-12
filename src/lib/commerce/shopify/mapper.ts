@@ -1,4 +1,3 @@
-import { developmentProducts } from "@/data/development/mock-commerce";
 import type {
   Cart,
   Collection,
@@ -26,42 +25,6 @@ function mapImage(
   };
 }
 
-function findEditorialProduct(
-  handle: string,
-  title: string,
-): Product | undefined {
-  const exact = developmentProducts.find(
-    (product) => product.handle === handle,
-  );
-  if (exact) {
-    return exact;
-  }
-
-  const text = `${handle} ${title}`.toLowerCase();
-  const design = [
-    ["beyond-fear", ["beyond fear"]],
-    ["beyond-reality", ["beyond reality"]],
-    ["beyond-limits", ["beyond limits"]],
-    ["past-present-beyond", ["past present beyond", "beyond time"]],
-  ].find(([, aliases]) =>
-    (aliases as readonly string[]).some((alias) => text.includes(alias)),
-  )?.[0];
-  const garment = [
-    ["sculptural-boxy-black", ["sculptural boxy"]],
-    ["washed-art-charcoal", ["washed art"]],
-    ["signature-regular-off-white", ["signature regular"]],
-    ["relaxed-essential-chocolate", ["relaxed essential"]],
-  ].find(([, aliases]) =>
-    (aliases as readonly string[]).some((alias) => text.includes(alias)),
-  )?.[0];
-
-  return design && garment
-    ? developmentProducts.find(
-        (product) => product.handle === `${design}-${garment}`,
-      )
-    : undefined;
-}
-
 function selectedValue(
   variant: ShopifyVariant,
   target: "size" | "color",
@@ -86,7 +49,7 @@ function mapVariant(
     title: variant.title,
     ...(variant.sku ? { sku: variant.sku } : {}),
     available: variant.availableForSale,
-    ...(variant.quantityAvailable !== null
+    ...(typeof variant.quantityAvailable === "number"
       ? { quantityAvailable: variant.quantityAvailable }
       : {}),
     ...(size ? { size } : {}),
@@ -103,15 +66,10 @@ function mapVariant(
 }
 
 export function mapShopifyProduct(product: ShopifyProduct): Product {
-  const editorial = findEditorialProduct(product.handle, product.title);
   const shopifyImages = product.images.nodes.map((image) =>
     mapImage(image, product.title),
   );
-  const imagesByUrl = new Map<string, ProductImage>();
-  for (const image of [...shopifyImages, ...(editorial?.images ?? [])]) {
-    imagesByUrl.set(image.url, image);
-  }
-  const images = Array.from(imagesByUrl.values());
+  const images = shopifyImages;
   const variants = product.variants.nodes.map((variant) =>
     mapVariant(variant, product.title),
   );
@@ -125,10 +83,7 @@ export function mapShopifyProduct(product: ShopifyProduct): Product {
     id: product.id,
     handle: product.handle,
     title: product.title,
-    description: product.description || editorial?.description || "",
-    ...(editorial?.shortDescription
-      ? { shortDescription: editorial.shortDescription }
-      : {}),
+    description: product.description,
     images,
     price,
     ...(showCompareAt ? { compareAtPrice: compareAt } : {}),
@@ -141,25 +96,15 @@ export function mapShopifyProduct(product: ShopifyProduct): Product {
     collectionHandles: product.collections.nodes.map(
       (collection) => collection.handle,
     ),
-    ...(editorial?.story ? { story: editorial.story } : {}),
-    ...(editorial?.details ? { details: editorial.details } : {}),
-    ...(product.productType
-      ? { productType: product.productType }
-      : editorial?.productType
-        ? { productType: editorial.productType }
-        : {}),
-    ...(editorial?.artworkPlacement
-      ? { artworkPlacement: editorial.artworkPlacement }
-      : {}),
+    ...(product.productType ? { productType: product.productType } : {}),
     seo: {
       title: product.seo.title?.trim() || product.title,
       description:
         product.seo.description?.trim() ||
         product.description ||
-        editorial?.seo.description ||
         product.title,
       ...(images[0] ? { image: images[0] } : {}),
-      noIndex: true,
+      noIndex: false,
     },
     contentStatus: "production",
     isNew: product.tags.some((tag) => tag.toLowerCase() === "new"),
@@ -167,9 +112,7 @@ export function mapShopifyProduct(product: ShopifyProduct): Product {
       (tag) => tag.toLowerCase() === "best-seller",
     ),
     isLimitedEdition: Boolean(
-      product.tags.some(
-        (tag) => tag.toLowerCase() === "limited-edition",
-      ) || editorial?.isLimitedEdition,
+      product.tags.some((tag) => tag.toLowerCase() === "limited-edition"),
     ),
   };
 }
@@ -198,7 +141,7 @@ export function mapShopifyCollection(
         collection.description ||
         collection.title,
       ...(image ? { image } : {}),
-      noIndex: true,
+      noIndex: false,
     },
     contentStatus: "production",
   };
@@ -211,6 +154,9 @@ export function mapShopifyCart(cart: ShopifyCart): Cart {
     totalQuantity: cart.totalQuantity,
     subtotal: cart.cost.subtotalAmount,
     total: cart.cost.totalAmount,
+    ...(cart.buyerIdentity.countryCode
+      ? { buyerCountryCode: cart.buyerIdentity.countryCode }
+      : {}),
     lines: cart.lines.nodes.map((line) => ({
       id: line.id,
       quantity: line.quantity,

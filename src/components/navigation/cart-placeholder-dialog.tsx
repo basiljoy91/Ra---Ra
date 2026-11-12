@@ -211,6 +211,13 @@ export function CartPlaceholderDialog({ open, onClose }: CartDialogProps) {
               <p className="type-caption mt-1 text-foreground-muted">
                 Shipping and taxes are calculated in Shopify checkout.
               </p>
+              <Link
+                className="mt-4 block text-center text-sm font-semibold underline underline-offset-4"
+                href="/cart"
+                onClick={onClose}
+              >
+                View full bag
+              </Link>
               <Button className="mt-4 w-full" disabled={isPending} onClick={checkout} size="lg">
                 {isPending ? "Updating…" : "Continue to secure checkout"}
               </Button>

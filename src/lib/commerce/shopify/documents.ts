@@ -26,7 +26,6 @@ export const PRODUCT_FIELDS = `
         title
         sku
         availableForSale
-        quantityAvailable
         selectedOptions { name value }
         price { amount currencyCode }
         compareAtPrice { amount currencyCode }
@@ -94,6 +93,7 @@ export const CART_FIELDS = `
     id
     checkoutUrl
     totalQuantity
+    buyerIdentity { countryCode }
     cost {
       subtotalAmount { amount currencyCode }
       totalAmount { amount currencyCode }
@@ -109,7 +109,6 @@ export const CART_FIELDS = `
             title
             sku
             availableForSale
-            quantityAvailable
             selectedOptions { name value }
             price { amount currencyCode }
             compareAtPrice { amount currencyCode }
@@ -171,6 +170,21 @@ export const CART_LINES_REMOVE_MUTATION = `
   mutation StorefrontCartLinesRemove($cartId: ID!, $lineIds: [ID!]!, $country: CountryCode!)
     @inContext(country: $country) {
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+      cart { ...CartFields }
+      userErrors { field message code }
+      warnings { message code }
+    }
+  }
+`;
+
+export const CART_BUYER_IDENTITY_UPDATE_MUTATION = `
+  ${CART_FIELDS}
+  mutation StorefrontCartBuyerIdentityUpdate(
+    $cartId: ID!
+    $buyerIdentity: CartBuyerIdentityInput!
+    $country: CountryCode!
+  ) @inContext(country: $country) {
+    cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {
       cart { ...CartFields }
       userErrors { field message code }
       warnings { message code }

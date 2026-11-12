@@ -1,0 +1,19 @@
+<main>
+  <h1>Returning to ra&amp;ra…</h1>
+  {% if settings.storefront_url != blank %}
+    <p>
+      <a href="{{ settings.storefront_url }}">Continue to the storefront</a>
+    </p>
+  {% else %}
+    <p>Set the storefront URL in this theme’s settings.</p>
+  {% endif %}
+</main>
+
+{% schema %}
+{
+  "name": "Storefront redirect",
+  "settings": [],
+  "presets": [{ "name": "Storefront redirect" }]
+}
+{% endschema %}
+

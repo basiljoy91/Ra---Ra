@@ -1,0 +1,21 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "ra&ra Headless Redirect",
+    "theme_version": "1.0.0",
+    "theme_author": "ra&ra"
+  },
+  {
+    "name": "Storefront",
+    "settings": [
+      {
+        "type": "text",
+        "id": "storefront_url",
+        "label": "Full storefront URL",
+        "default": "http://localhost:3000",
+        "info": "Use http://localhost:3000 for testing. Replace it with the public EU storefront URL before launch."
+      }
+    ]
+  }
+]
+

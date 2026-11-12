@@ -4,13 +4,10 @@ import { notFound, redirect } from "next/navigation";
 import { CollectionPageTemplate } from "@/components/commerce/collections/collection-page-template";
 import { CollectionStructuredData } from "@/components/commerce/collections/collection-structured-data";
 import { siteConfig } from "@/config/site";
-import {
-  collectionCatalog,
-  getCollectionCatalogEntry,
-} from "@/data/development/mock-collections";
 import { commerceQuickAdd } from "@/features/cart/commerce-cart";
-import { isShopifyConfigured } from "@/lib/commerce/shopify/config";
+import { createCollectionCatalogEntry } from "@/lib/collections/catalog-entry";
 import { getCollectionByHandle } from "@/lib/commerce/shopify/provider";
+import { getCommerceRequestContext } from "@/lib/commerce/shopify/request-context";
 import {
   buildCollectionFilters,
   buildCollectionHref,
@@ -26,25 +23,20 @@ interface CollectionRouteProps {
   searchParams: Promise<CollectionSearchParams>;
 }
 
-export function generateStaticParams() {
-  return collectionCatalog
-    .filter((entry) => entry.status !== "hidden")
-    .map((entry) => ({ collectionHandle: entry.collection.handle }));
-}
-
 export async function generateMetadata({
   params,
   searchParams,
 }: CollectionRouteProps): Promise<Metadata> {
   const { collectionHandle } = await params;
   const resolvedSearchParams = await searchParams;
-  const localEntry = getCollectionCatalogEntry(collectionHandle);
-  const commerceCollection = await getCollectionByHandle(collectionHandle);
-  const entry = localEntry && commerceCollection
-    ? { ...localEntry, collection: { ...commerceCollection, themeKey: localEntry.collection.themeKey } }
-    : isShopifyConfigured()
-      ? undefined
-      : localEntry;
+  const context = await getCommerceRequestContext();
+  const commerceCollection = await getCollectionByHandle(
+    collectionHandle,
+    context,
+  );
+  const entry = commerceCollection
+    ? createCollectionCatalogEntry(commerceCollection)
+    : undefined;
 
   if (!entry) {
     return {};
@@ -91,13 +83,14 @@ export default async function CollectionDetailPage({
 }: CollectionRouteProps) {
   const { collectionHandle } = await params;
   const resolvedSearchParams = await searchParams;
-  const localEntry = getCollectionCatalogEntry(collectionHandle);
-  const commerceCollection = await getCollectionByHandle(collectionHandle);
-  const entry = localEntry && commerceCollection
-    ? { ...localEntry, collection: { ...commerceCollection, themeKey: localEntry.collection.themeKey } }
-    : isShopifyConfigured()
-      ? undefined
-      : localEntry;
+  const context = await getCommerceRequestContext();
+  const commerceCollection = await getCollectionByHandle(
+    collectionHandle,
+    context,
+  );
+  const entry = commerceCollection
+    ? createCollectionCatalogEntry(commerceCollection)
+    : undefined;
 
   if (!entry) {
     notFound();

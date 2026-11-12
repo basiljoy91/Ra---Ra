@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Returning to ra&amp;ra</title>
+    {{ content_for_header }}
+
+    {% if settings.storefront_url != blank %}
+      <script>
+        if (!window.Shopify.designMode) {
+          var storefrontUrl = {{ settings.storefront_url | json }};
+          var target = new URL(storefrontUrl);
+          var source = new URL(window.location.href);
+
+          if (source.pathname !== '/') {
+            target.pathname = source.pathname;
+          }
+          target.search = source.search;
+          window.location.replace(target.toString());
+        }
+      </script>
+    {% endif %}
+
+    <style>
+      body {
+        background: #0b0b0b;
+        color: #f5f1e8;
+        display: grid;
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        place-items: center;
+        text-align: center;
+      }
+
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    {{ content_for_layout }}
+  </body>
+</html>
+

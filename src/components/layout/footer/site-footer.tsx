@@ -3,13 +3,21 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { BrandLogo } from "@/components/navigation/brand-logo";
+import { MarketSelector } from "@/components/layout/footer/market-selector.client";
+import type { StorefrontMarketOption } from "@/config/storefront-markets";
 import type { FooterConfig } from "@/types/footer";
 
 type SiteFooterProps = {
   config: FooterConfig;
+  marketOptions: readonly StorefrontMarketOption[];
+  selectedCountryCode: string;
 };
 
-export function SiteFooter({ config }: SiteFooterProps) {
+export function SiteFooter({
+  config,
+  marketOptions,
+  selectedCountryCode,
+}: SiteFooterProps) {
   return (
     <footer
       className="border-t border-border bg-background text-foreground"
@@ -42,9 +50,10 @@ export function SiteFooter({ config }: SiteFooterProps) {
               <Link href="/journal" aria-label="YouTube"><Video size={20} strokeWidth={1.7} /></Link>
               <Link href="/journal" aria-label="Spotify"><Radio size={19} strokeWidth={1.7} /></Link>
             </div>
-            <Link href="/faq" className="inline-flex w-max min-h-8 items-center rounded-full border border-foreground/50 px-4 text-[0.625rem] font-medium tracking-[0.08em] no-underline uppercase">
-              {config.market.marketLabel} / {config.market.currencyLabel}
-            </Link>
+            <MarketSelector
+              initialCountryCode={selectedCountryCode}
+              markets={marketOptions}
+            />
             <div className="flex items-center gap-4">
               <span className="text-[0.6875rem] font-bold italic">VISA</span>
               <span className="text-[0.6875rem] font-bold">●●</span>

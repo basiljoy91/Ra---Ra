@@ -142,4 +142,5 @@ export interface Cart {
   lines: readonly CartLine[];
   subtotal: Money;
   total: Money;
+  buyerCountryCode?: string;
 }

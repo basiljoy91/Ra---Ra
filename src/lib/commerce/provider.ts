@@ -6,13 +6,27 @@ export interface ProductQuery {
   limit?: number;
 }
 
+export interface CommerceRequestContext {
+  buyerIp?: string;
+  countryCode?: string;
+}
+
 /**
  * Storefront-only provider boundary. Transactional capabilities such as cart,
  * checkout, accounts and inventory synchronization are intentionally deferred.
  */
 export interface CommerceProvider {
-  getProducts(query?: ProductQuery): Promise<readonly Product[]>;
-  getProductByHandle(handle: string): Promise<Product | null>;
-  getCollections(): Promise<readonly Collection[]>;
-  getCollectionByHandle(handle: string): Promise<Collection | null>;
+  getProducts(
+    query?: ProductQuery,
+    context?: CommerceRequestContext,
+  ): Promise<readonly Product[]>;
+  getProductByHandle(
+    handle: string,
+    context?: CommerceRequestContext,
+  ): Promise<Product | null>;
+  getCollections(context?: CommerceRequestContext): Promise<readonly Collection[]>;
+  getCollectionByHandle(
+    handle: string,
+    context?: CommerceRequestContext,
+  ): Promise<Collection | null>;
 }

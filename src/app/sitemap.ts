@@ -2,10 +2,17 @@ import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/config/site";
 import { journalArticles } from "@/data/development/editorial-content";
-import { collectionCatalog } from "@/data/development/mock-collections";
+import {
+  getCollections,
+  getProducts,
+} from "@/lib/commerce/shopify/provider";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [collections, products] = await Promise.all([
+    getCollections(),
+    getProducts({ limit: 250 }),
+  ]);
   const editorialRoutes = ["/about", "/journal", "/contact", "/faq", "/size-guide"].map(
     (path) => ({
       url: buildAbsoluteUrl(path, siteConfig.siteUrl),
@@ -18,17 +25,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
-  const activeCollections = collectionCatalog
-    .filter((entry) => entry.status === "active")
-    .map((entry) => ({
+  const collectionRoutes = collections.map((collection) => ({
       url: buildAbsoluteUrl(
-        `/collections/${entry.collection.handle}`,
+        `/collections/${collection.handle}`,
         siteConfig.siteUrl,
       ),
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     }));
+  const productRoutes = products.map((product) => ({
+    url: buildAbsoluteUrl(`/products/${product.handle}`, siteConfig.siteUrl),
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
 
   return [
     {
@@ -45,6 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...editorialRoutes,
     ...journalRoutes,
-    ...activeCollections,
+    ...collectionRoutes,
+    ...productRoutes,
   ];
 }

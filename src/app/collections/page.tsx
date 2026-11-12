@@ -5,9 +5,10 @@ import { CollectionOverviewGrid } from "@/components/commerce/collections/collec
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { siteConfig } from "@/config/site";
-import { getVisibleCollectionSummaries } from "@/data/development/mock-collections";
-import { getCollectionByHandle } from "@/lib/commerce/shopify/provider";
+import { getCollections } from "@/lib/commerce/shopify/provider";
+import { getCommerceRequestContext } from "@/lib/commerce/shopify/request-context";
 import { buildAbsoluteUrl } from "@/lib/utilities";
+import type { CollectionSummary } from "@/types/collection";
 
 const title = "Explore the Editions";
 const description =
@@ -39,16 +40,22 @@ export const metadata: Metadata = {
 };
 
 export default async function CollectionsOverviewPage() {
-  const summaries = getVisibleCollectionSummaries();
-  const beyond = await getCollectionByHandle("beyond");
-  const collections = summaries.map((summary) =>
-    summary.handle === "beyond" && beyond
-      ? {
-          ...summary,
-          productCount: beyond.products.length,
-          ...(beyond.heroImage ? { image: beyond.heroImage } : {}),
-        }
-      : summary,
+  const context = await getCommerceRequestContext();
+  const commerceCollections = await getCollections(context);
+  const collections: readonly CollectionSummary[] = commerceCollections.map(
+    (collection) => ({
+      id: collection.id,
+      handle: collection.handle,
+      title: collection.title,
+      description: collection.description,
+      ...(collection.heroImage ? { image: collection.heroImage } : {}),
+      href: `/collections/${collection.handle}`,
+      status: "active",
+      themeKey: collection.themeKey,
+      ...(collection.products.length
+        ? { productCount: collection.products.length }
+        : {}),
+    }),
   );
 
   return (

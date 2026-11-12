@@ -1,27 +1,32 @@
 "use server";
 
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
-import { developmentAddToCart } from "@/features/cart/development-add-to-cart";
 import {
   addShopifyCartLine,
   createShopifyCart,
   getShopifyCart,
   removeShopifyCartLine,
+  updateShopifyCartBuyerIdentity,
   updateShopifyCartLine,
 } from "@/lib/commerce/shopify/cart";
 import { isShopifyConfigured } from "@/lib/commerce/shopify/config";
+import {
+  getAvailableStorefrontMarkets,
+  getCommerceRequestContext,
+  MARKET_COOKIE,
+  resolveStorefrontCountry,
+} from "@/lib/commerce/shopify/request-context";
+import type { Cart, CommerceRequestContext } from "@/lib/commerce";
 import type { CheckoutResult, CartMutationResult, CartReadResult } from "@/types/cart";
-import type { AddToCartInput, AddToCartResult } from "@/types/product-detail";
+import type {
+  AddToCartInput,
+  AddToCartResult,
+  BuyNowResult,
+} from "@/types/product-detail";
 import type { QuickAddInput, QuickAddResult } from "@/types/product-card";
 
 const CART_COOKIE = "ra_shopify_cart";
-
-async function getBuyerIp(): Promise<string | undefined> {
-  const requestHeaders = await headers();
-  const forwarded = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || requestHeaders.get("x-real-ip") || undefined;
-}
 
 async function readCartId(): Promise<string | undefined> {
   return (await cookies()).get(CART_COOKIE)?.value;
@@ -47,6 +52,21 @@ function errorMessage(error: unknown): string {
     : "The Shopify cart could not be updated. Try again.";
 }
 
+async function getSynchronizedCart(
+  cartId: string,
+  context: CommerceRequestContext,
+): Promise<Cart | null> {
+  const cart = await getShopifyCart(cartId, context);
+  if (
+    cart &&
+    context.countryCode &&
+    cart.buyerCountryCode !== context.countryCode
+  ) {
+    return updateShopifyCartBuyerIdentity(cartId, context);
+  }
+  return cart;
+}
+
 export async function getCartAction(): Promise<CartReadResult> {
   if (!isShopifyConfigured()) {
     return { status: "success", configured: false, cart: null };
@@ -58,7 +78,8 @@ export async function getCartAction(): Promise<CartReadResult> {
   }
 
   try {
-    const cart = await getShopifyCart(cartId, await getBuyerIp());
+    const context = await getCommerceRequestContext();
+    const cart = await getSynchronizedCart(cartId, context);
     if (!cart) {
       await clearCartId();
     }
@@ -76,7 +97,11 @@ export async function commerceAddToCart(
   input: AddToCartInput,
 ): Promise<AddToCartResult> {
   if (!isShopifyConfigured()) {
-    return developmentAddToCart(input);
+    return {
+      status: "error",
+      message:
+        "Shopify is not connected to this website yet. Add the store domain and private Storefront token, then restart the server.",
+    };
   }
 
   if (!input.variantId || input.quantity < 1 || input.quantity > 99) {
@@ -84,10 +109,10 @@ export async function commerceAddToCart(
   }
 
   try {
-    const buyerIp = await getBuyerIp();
+    const context = await getCommerceRequestContext();
     const cartId = await readCartId();
     const existingCart = cartId
-      ? await getShopifyCart(cartId, buyerIp)
+      ? await getSynchronizedCart(cartId, context)
       : null;
     if (cartId && !existingCart) {
       await clearCartId();
@@ -97,9 +122,9 @@ export async function commerceAddToCart(
           cartId,
           input.variantId,
           input.quantity,
-          buyerIp,
+          context,
         )
-      : await createShopifyCart(input.variantId, input.quantity, buyerIp);
+      : await createShopifyCart(input.variantId, input.quantity, context);
 
     await saveCartId(cart.id);
     return {
@@ -118,6 +143,39 @@ export async function commerceQuickAdd(
   return commerceAddToCart(input);
 }
 
+export async function commerceBuyNow(
+  input: AddToCartInput,
+): Promise<BuyNowResult> {
+  if (!isShopifyConfigured()) {
+    return {
+      status: "error",
+      message:
+        "Shopify is not connected to this website yet. Add the store domain and private Storefront token, then restart the server.",
+    };
+  }
+
+  if (!input.variantId || input.quantity < 1 || input.quantity > 99) {
+    return { status: "error", message: "Choose a valid quantity and variant." };
+  }
+
+  try {
+    const context = await getCommerceRequestContext();
+    const cart = await createShopifyCart(
+      input.variantId,
+      input.quantity,
+      context,
+    );
+    await saveCartId(cart.id);
+    return {
+      status: "success",
+      checkoutUrl: cart.checkoutUrl,
+      cartCount: cart.totalQuantity,
+    };
+  } catch (error) {
+    return { status: "error", message: errorMessage(error) };
+  }
+}
+
 export async function updateCartLineAction(
   lineId: string,
   quantity: number,
@@ -128,13 +186,14 @@ export async function updateCartLineAction(
   }
 
   try {
+    const context = await getCommerceRequestContext();
     const cart = quantity <= 0
-      ? await removeShopifyCartLine(cartId, lineId, await getBuyerIp())
+      ? await removeShopifyCartLine(cartId, lineId, context)
       : await updateShopifyCartLine(
           cartId,
           lineId,
           Math.min(quantity, 99),
-          await getBuyerIp(),
+          context,
         );
     return { status: "success", cart };
   } catch (error) {
@@ -157,4 +216,45 @@ export async function getCheckoutUrlAction(): Promise<CheckoutResult> {
     return { status: "error", message: "Your bag is empty." };
   }
   return { status: "success", checkoutUrl: result.cart.checkoutUrl };
+}
+
+export async function updateMarketAction(countryCode: string): Promise<
+  | { status: "success"; countryCode: string; cart: Cart | null }
+  | { status: "error"; message: string }
+> {
+  const normalized = countryCode.trim().toUpperCase();
+  const allowed = getAvailableStorefrontMarkets().some(
+    (market) => market.countryCode === normalized,
+  );
+  if (!allowed) {
+    return { status: "error", message: "That market is not available." };
+  }
+
+  const country = resolveStorefrontCountry(normalized);
+  (await cookies()).set(MARKET_COOKIE, country, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+  });
+
+  if (!isShopifyConfigured()) {
+    return { status: "success", countryCode: country, cart: null };
+  }
+
+  try {
+    const cartId = await readCartId();
+    if (!cartId) {
+      return { status: "success", countryCode: country, cart: null };
+    }
+    const requestContext = await getCommerceRequestContext();
+    const cart = await updateShopifyCartBuyerIdentity(cartId, {
+      ...requestContext,
+      countryCode: country,
+    });
+    return { status: "success", countryCode: country, cart };
+  } catch (error) {
+    return { status: "error", message: errorMessage(error) };
+  }
 }

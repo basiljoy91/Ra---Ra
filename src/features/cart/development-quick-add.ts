@@ -18,6 +18,6 @@ export const developmentQuickAdd: ProductCardQuickAddHandler = async (
 
   return {
     status: "success",
-    message: "Development selection confirmed. No cart was updated.",
+    message: "Component preview only. Use a storefront product page to test the Shopify cart.",
   };
 };
