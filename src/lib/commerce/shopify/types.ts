@@ -20,7 +20,7 @@ export interface ShopifyVariant {
   title: string;
   sku: string | null;
   availableForSale: boolean;
-  quantityAvailable: number | null;
+  quantityAvailable?: number | null;
   selectedOptions: readonly ShopifySelectedOption[];
   price: ShopifyMoney;
   compareAtPrice: ShopifyMoney | null;
@@ -68,6 +68,9 @@ export interface ShopifyCart {
   id: string;
   checkoutUrl: string;
   totalQuantity: number;
+  buyerIdentity: {
+    countryCode: string | null;
+  };
   cost: {
     subtotalAmount: ShopifyMoney;
     totalAmount: ShopifyMoney;

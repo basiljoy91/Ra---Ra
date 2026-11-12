@@ -4,12 +4,16 @@ import { notFound } from "next/navigation";
 import { ProductPageTemplate } from "@/components/commerce/product-detail/product-page-template";
 import { ProductStructuredData } from "@/components/commerce/product-detail/product-structured-data";
 import { siteConfig } from "@/config/site";
-import { getCollectionCatalogEntry } from "@/data/development/mock-collections";
-import { commerceAddToCart } from "@/features/cart/commerce-cart";
 import {
+  commerceAddToCart,
+  commerceBuyNow,
+} from "@/features/cart/commerce-cart";
+import {
+  getCollectionByHandle,
   getProductByHandle,
   getProducts,
 } from "@/lib/commerce/shopify/provider";
+import { getCommerceRequestContext } from "@/lib/commerce/shopify/request-context";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
 interface ProductRouteProps {
@@ -20,7 +24,8 @@ export async function generateMetadata({
   params,
 }: ProductRouteProps): Promise<Metadata> {
   const { productHandle } = await params;
-  const product = await getProductByHandle(productHandle);
+  const context = await getCommerceRequestContext();
+  const product = await getProductByHandle(productHandle, context);
 
   if (!product) {
     return {};
@@ -61,26 +66,25 @@ export async function generateMetadata({
 
 export default async function ProductDetailPage({ params }: ProductRouteProps) {
   const { productHandle } = await params;
-  const product = await getProductByHandle(productHandle);
+  const context = await getCommerceRequestContext();
+  const product = await getProductByHandle(productHandle, context);
 
   if (!product) {
     notFound();
   }
 
   const collectionHandle = product.collectionHandles[0];
-  const collectionEntry = collectionHandle
-    ? getCollectionCatalogEntry(collectionHandle)
-    : undefined;
-  const collection = collectionEntry
+  const commerceCollection = collectionHandle
+    ? await getCollectionByHandle(collectionHandle, context)
+    : null;
+  const collection = commerceCollection
     ? {
-        handle: collectionEntry.collection.handle,
-        title: collectionEntry.collection.title,
+        handle: commerceCollection.handle,
+        title: commerceCollection.title,
       }
     : undefined;
-  const relatedProducts = (await getProducts({
-    collectionHandle: collectionHandle ?? "beyond",
-    limit: 16,
-  }))
+  const catalogProducts = await getProducts({ limit: 50 }, context);
+  const relatedProducts = catalogProducts
     .filter((candidate) => candidate.id !== product.id)
     .slice(0, 4);
 
@@ -92,6 +96,8 @@ export default async function ProductDetailPage({ params }: ProductRouteProps) {
       />
       <ProductPageTemplate
         addToCartAction={commerceAddToCart}
+        buyNowAction={commerceBuyNow}
+        familyProducts={catalogProducts}
         product={product}
         relatedProducts={relatedProducts}
         {...(collection ? { collection } : {})}

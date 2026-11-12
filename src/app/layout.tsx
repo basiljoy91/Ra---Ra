@@ -6,6 +6,10 @@ import { SiteFooter } from "@/components/layout/footer/site-footer";
 import { SiteHeader } from "@/components/navigation/site-header";
 import { footerConfig } from "@/config/footer";
 import { siteConfig } from "@/config/site";
+import {
+  getAvailableStorefrontMarkets,
+  getCommerceRequestContext,
+} from "@/lib/commerce/shopify/request-context";
 
 import "./globals.css";
 
@@ -69,11 +73,14 @@ export const viewport: Viewport = {
   themeColor: "#0b0b0b",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const commerceContext = await getCommerceRequestContext();
+  const marketOptions = getAvailableStorefrontMarkets();
+
   return (
     <html
       lang={siteConfig.defaultLocale}
@@ -91,7 +98,13 @@ export default function RootLayout({
         <main id="main-content" tabIndex={-1} className="flex-1">
           {children}
         </main>
-        <SiteFooter config={footerConfig} />
+        <SiteFooter
+          config={footerConfig}
+          marketOptions={marketOptions}
+          selectedCountryCode={
+            commerceContext.countryCode ?? marketOptions[0]?.countryCode ?? "IN"
+          }
+        />
       </body>
     </html>
   );

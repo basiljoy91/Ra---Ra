@@ -72,15 +72,21 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                 </p>
                 <ul className="mt-6 grid gap-3 text-sm" role="list">
                   {[
-                    `${details?.fit ?? "Unisex"} fit`,
-                    details?.material ?? "Heavyweight premium cotton",
-                    details?.artworkPlacement ?? product.artworkPlacement,
-                    details?.manufacturing ?? "Soft-hand print finish",
-                    "Designed as a unisex style",
-                  ].map((item) => (
-                    <li className="flex items-start gap-3" key={item}>
+                    { id: "fit", text: `${details?.fit ?? "Unisex"} fit` },
+                    { id: "material", text: details?.material ?? "Heavyweight premium cotton" },
+                    {
+                      id: "artwork-placement",
+                      text:
+                        details?.artworkPlacement ??
+                        product.artworkPlacement ??
+                        "Signature chest and back artwork",
+                    },
+                    { id: "manufacturing", text: details?.manufacturing ?? "Soft-hand print finish" },
+                    { id: "unisex", text: "Designed as a unisex style" },
+                  ].map(({ id, text }) => (
+                    <li className="flex items-start gap-3" key={id}>
                       <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0" strokeWidth={1.8} />
-                      {item}
+                      {text}
                     </li>
                   ))}
                 </ul>
@@ -111,8 +117,8 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                   <div>
                     <p className="font-semibold">Care</p>
                     <ul className="mt-2 grid gap-2 text-foreground-muted" role="list">
-                      {details.care.map((instruction) => (
-                        <li key={instruction}>— {instruction}</li>
+                      {details.care.map((instruction, index) => (
+                        <li key={`${index}-${instruction}`}>— {instruction}</li>
                       ))}
                     </ul>
                   </div>

@@ -4,20 +4,27 @@ import { RelatedProducts } from "@/components/commerce/product-detail/related-pr
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import type { Product } from "@/lib/commerce";
-import type { AddToCartHandler } from "@/types/product-detail";
+import type {
+  AddToCartHandler,
+  BuyNowHandler,
+} from "@/types/product-detail";
 
 interface ProductPageTemplateProps {
   product: Product;
+  familyProducts: readonly Product[];
   relatedProducts: readonly Product[];
   collection?: { handle: string; title: string };
   addToCartAction: AddToCartHandler;
+  buyNowAction: BuyNowHandler;
 }
 
 export function ProductPageTemplate({
   product,
+  familyProducts,
   relatedProducts,
   collection,
   addToCartAction,
+  buyNowAction,
 }: ProductPageTemplateProps) {
   return (
     <article className="product-detail-page">
@@ -25,6 +32,15 @@ export function ProductPageTemplate({
         <Container>
           <ProductPrimaryExperience
             addToCartAction={addToCartAction}
+            buyNowAction={buyNowAction}
+            familyProducts={familyProducts.map(
+              ({ handle, id, productType, title }) => ({
+                handle,
+                id,
+                title,
+                ...(productType ? { productType } : {}),
+              }),
+            )}
             product={product}
             {...(collection ? { collectionTitle: collection.title } : {})}
           />

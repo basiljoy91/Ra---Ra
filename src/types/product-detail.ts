@@ -11,3 +11,11 @@ export type AddToCartResult =
 export type AddToCartHandler = (
   input: AddToCartInput,
 ) => Promise<AddToCartResult>;
+
+export type BuyNowResult =
+  | { status: "success"; checkoutUrl: string; cartCount: number }
+  | { status: "error"; message: string };
+
+export type BuyNowHandler = (
+  input: AddToCartInput,
+) => Promise<BuyNowResult>;

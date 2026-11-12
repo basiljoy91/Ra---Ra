@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "main": {
+      "type": "redirect",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
+

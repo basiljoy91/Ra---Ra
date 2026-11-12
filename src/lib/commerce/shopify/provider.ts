@@ -4,6 +4,7 @@ import {
 } from "@/data/development/mock-commerce";
 import type {
   Collection,
+  CommerceRequestContext,
   CommerceProvider,
   Product,
   ProductQuery,
@@ -61,10 +62,11 @@ const developmentProvider: CommerceProvider = {
 };
 
 const shopifyProvider: CommerceProvider = {
-  async getProducts(query = {}) {
+  async getProducts(query = {}, context = {}) {
     if (query.collectionHandle) {
       const collection = await shopifyProvider.getCollectionByHandle(
         query.collectionHandle,
+        context,
       );
       const products = collection?.products ?? [];
       return products.slice(0, query.limit ?? products.length);
@@ -78,30 +80,39 @@ const shopifyProvider: CommerceProvider = {
       variables: {
         first: Math.min(query.limit ?? 50, 250),
         query: query.search?.trim() || null,
-        country: config?.countryCode ?? "IN",
+        country: context.countryCode ?? config?.countryCode ?? "IN",
       },
+      buyerIp: context.buyerIp,
     });
     return data.products.nodes.map(mapShopifyProduct);
   },
-  async getProductByHandle(handle) {
+  async getProductByHandle(handle, context = {}) {
     const config = getShopifyConfig();
     const data = await shopifyFetch<{ product: ShopifyProduct | null }>({
       query: PRODUCT_BY_HANDLE_QUERY,
-      variables: { handle, country: config?.countryCode ?? "IN" },
+      variables: {
+        handle,
+        country: context.countryCode ?? config?.countryCode ?? "IN",
+      },
+      buyerIp: context.buyerIp,
     });
     return data.product ? mapShopifyProduct(data.product) : null;
   },
-  async getCollections() {
+  async getCollections(context = {}) {
     const config = getShopifyConfig();
     const data = await shopifyFetch<{
       collections: { nodes: readonly ShopifyCollection[] };
     }>({
       query: COLLECTIONS_QUERY,
-      variables: { first: 50, country: config?.countryCode ?? "IN" },
+      variables: {
+        first: 50,
+        country: context.countryCode ?? config?.countryCode ?? "IN",
+      },
+      buyerIp: context.buyerIp,
     });
     return data.collections.nodes.map(mapShopifyCollection);
   },
-  async getCollectionByHandle(handle) {
+  async getCollectionByHandle(handle, context = {}) {
     const config = getShopifyConfig();
     const data = await shopifyFetch<{
       collection: ShopifyCollection | null;
@@ -110,8 +121,9 @@ const shopifyProvider: CommerceProvider = {
       variables: {
         handle,
         first: 250,
-        country: config?.countryCode ?? "IN",
+        country: context.countryCode ?? config?.countryCode ?? "IN",
       },
+      buyerIp: context.buyerIp,
     });
     return data.collection ? mapShopifyCollection(data.collection) : null;
   },
@@ -123,22 +135,27 @@ export function getCommerceProvider(): CommerceProvider {
 
 export async function getProducts(
   query?: ProductQuery,
+  context?: CommerceRequestContext,
 ): Promise<readonly Product[]> {
-  return getCommerceProvider().getProducts(query);
+  return getCommerceProvider().getProducts(query, context);
 }
 
 export async function getProductByHandle(
   handle: string,
+  context?: CommerceRequestContext,
 ): Promise<Product | null> {
-  return getCommerceProvider().getProductByHandle(handle);
+  return getCommerceProvider().getProductByHandle(handle, context);
 }
 
-export async function getCollections(): Promise<readonly Collection[]> {
-  return getCommerceProvider().getCollections();
+export async function getCollections(
+  context?: CommerceRequestContext,
+): Promise<readonly Collection[]> {
+  return getCommerceProvider().getCollections(context);
 }
 
 export async function getCollectionByHandle(
   handle: string,
+  context?: CommerceRequestContext,
 ): Promise<Collection | null> {
-  return getCommerceProvider().getCollectionByHandle(handle);
+  return getCommerceProvider().getCollectionByHandle(handle, context);
 }

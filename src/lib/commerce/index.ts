@@ -16,6 +16,7 @@ export type {
   SeoFields,
 } from "@/lib/commerce/types";
 export type {
+  CommerceRequestContext,
   CommerceProvider,
   ProductQuery,
 } from "@/lib/commerce/provider";
