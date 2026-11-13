@@ -27,7 +27,7 @@ export function AnnouncementBar({ config }: AnnouncementBarProps) {
   return (
     <aside
       aria-label="Store announcement"
-      className="relative z-[var(--z-sticky)] grid min-h-[var(--announcement-height)] grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-[#111] px-[var(--page-gutter)] py-1 text-center text-[0.5625rem] font-medium tracking-[0.16em] text-[#f6f1ea] uppercase sm:text-[0.625rem]"
+      className="relative z-[var(--z-sticky)] grid min-h-[var(--announcement-height)] grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-[#111] px-[var(--page-gutter)] py-1 text-center text-[0.5625rem] font-medium tracking-[0.16em] text-[#f6f1ea] uppercase max-[47.999rem]:hidden sm:text-[0.625rem]"
     >
       <span aria-hidden="true" />
       <span>

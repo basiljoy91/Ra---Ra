@@ -1,4 +1,5 @@
 import { Menu } from "lucide-react";
+import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { BrandLogo } from "@/components/navigation/brand-logo";
@@ -30,7 +31,7 @@ export function MobileHeader({
   onAccount,
 }: MobileHeaderProps) {
   return (
-    <Container className="grid h-[var(--header-height-mobile)] grid-cols-[1fr_auto_1fr] items-center gap-1 min-[64rem]:hidden">
+    <Container className="grid h-[var(--header-height-mobile)] grid-cols-[1fr_auto_1fr] items-center gap-1 max-[47.999rem]:px-3 min-[64rem]:hidden">
       <button
         type="button"
         aria-label="Open navigation menu"
@@ -43,7 +44,14 @@ export function MobileHeader({
         <Menu aria-hidden="true" size={21} strokeWidth={1.7} />
       </button>
 
-      <BrandLogo compact className="justify-self-center" />
+      <Link
+        className="hidden justify-self-center font-serif text-[1.9rem] font-bold leading-none tracking-[-0.045em] no-underline max-[47.999rem]:block"
+        href="/"
+        aria-label="Ra & Ra home"
+      >
+        Ra &amp; Ra
+      </Link>
+      <BrandLogo compact className="justify-self-center max-[47.999rem]:hidden" />
 
       <HeaderActions
         searchEnabled={searchEnabled}

@@ -5,6 +5,14 @@
   font-feature-settings: "kern" 1, "liga" 1;
 }
 
+.mobileExperience {
+  display: none;
+}
+
+.desktopExperience {
+  display: block;
+}
+
 .heroCarousel {
   position: relative;
   min-height: clamp(32rem, 64vh, 46rem);
@@ -840,6 +848,14 @@
 }
 
 @media (max-width: 47.999rem) {
+  .mobileExperience {
+    display: block;
+  }
+
+  .desktopExperience {
+    display: none;
+  }
+
   .heroCarousel {
     min-height: 34rem;
   }
