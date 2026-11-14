@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 
 import { ProductPrice } from "@/components/commerce/product-card/product-price";
+import styles from "@/components/commerce/product-detail/product-detail-mobile.module.css";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { productPageConfig } from "@/config/product-page";
@@ -18,10 +19,10 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
   }
 
   return (
-    <Section aria-labelledby="related-products-heading" className="pb-12 pt-8" spacing="sm">
+    <Section aria-labelledby="related-products-heading" className={`pb-12 pt-8 ${styles.relatedSection}`} spacing="sm">
       <Container>
         <div className="flex items-end justify-between gap-4">
-          <h2 className="font-serif text-3xl font-medium tracking-[-0.02em]" id="related-products-heading">
+          <h2 className={`font-serif text-3xl font-medium tracking-[-0.02em] ${styles.relatedHeading}`} id="related-products-heading">
             {productPageConfig.relatedProductsHeading}
           </h2>
           <Link className="inline-flex items-center gap-2 text-xs font-semibold no-underline" href="/collections/beyond">
@@ -30,7 +31,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
           </Link>
         </div>
         <ul
-          className="product-rail-scroll -mx-[var(--page-gutter)] mt-5 grid snap-x snap-mandatory grid-flow-col auto-cols-[minmax(13rem,72vw)] gap-4 overflow-x-auto px-[var(--page-gutter)] pb-5 sm:mx-0 sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
+          className={`product-rail-scroll -mx-[var(--page-gutter)] mt-5 grid snap-x snap-mandatory grid-flow-col auto-cols-[minmax(13rem,72vw)] gap-4 overflow-x-auto px-[var(--page-gutter)] pb-5 sm:mx-0 sm:grid-flow-row sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 ${styles.relatedGrid}`}
           role="list"
         >
           {products.slice(0, 4).map((product) => {
@@ -38,10 +39,10 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
 
             return (
               <li className="min-w-0 snap-start" key={product.id}>
-                <article className="overflow-hidden rounded-xl border border-border bg-surface">
+                <article className={`overflow-hidden rounded-xl border border-border bg-surface ${styles.relatedCard}`}>
                   <Link
                     aria-label={`View ${product.title}`}
-                    className="relative block aspect-[4/5] overflow-hidden bg-[#eeece8] no-underline"
+                    className={`relative block aspect-[4/5] overflow-hidden bg-[#eeece8] no-underline ${styles.relatedMedia}`}
                     href={`/products/${product.handle}`}
                   >
                     {image ? (
@@ -54,7 +55,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
                       />
                     ) : null}
                   </Link>
-                  <div className="grid grid-cols-[minmax(0,1fr)_2.75rem] gap-2 p-3">
+                  <div className={`grid grid-cols-[minmax(0,1fr)_2.75rem] gap-2 p-3 ${styles.relatedMeta}`}>
                     <div className="min-w-0">
                       <h3 className="truncate text-sm font-medium">
                         <Link className="no-underline" href={`/products/${product.handle}`}>

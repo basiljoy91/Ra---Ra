@@ -12,6 +12,7 @@ import Link from "next/link";
 import { NewsletterForm } from "@/components/forms/newsletter/newsletter-form";
 import { FavoriteButton } from "@/components/homepage/favorite-button.client";
 import { HeroCarousel } from "@/components/homepage/hero-carousel.client";
+import { MobileEditorialStorefront } from "@/components/homepage/mobile-editorial-storefront";
 import styles from "@/components/homepage/homepage.module.css";
 import { editorialHomepage } from "@/config/editorial-homepage";
 import type { Product } from "@/lib/commerce";
@@ -172,7 +173,12 @@ export function EditorialStorefront({
 }) {
   return (
     <div className={styles.page} data-editorial-homepage>
-      <HeroCarousel />
+      <div className={styles.mobileExperience}>
+        <MobileEditorialStorefront newsletterAction={newsletterAction} products={products} />
+      </div>
+
+      <div className={styles.desktopExperience}>
+        <HeroCarousel />
 
       <section className={styles.storyStrip} aria-label="Collection stories">
         {storyCards.map((story) => (
@@ -285,6 +291,7 @@ export function EditorialStorefront({
           <NewsletterForm action={newsletterAction} config={editorialHomepage.newsletter} variant="editorial" />
         </div>
       </section>
+      </div>
     </div>
   );
 }

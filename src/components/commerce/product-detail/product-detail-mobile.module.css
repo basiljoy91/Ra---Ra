@@ -1,0 +1,573 @@
+.primarySection,
+.detailsSection,
+.relatedSection {
+  --product-mobile-gutter: clamp(1rem, 4.7vw, 1.35rem);
+}
+
+.mobileDetails {
+  display: none;
+}
+
+.mobileProductDescription {
+  display: none;
+}
+
+.galleryNavigation {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.galleryArrow {
+  width: 2.75rem !important;
+  min-width: 2.75rem !important;
+  height: 3.4rem !important;
+  min-height: 3.4rem !important;
+  border: 1px solid rgb(255 255 255 / 0.28) !important;
+  border-radius: 0.18rem !important;
+  background: rgb(17 17 17 / 0.72) !important;
+  color: #fff !important;
+  box-shadow: 0 0.45rem 1.4rem rgb(0 0 0 / 0.18) !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  pointer-events: auto;
+  backdrop-filter: blur(0.65rem);
+  transform: none !important;
+}
+
+.galleryArrow svg {
+  width: 1.25rem !important;
+  min-width: 1.25rem;
+  height: 1.25rem !important;
+}
+
+.galleryArrow:hover {
+  border-color: rgb(255 255 255 / 0.5) !important;
+  background: rgb(17 17 17 / 0.9) !important;
+}
+
+.galleryArrow:focus-visible,
+.galleryZoom:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.galleryCounter {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 0.15rem !important;
+  background: rgb(17 17 17 / 0.7) !important;
+  color: #fff !important;
+  box-shadow: 0 0.35rem 1.1rem rgb(0 0 0 / 0.12);
+  backdrop-filter: blur(0.55rem);
+}
+
+.galleryZoom {
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid rgb(255 255 255 / 0.26) !important;
+  border-radius: 0.15rem !important;
+  background: rgb(17 17 17 / 0.72) !important;
+  color: #fff;
+  box-shadow: 0 0.35rem 1.1rem rgb(0 0 0 / 0.15);
+  backdrop-filter: blur(0.55rem);
+}
+
+.galleryZoom:hover {
+  background: rgb(17 17 17 / 0.9) !important;
+}
+
+@media (max-width: 47.999rem) {
+  .primarySection {
+    width: 100%;
+    max-width: 100%;
+    overflow: clip;
+    padding-block: 0 !important;
+  }
+
+  .primaryContainer {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-inline: 0 !important;
+  }
+
+  .primaryLayout {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0 !important;
+  }
+
+  .primaryLayout > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .productInformation {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: clip;
+    margin-top: -0.15rem;
+    border-radius: 1rem 1rem 0 0;
+    background: #f7f2ec;
+    padding: 1.35rem var(--product-mobile-gutter) 0;
+  }
+
+  .productInformation > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .gallery {
+    display: flex !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 0 !important;
+  }
+
+  .galleryMain {
+    order: 1 !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    aspect-ratio: 4 / 5 !important;
+    border-radius: 0 !important;
+    background: #ded5cc !important;
+  }
+
+  .galleryMainImage {
+    object-position: center 24%;
+  }
+
+  .galleryThumbnails {
+    order: 2 !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0.5rem !important;
+    padding: 0.65rem var(--product-mobile-gutter) 0 !important;
+    scroll-padding-inline: var(--product-mobile-gutter);
+    scrollbar-width: none;
+  }
+
+  .galleryThumbnails::-webkit-scrollbar {
+    display: none;
+  }
+
+  .galleryThumbnail {
+    width: 4rem !important;
+    border-width: 1px !important;
+    border-radius: 0.25rem !important;
+  }
+
+  .galleryArrow {
+    width: 2.5rem !important;
+    min-width: 2.5rem !important;
+    height: 3.15rem !important;
+    min-height: 3.15rem !important;
+  }
+
+  .galleryCounter,
+  .galleryZoom {
+    border-radius: 0.15rem !important;
+  }
+
+  .galleryCounter {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.08em;
+  }
+
+  .productBadge {
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: #6d645c !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+  }
+
+  .productTitle {
+    width: 100%;
+    max-width: 100% !important;
+    margin-top: 0.65rem !important;
+    overflow-wrap: anywhere;
+    font-size: clamp(2rem, 10.5vw, 3.15rem) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 0.88 !important;
+  }
+
+  .productContext {
+    margin-top: 0.7rem !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .productPrice {
+    margin-top: 1rem !important;
+  }
+
+  .productDescription {
+    width: 100%;
+    max-width: 100% !important;
+    margin-top: 1rem !important;
+    font-size: 0.82rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .desktopProductDescription {
+    display: none;
+  }
+
+  .mobileProductDescription {
+    display: block;
+  }
+
+  .familySelector {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 1.15rem !important;
+    margin-top: 1.25rem;
+    padding-top: 1.15rem !important;
+  }
+
+  .familySelector legend {
+    font-size: 0.75rem !important;
+  }
+
+  .artworkOptions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
+    flex-wrap: nowrap !important;
+    gap: 0.45rem !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .familyOption {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 2.8rem !important;
+    border-radius: 0.2rem !important;
+    padding-inline: 0.55rem !important;
+    overflow-wrap: anywhere;
+    text-align: center;
+    white-space: normal;
+    font-size: 0.68rem !important;
+  }
+
+  .fitOptions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0.45rem !important;
+  }
+
+  .purchasePanel {
+    gap: 1.1rem !important;
+    margin-top: 1.35rem !important;
+    padding-top: 1.15rem !important;
+  }
+
+  .optionFieldset {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0.65rem !important;
+  }
+
+  .optionFieldset legend {
+    font-size: 0.76rem !important;
+  }
+
+  .optionValues {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0.45rem !important;
+  }
+
+  .optionButton {
+    width: 100%;
+    min-width: 0 !important;
+    padding-inline: 0.25rem !important;
+    border-radius: 0.2rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .sizeChartButton {
+    min-height: 2.75rem;
+    align-self: flex-start;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.04em;
+  }
+
+  .purchaseButtons {
+    grid-template-columns: minmax(0, 1fr) 3.25rem !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0.5rem !important;
+  }
+
+  .purchaseButtons button {
+    min-height: 3.25rem !important;
+    border-radius: 0.2rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .purchaseBenefits {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-top: 1rem !important;
+    padding-block: 1rem 1.25rem;
+  }
+
+  .purchaseBenefits > div {
+    gap: 0.35rem !important;
+  }
+
+  .purchaseBenefits p:first-of-type {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.025em;
+  }
+
+  .purchaseBenefits p:last-of-type {
+    font-size: 0.54rem !important;
+    line-height: 1.25;
+  }
+
+  .desktopDetails {
+    display: none;
+  }
+
+  .mobileDetails {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: #f7f2ec;
+    padding: 1.4rem var(--product-mobile-gutter) 0;
+  }
+
+  .mobileDetails > details {
+    border-top: 1px solid #d4cbc2;
+  }
+
+  .mobileDetails > details:last-of-type {
+    border-bottom: 1px solid #d4cbc2;
+  }
+
+  .mobileDetails summary {
+    display: flex;
+    min-height: 3.45rem;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+  }
+
+  .mobileDetails summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobileDetails summary span:last-child {
+    font-family: var(--font-body), sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+
+  .mobileDetails details[open] summary span:last-child {
+    transform: rotate(45deg);
+  }
+
+  .mobileDetailContent {
+    padding: 0 0 1.35rem;
+    color: #5f5750;
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .mobileDetailContent ul {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mobileDetailContent li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mobileDetailContent button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    border-bottom: 1px solid #111;
+    color: #111;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .mobileDetailImage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    margin-top: 1.35rem;
+    overflow: hidden;
+    background: #ded5cc;
+  }
+
+  .mobileDetailImage img {
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .detailsSection {
+    padding-block: 0 1.5rem !important;
+  }
+
+  .relatedSection {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: clip;
+    border-top: 1px solid #d4cbc2;
+    padding-block: 1.5rem 2rem !important;
+  }
+
+  .relatedHeading {
+    font-family: var(--font-display), Georgia, serif !important;
+    font-size: 1.65rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase;
+  }
+
+  .relatedGrid {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-auto-flow: row !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.1rem 0.6rem !important;
+    overflow: visible !important;
+    margin-inline: 0 !important;
+    padding: 0 !important;
+  }
+
+  .relatedCard {
+    max-width: 100%;
+    min-width: 0;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .relatedMedia {
+    border-radius: 0 !important;
+  }
+
+  .relatedMeta {
+    grid-template-columns: minmax(0, 1fr) 2rem !important;
+    padding: 0.55rem 0 0 !important;
+  }
+
+  .relatedMeta h3 {
+    overflow: visible !important;
+    font-size: 0.68rem !important;
+    font-weight: 650 !important;
+    letter-spacing: 0.025em;
+    line-height: 1.25;
+    text-overflow: clip !important;
+    text-transform: uppercase;
+    white-space: normal !important;
+  }
+
+  .stickyPurchase {
+    width: 100%;
+    max-width: 100%;
+    border-color: #cfc5bc !important;
+    background: rgb(247 242 236 / 0.97) !important;
+    padding: 0.55rem var(--product-mobile-gutter) !important;
+    backdrop-filter: blur(0.6rem);
+  }
+
+  .stickyPurchase button {
+    min-height: 2.8rem !important;
+    min-width: 7rem !important;
+    border-radius: 0.2rem !important;
+    font-size: 0.72rem !important;
+  }
+
+  .stickyPurchase > div {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  @media (max-width: 21.25rem) {
+    .productInformation {
+      padding-inline: 0.85rem;
+    }
+
+    .mobileDetails {
+      padding-inline: 0.85rem;
+    }
+
+    .productTitle {
+      font-size: 1.95rem !important;
+    }
+
+    .familyOption {
+      padding-inline: 0.35rem !important;
+      font-size: 0.62rem !important;
+    }
+
+    .purchaseBenefits {
+      grid-template-columns: 1fr !important;
+      gap: 0.9rem !important;
+      text-align: left !important;
+    }
+
+    .purchaseBenefits > div {
+      grid-template-columns: 1.5rem minmax(0, 1fr);
+      justify-items: start;
+      text-align: left;
+    }
+
+    .purchaseBenefits svg {
+      grid-row: span 2;
+    }
+  }
+}

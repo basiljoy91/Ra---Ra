@@ -7,6 +7,7 @@ import { AnnouncementBar } from "@/components/navigation/announcement-bar";
 import { CartPlaceholderDialog } from "@/components/navigation/cart-placeholder-dialog";
 import { DesktopHeader } from "@/components/navigation/desktop-header";
 import { MobileHeader } from "@/components/navigation/mobile-header";
+import { MobileBottomNavigation } from "@/components/navigation/mobile-bottom-navigation";
 import { MobileNavigationDrawer } from "@/components/navigation/mobile-navigation-drawer";
 import { SearchDialog } from "@/components/navigation/search-dialog";
 import { siteConfig } from "@/config/site";
@@ -110,6 +111,11 @@ export function SiteHeader({
         secondaryLinks={siteConfig.header.mobileSecondaryLinks}
         socialLinks={siteConfig.socialLinks}
         market={siteConfig.market}
+      />
+      <MobileBottomNavigation
+        cartCount={cartCount}
+        onSearch={() => setActiveOverlay("search")}
+        onCart={() => setActiveOverlay("cart")}
       />
       <SearchDialog
         open={activeOverlay === "search"}

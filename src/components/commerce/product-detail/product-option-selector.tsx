@@ -7,6 +7,7 @@ import {
   getOptionValueAvailability,
 } from "@/lib/commerce";
 import { cn } from "@/lib/utilities";
+import styles from "@/components/commerce/product-detail/product-detail-mobile.module.css";
 
 interface ProductOptionSelectorProps {
   option: ProductOption;
@@ -25,14 +26,14 @@ export const ProductOptionSelector = forwardRef<
   const displayName = isColour ? "Colour" : option.name;
 
   return (
-    <fieldset className="grid gap-3" ref={ref} tabIndex={-1}>
+    <fieldset className={`grid gap-3 ${styles.optionFieldset}`} ref={ref} tabIndex={-1}>
       <legend className="text-sm font-semibold text-foreground">
         {displayName}
         {selectedValue ? (
           <span className="font-normal text-foreground-muted">: {selectedValue}</span>
         ) : null}
       </legend>
-      <div className="flex flex-wrap gap-2">
+      <div className={`flex flex-wrap gap-2 ${styles.optionValues}`}>
         {option.values.map((value) => {
           const availability = getOptionValueAvailability(
             product,
@@ -81,7 +82,7 @@ export const ProductOptionSelector = forwardRef<
               aria-label={`${displayName} ${value}, ${accessibleState}`}
               aria-pressed={selected}
               className={cn(
-                "relative min-h-11 min-w-12 rounded-[var(--radius-control)] border px-3 text-sm font-semibold transition-colors",
+                `relative min-h-11 min-w-12 rounded-[var(--radius-control)] border px-3 text-sm font-semibold transition-colors ${styles.optionButton}`,
                 selected
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-surface text-foreground",
