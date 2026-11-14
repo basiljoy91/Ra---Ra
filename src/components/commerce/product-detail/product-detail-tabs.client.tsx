@@ -5,6 +5,7 @@ import { Check, Ruler, Shirt, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 import { SizeGuideDrawer } from "@/components/commerce/product-detail/size-guide-drawer.client";
+import styles from "@/components/commerce/product-detail/product-detail-mobile.module.css";
 import { Container } from "@/components/layout/container";
 import { productPageConfig } from "@/config/product-page";
 import type { Product } from "@/lib/commerce";
@@ -26,10 +27,78 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const details = product.details;
   const detailImage = product.images[4] ?? product.images[1] ?? product.images[0];
+  const detailPoints = [
+    { id: "fit", text: `${details?.fit ?? "Unisex"} fit` },
+    { id: "material", text: details?.material ?? "Heavyweight premium cotton" },
+    {
+      id: "artwork-placement",
+      text:
+        details?.artworkPlacement ??
+        product.artworkPlacement ??
+        "Signature chest and back artwork",
+    },
+    { id: "manufacturing", text: details?.manufacturing ?? "Soft-hand print finish" },
+    { id: "unisex", text: "Designed as a unisex style" },
+  ];
 
   return (
-    <section aria-labelledby="product-specifications-heading" className="py-8 sm:py-10">
+    <section aria-label="Product information" className={`py-8 sm:py-10 ${styles.detailsSection}`}>
       <Container>
+        <div className={styles.mobileDetails}>
+          <h2 className="sr-only">Product information</h2>
+          <details open>
+            <summary>Details <span aria-hidden="true">+</span></summary>
+            <div className={styles.mobileDetailContent}>
+              <p>{product.description}</p>
+              <ul role="list">
+                {detailPoints.map(({ id, text }) => (
+                  <li key={id}>
+                    <Check aria-hidden="true" className="mt-1 size-3.5 shrink-0" strokeWidth={1.8} />
+                    {text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </details>
+          <details>
+            <summary>Materials &amp; care <span aria-hidden="true">+</span></summary>
+            <div className={styles.mobileDetailContent}>
+              <p><strong>Fabric:</strong> {details?.material ?? "100% Supima cotton double jersey"}</p>
+              <p className="mt-2"><strong>Finish:</strong> {details?.manufacturing ?? "Soft-hand screen print"}</p>
+              {details?.care?.length ? (
+                <ul role="list">
+                  {details.care.map((instruction, index) => (
+                    <li key={`${index}-${instruction}`}>— {instruction}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </details>
+          <details>
+            <summary>Size &amp; fit <span aria-hidden="true">+</span></summary>
+            <div className={styles.mobileDetailContent}>
+              <p>{details?.fit ?? "Unisex"} fit. Select your usual size for the intended silhouette, or size down for a closer fit.</p>
+              <button onClick={() => setSizeGuideOpen(true)} type="button">
+                <Ruler aria-hidden="true" className="size-4" strokeWidth={1.6} />
+                Open this product’s size chart
+              </button>
+            </div>
+          </details>
+          <details>
+            <summary>Shipping &amp; returns <span aria-hidden="true">+</span></summary>
+            <div className={styles.mobileDetailContent}>
+              <p><strong>Shipping:</strong> {details?.shippingSummary ?? productPageConfig.shippingSummary}</p>
+              <p className="mt-2"><strong>Returns:</strong> {details?.returnSummary ?? productPageConfig.returnSummary}</p>
+            </div>
+          </details>
+          {detailImage ? (
+            <div className={styles.mobileDetailImage}>
+              <Image alt={detailImage.alt} fill sizes="100vw" src={detailImage.url} />
+            </div>
+          ) : null}
+        </div>
+
+        <div className={styles.desktopDetails}>
         <h2 className="sr-only" id="product-specifications-heading">
           Product specifications
         </h2>
@@ -71,19 +140,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                   {product.description}
                 </p>
                 <ul className="mt-6 grid gap-3 text-sm" role="list">
-                  {[
-                    { id: "fit", text: `${details?.fit ?? "Unisex"} fit` },
-                    { id: "material", text: details?.material ?? "Heavyweight premium cotton" },
-                    {
-                      id: "artwork-placement",
-                      text:
-                        details?.artworkPlacement ??
-                        product.artworkPlacement ??
-                        "Signature chest and back artwork",
-                    },
-                    { id: "manufacturing", text: details?.manufacturing ?? "Soft-hand print finish" },
-                    { id: "unisex", text: "Designed as a unisex style" },
-                  ].map(({ id, text }) => (
+                  {detailPoints.map(({ id, text }) => (
                     <li className="flex items-start gap-3" key={id}>
                       <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0" strokeWidth={1.8} />
                       {text}
@@ -177,6 +234,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
               />
             ) : null}
           </div>
+        </div>
         </div>
       </Container>
       <SizeGuideDrawer

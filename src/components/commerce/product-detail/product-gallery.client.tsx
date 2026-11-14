@@ -117,10 +117,10 @@ export function ProductGallery({
           width={activeImage.width ?? 1402}
         />
         {images.length > 1 ? (
-          <div className="absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between lg:hidden">
+          <div className={`absolute inset-x-3 top-1/2 flex -translate-y-1/2 justify-between ${styles.galleryNavigation}`}>
             <Button
               aria-label="View previous product image"
-              className={`size-11 rounded-full bg-surface/95 p-0 shadow-[var(--shadow-soft)] ${styles.galleryArrow}`}
+              className={`p-0 ${styles.galleryArrow}`}
               onClick={() => moveImage(-1)}
               variant="secondary"
             >
@@ -128,7 +128,7 @@ export function ProductGallery({
             </Button>
             <Button
               aria-label="View next product image"
-              className={`size-11 rounded-full bg-surface/95 p-0 shadow-[var(--shadow-soft)] ${styles.galleryArrow}`}
+              className={`p-0 ${styles.galleryArrow}`}
               onClick={() => moveImage(1)}
               variant="secondary"
             >
@@ -137,14 +137,14 @@ export function ProductGallery({
           </div>
         ) : null}
         {images.length > 1 ? (
-          <p className={`type-caption absolute left-3 top-3 rounded-full bg-surface/95 px-3 py-1.5 font-semibold text-foreground ${styles.galleryCounter}`}>
+          <p className={`type-caption absolute left-3 top-3 px-3 py-1.5 font-semibold ${styles.galleryCounter}`}>
             <span className="sr-only">Image </span>
             {activeIndex + 1} / {images.length}
           </p>
         ) : null}
         <button
           aria-label={zoomed ? "Reset product image zoom" : "Zoom product image"}
-          className={`absolute bottom-3 right-3 grid size-11 place-items-center rounded-full border border-border bg-surface/95 shadow-sm ${styles.galleryZoom}`}
+          className={`absolute bottom-3 right-3 grid place-items-center ${styles.galleryZoom}`}
           onClick={() => setZoomed((value) => !value)}
           type="button"
         >

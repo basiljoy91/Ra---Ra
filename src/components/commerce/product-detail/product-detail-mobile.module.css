@@ -8,36 +8,133 @@
   display: none;
 }
 
+.mobileProductDescription {
+  display: none;
+}
+
+.galleryNavigation {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.galleryArrow {
+  width: 2.75rem !important;
+  min-width: 2.75rem !important;
+  height: 3.4rem !important;
+  min-height: 3.4rem !important;
+  border: 1px solid rgb(255 255 255 / 0.28) !important;
+  border-radius: 0.18rem !important;
+  background: rgb(17 17 17 / 0.72) !important;
+  color: #fff !important;
+  box-shadow: 0 0.45rem 1.4rem rgb(0 0 0 / 0.18) !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  pointer-events: auto;
+  backdrop-filter: blur(0.65rem);
+  transform: none !important;
+}
+
+.galleryArrow svg {
+  width: 1.25rem !important;
+  min-width: 1.25rem;
+  height: 1.25rem !important;
+}
+
+.galleryArrow:hover {
+  border-color: rgb(255 255 255 / 0.5) !important;
+  background: rgb(17 17 17 / 0.9) !important;
+}
+
+.galleryArrow:focus-visible,
+.galleryZoom:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.galleryCounter {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 0.15rem !important;
+  background: rgb(17 17 17 / 0.7) !important;
+  color: #fff !important;
+  box-shadow: 0 0.35rem 1.1rem rgb(0 0 0 / 0.12);
+  backdrop-filter: blur(0.55rem);
+}
+
+.galleryZoom {
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid rgb(255 255 255 / 0.26) !important;
+  border-radius: 0.15rem !important;
+  background: rgb(17 17 17 / 0.72) !important;
+  color: #fff;
+  box-shadow: 0 0.35rem 1.1rem rgb(0 0 0 / 0.15);
+  backdrop-filter: blur(0.55rem);
+}
+
+.galleryZoom:hover {
+  background: rgb(17 17 17 / 0.9) !important;
+}
+
 @media (max-width: 47.999rem) {
   .primarySection {
+    width: 100%;
+    max-width: 100%;
+    overflow: clip;
     padding-block: 0 !important;
   }
 
   .primaryContainer {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding-inline: 0 !important;
   }
 
   .primaryLayout {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: 0 !important;
+  }
+
+  .primaryLayout > * {
+    max-width: 100%;
+    min-width: 0;
   }
 
   .productInformation {
     position: relative;
     z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: clip;
     margin-top: -0.15rem;
     border-radius: 1rem 1rem 0 0;
     background: #f7f2ec;
     padding: 1.35rem var(--product-mobile-gutter) 0;
   }
 
+  .productInformation > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .gallery {
     display: flex !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
     flex-direction: column;
     gap: 0 !important;
   }
 
   .galleryMain {
     order: 1 !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     aspect-ratio: 4 / 5 !important;
     border-radius: 0 !important;
     background: #ded5cc !important;
@@ -49,6 +146,9 @@
 
   .galleryThumbnails {
     order: 2 !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: 0.5rem !important;
     padding: 0.65rem var(--product-mobile-gutter) 0 !important;
     scroll-padding-inline: var(--product-mobile-gutter);
@@ -66,16 +166,15 @@
   }
 
   .galleryArrow {
-    border: 1px solid rgb(17 17 17 / 0.12) !important;
-    background: rgb(247 242 236 / 0.9) !important;
-    box-shadow: none !important;
-    backdrop-filter: blur(0.4rem);
+    width: 2.5rem !important;
+    min-width: 2.5rem !important;
+    height: 3.15rem !important;
+    min-height: 3.15rem !important;
   }
 
   .galleryCounter,
   .galleryZoom {
-    border-radius: 0.2rem !important;
-    background: rgb(247 242 236 / 0.92) !important;
+    border-radius: 0.15rem !important;
   }
 
   .galleryCounter {
@@ -94,9 +193,11 @@
   }
 
   .productTitle {
-    max-width: 16ch !important;
+    width: 100%;
+    max-width: 100% !important;
     margin-top: 0.65rem !important;
-    font-size: clamp(2.35rem, 11.8vw, 3.4rem) !important;
+    overflow-wrap: anywhere;
+    font-size: clamp(2rem, 10.5vw, 3.15rem) !important;
     font-weight: 500 !important;
     letter-spacing: -0.045em !important;
     line-height: 0.88 !important;
@@ -114,12 +215,25 @@
   }
 
   .productDescription {
+    width: 100%;
+    max-width: 100% !important;
     margin-top: 1rem !important;
     font-size: 0.82rem !important;
     line-height: 1.55 !important;
   }
 
+  .desktopProductDescription {
+    display: none;
+  }
+
+  .mobileProductDescription {
+    display: block;
+  }
+
   .familySelector {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: 1.15rem !important;
     margin-top: 1.25rem;
     padding-top: 1.15rem !important;
@@ -131,27 +245,36 @@
 
   .artworkOptions {
     display: grid !important;
-    grid-auto-columns: minmax(8.8rem, 42vw);
-    grid-auto-flow: column;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
     flex-wrap: nowrap !important;
-    overflow-x: auto;
-    margin-inline: calc(var(--product-mobile-gutter) * -1);
-    padding-inline: var(--product-mobile-gutter);
-    scroll-padding-inline: var(--product-mobile-gutter);
-    scrollbar-width: none;
-  }
-
-  .artworkOptions::-webkit-scrollbar {
-    display: none;
+    gap: 0.45rem !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+    margin-inline: 0;
+    padding-inline: 0;
   }
 
   .familyOption {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     min-height: 2.8rem !important;
     border-radius: 0.2rem !important;
+    padding-inline: 0.55rem !important;
+    overflow-wrap: anywhere;
+    text-align: center;
+    white-space: normal;
     font-size: 0.68rem !important;
   }
 
   .fitOptions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: 0.45rem !important;
   }
 
@@ -162,6 +285,9 @@
   }
 
   .optionFieldset {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: 0.65rem !important;
   }
 
@@ -169,8 +295,19 @@
     font-size: 0.76rem !important;
   }
 
+  .optionValues {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 0.45rem !important;
+  }
+
   .optionButton {
-    min-width: 3.2rem !important;
+    width: 100%;
+    min-width: 0 !important;
+    padding-inline: 0.25rem !important;
     border-radius: 0.2rem !important;
     font-size: 0.75rem !important;
   }
@@ -183,6 +320,10 @@
   }
 
   .purchaseButtons {
+    grid-template-columns: minmax(0, 1fr) 3.25rem !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: 0.5rem !important;
   }
 
@@ -193,6 +334,9 @@
   }
 
   .purchaseBenefits {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     margin-top: 1rem !important;
     padding-block: 1rem 1.25rem;
   }
@@ -217,6 +361,10 @@
 
   .mobileDetails {
     display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
     background: #f7f2ec;
     padding: 1.4rem var(--product-mobile-gutter) 0;
   }
@@ -309,6 +457,10 @@
   }
 
   .relatedSection {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: clip;
     border-top: 1px solid #d4cbc2;
     padding-block: 1.5rem 2rem !important;
   }
@@ -322,6 +474,9 @@
   }
 
   .relatedGrid {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     display: grid !important;
     grid-auto-flow: row !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -332,6 +487,8 @@
   }
 
   .relatedCard {
+    max-width: 100%;
+    min-width: 0;
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -358,6 +515,8 @@
   }
 
   .stickyPurchase {
+    width: 100%;
+    max-width: 100%;
     border-color: #cfc5bc !important;
     background: rgb(247 242 236 / 0.97) !important;
     padding: 0.55rem var(--product-mobile-gutter) !important;
@@ -366,8 +525,49 @@
 
   .stickyPurchase button {
     min-height: 2.8rem !important;
-    min-width: 8rem !important;
+    min-width: 7rem !important;
     border-radius: 0.2rem !important;
     font-size: 0.72rem !important;
+  }
+
+  .stickyPurchase > div {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  @media (max-width: 21.25rem) {
+    .productInformation {
+      padding-inline: 0.85rem;
+    }
+
+    .mobileDetails {
+      padding-inline: 0.85rem;
+    }
+
+    .productTitle {
+      font-size: 1.95rem !important;
+    }
+
+    .familyOption {
+      padding-inline: 0.35rem !important;
+      font-size: 0.62rem !important;
+    }
+
+    .purchaseBenefits {
+      grid-template-columns: 1fr !important;
+      gap: 0.9rem !important;
+      text-align: left !important;
+    }
+
+    .purchaseBenefits > div {
+      grid-template-columns: 1.5rem minmax(0, 1fr);
+      justify-items: start;
+      text-align: left;
+    }
+
+    .purchaseBenefits svg {
+      grid-row: span 2;
+    }
   }
 }

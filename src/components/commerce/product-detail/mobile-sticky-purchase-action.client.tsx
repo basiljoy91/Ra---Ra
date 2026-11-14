@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { ProductPrice } from "@/components/commerce/product-card/product-price";
+import styles from "@/components/commerce/product-detail/product-detail-mobile.module.css";
 import { Button } from "@/components/ui/button";
 import type { Money } from "@/lib/commerce";
 
@@ -70,7 +71,7 @@ export function MobileStickyPurchaseAction({
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom))] z-[var(--z-sticky)] border-t border-border bg-surface/98 px-[var(--page-gutter)] pb-3 pt-3 shadow-[0_-0.75rem_2rem_rgb(40_35_31_/_0.1)] min-[48rem]:bottom-0 min-[48rem]:pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
+    <div className={`fixed inset-x-0 bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom))] z-[var(--z-sticky)] border-t border-border bg-surface/98 px-[var(--page-gutter)] pb-3 pt-3 shadow-[0_-0.75rem_2rem_rgb(40_35_31_/_0.1)] min-[48rem]:bottom-0 min-[48rem]:pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden ${styles.stickyPurchase}`}>
       <div className="mx-auto flex max-w-[var(--container-wide)] items-center gap-3">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold">{productTitle}</p>
