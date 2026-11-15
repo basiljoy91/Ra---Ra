@@ -3,8 +3,8 @@ import type { FooterConfig } from "@/types/footer";
 
 export const footerConfig = {
   brandStatement:
-    "Limited-edition apparel where myth, material and meaning meet.",
-  tagline: "LOOK ONCE. THEN LOOK CLOSER.",
+    "Four designs. Four human experiences. One way of making the invisible personal.",
+  tagline: "THE THINGS WE CARRY.",
   navigationGroups: [
     {
       id: "shop",
@@ -12,7 +12,7 @@ export const footerConfig = {
       links: [
         { id: "new-arrivals", label: "New Arrivals", href: "/collections/beyond?sort=newest" },
         { id: "t-shirts", label: "T-Shirts", href: "/collections/beyond" },
-        { id: "limited", label: "Limited Editions", href: "/collections/beyond" },
+        { id: "story", label: "The Collection Story", href: "/about" },
         { id: "all-products", label: "All Products", href: "/collections/beyond" },
       ],
     },
@@ -34,8 +34,7 @@ export const footerConfig = {
         { id: "story", label: "Our Story", href: "/about" },
         { id: "journal", label: "Journal", href: "/journal" },
         { id: "size-guide", label: "Size Guide", href: "/size-guide" },
-        { id: "care-guide", label: "Care Guide", href: "/faq" },
-        { id: "editions", label: "Limited Editions", href: "/collections/beyond" },
+        { id: "collection", label: "Collection 01", href: "/collections/beyond" },
       ],
     },
   ],

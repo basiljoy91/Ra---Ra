@@ -5,10 +5,9 @@ import {
   Feather,
   Layers3,
   Orbit,
-  ShieldCheck,
+  Ruler,
   Shirt,
   Sparkles,
-  Waves,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,116 +16,28 @@ import { NewsletterForm } from "@/components/forms/newsletter/newsletter-form";
 import { FavoriteButton } from "@/components/homepage/favorite-button.client";
 import styles from "@/components/homepage/mobile-homepage.module.css";
 import { editorialHomepage } from "@/config/editorial-homepage";
+import {
+  beyondCollectionHero,
+  beyondDesigns,
+} from "@/data/beyond-collection";
 import type { Product } from "@/lib/commerce";
 import { formatMoney } from "@/lib/utilities";
 import type { NewsletterFormAction } from "@/types/newsletter";
 
 const shortcuts = [
-  { label: "New drop", href: "/collections/beyond?sort=newest", Icon: Sparkles },
-  { label: "Beyond", href: "/collections/beyond", Icon: Orbit },
+  { label: "Collection", href: "/collections/beyond", Icon: Sparkles },
+  { label: "Beyond", href: "/about", Icon: Orbit },
   { label: "Stories", href: "/journal", Icon: Feather },
-  { label: "Fits", href: "/size-guide", Icon: Shirt },
+  { label: "Fit", href: "/size-guide", Icon: Shirt },
   { label: "Journal", href: "/journal", Icon: BookOpen },
 ] as const;
 
-const series = [
-  { label: "Fear", href: "/products/beyond-fear-sculptural-boxy-black" },
-  { label: "Reality", href: "/products/beyond-reality-sculptural-boxy-black" },
-  { label: "Limits", href: "/products/beyond-limits-sculptural-boxy-black" },
-  { label: "Time", href: "/products/past-present-beyond-sculptural-boxy-black" },
-] as const;
-
-const collections = [
-  {
-    title: "Beyond Fear",
-    href: "/products/beyond-fear-sculptural-boxy-black",
-    image: "/products/beyond-fear/sculptural-boxy-black/side-couple-black.png",
-    alt: "Models wearing the Beyond Fear sculptural boxy T-shirt",
-  },
-  {
-    title: "Beyond Reality",
-    href: "/products/beyond-reality-sculptural-boxy-black",
-    image: "/products/beyond-reality/sculptural-boxy-black/side-couple-black.png",
-    alt: "Models wearing the Beyond Reality sculptural boxy T-shirt",
-  },
-  {
-    title: "Beyond Limits",
-    href: "/products/beyond-limits-sculptural-boxy-black",
-    image: "/products/beyond-limits/sculptural-boxy-black/side-couple-black.png",
-    alt: "Models wearing the Beyond Limits sculptural boxy T-shirt",
-  },
-  {
-    title: "Beyond Time",
-    href: "/products/past-present-beyond-sculptural-boxy-black",
-    image: "/products/past-present-beyond/sculptural-boxy-black/side-couple-black.png",
-    alt: "Models wearing the Past Present Beyond sculptural boxy T-shirt",
-  },
-] as const;
-
-const fits = [
-  {
-    label: "Sculptural boxy",
-    image: "/products/beyond-fear/sculptural-boxy-black/front-male-black.png",
-  },
-  {
-    label: "Washed art",
-    image: "/products/beyond-reality/washed-art-charcoal/front-male-black.png",
-  },
-  {
-    label: "Signature regular",
-    image: "/products/past-present-beyond/signature-regular-off-white/front-female-black.png",
-  },
-  {
-    label: "Relaxed essential",
-    image: "/products/beyond-limits/relaxed-essential-chocolate/front-female-black.png",
-  },
-] as const;
-
 const benefits = [
-  { label: "Premium cotton", Icon: Sparkles },
-  { label: "Considered weight", Icon: Waves },
-  { label: "Limited drops", Icon: Layers3 },
-  { label: "Secure checkout", Icon: ShieldCheck },
+  { label: "100% Supima cotton", Icon: Sparkles },
+  { label: "280 GSM", Icon: Ruler },
+  { label: "Double jersey", Icon: Layers3 },
+  { label: "Oversized unisex fit", Icon: Shirt },
 ] as const;
-
-const worldImages = [
-  {
-    src: "/products/beyond-limits/washed-art-charcoal/front-male-black.png",
-    alt: "Model wearing a washed black Beyond Limits T-shirt",
-  },
-  {
-    src: "/editorial/washed-cotton-macro.png",
-    alt: "Close view of washed black cotton",
-  },
-  {
-    src: "/products/past-present-beyond/signature-regular-off-white/side-couple-black.png",
-    alt: "Models wearing the Past Present Beyond artwork",
-  },
-  {
-    src: "/products/beyond-fear/washed-art-charcoal/lifestyle-back.png",
-    alt: "Beyond Fear back artwork in directional light",
-  },
-] as const;
-
-const preferredHandles = [
-  "beyond-fear-sculptural-boxy-black",
-  "past-present-beyond-signature-regular-off-white",
-  "beyond-limits-relaxed-essential-chocolate",
-  "beyond-reality-washed-art-charcoal",
-] as const;
-
-function selectProducts(products: readonly Product[]) {
-  const preferred = preferredHandles.flatMap((handle) => {
-    const product = products.find((candidate) => candidate.handle === handle);
-    return product ? [product] : [];
-  });
-  const preferredIds = new Set(preferred.map((product) => product.id));
-
-  return [
-    ...preferred,
-    ...products.filter((product) => !preferredIds.has(product.id)),
-  ].slice(0, 4);
-}
 
 function SectionHeading({
   id,
@@ -154,8 +65,6 @@ export function MobileEditorialStorefront({
   newsletterAction: NewsletterFormAction;
   products: readonly Product[];
 }) {
-  const bestSellers = selectProducts(products);
-
   return (
     <div className={styles.mobilePage}>
       <nav className={styles.shortcutNav} aria-label="Homepage shortcuts">
@@ -169,61 +78,66 @@ export function MobileEditorialStorefront({
 
       <section className={styles.hero} aria-labelledby="mobile-hero-title">
         <Image
-          alt="Two models wearing black Ra & Ra Beyond Fear T-shirts"
+          alt={beyondCollectionHero.mobile.alt}
           className={styles.heroImage}
           fill
           priority
           sizes="(max-width: 767px) 100vw, 1px"
-          src="/products/beyond-fear/sculptural-boxy-black/side-couple-black.png"
+          src={beyondCollectionHero.mobile.url}
         />
         <div className={styles.heroShade} />
         <div className={styles.heroCopy}>
           <h1 id="mobile-hero-title">
             <span>Beyond</span>
-            <span>Series</span>
+            <span>Collection</span>
           </h1>
           <i aria-hidden="true" />
-          <p>Four perspectives.<br />One mindset.</p>
+          <p>Four designs.<br />Four human experiences.</p>
           <Link href="/collections/beyond">
-            Explore now <ArrowRight aria-hidden="true" size={18} />
+            Explore the collection <ArrowRight aria-hidden="true" size={18} />
           </Link>
         </div>
       </section>
 
-      <nav className={styles.seriesNav} aria-label="Explore the Beyond series">
-        {series.map((item) => (
-          <Link href={item.href} key={item.label}>
-            {item.label} <ArrowRight aria-hidden="true" size={19} />
+      <nav className={styles.seriesNav} aria-label="Explore the BEYOND stories">
+        {beyondDesigns.map((design) => (
+          <Link href={`/products/${design.handle}`} key={design.handle}>
+            {design.title.replace("Beyond ", "")} <ArrowRight aria-hidden="true" size={19} />
           </Link>
         ))}
       </nav>
 
       <section className={styles.fabricBanner} aria-labelledby="fabric-title">
         <Image
-          alt="Macro detail of premium washed black cotton"
+          alt={beyondDesigns[0]!.images[10]!.alt}
           fill
           sizes="(max-width: 767px) 100vw, 1px"
-          src="/editorial/washed-cotton-macro.png"
+          src={beyondDesigns[0]!.images[10]!.url}
         />
         <div className={styles.fabricShade} />
-        <span className={styles.fabricLabel} aria-hidden="true">Ra &amp; Ra</span>
+        <span className={styles.fabricLabel} aria-hidden="true">RA &amp; RA</span>
         <div className={styles.fabricCopy}>
-          <h2 id="fabric-title">Crafted<br />for more</h2>
-          <p>Substantial feel. Structured drape.<br />Built for everyday wear.</p>
+          <h2 id="fabric-title">One garment.<br />Four meanings.</h2>
+          <p>280 GSM Supima cotton.<br />Dense, smooth and softly structured.</p>
         </div>
       </section>
 
       <section className={styles.mobileSection} aria-labelledby="featured-collections-title">
-        <SectionHeading id="featured-collections-title" title="Featured collections" href="/collections/beyond" />
+        <SectionHeading id="featured-collections-title" title="The four stories" href="/collections/beyond" />
         <div className={styles.collectionRail}>
-          {collections.map((collection) => (
-            <article className={styles.collectionCard} key={collection.title}>
-              <Link href={collection.href}>
-                <Image alt={collection.alt} fill sizes="(max-width: 767px) 72vw, 1px" src={collection.image} />
+          {beyondDesigns.map((design) => (
+            <article className={styles.collectionCard} key={design.handle}>
+              <Link href={`/products/${design.handle}`}>
+                <Image
+                  alt={design.images[2]!.alt}
+                  fill
+                  sizes="(max-width: 767px) 72vw, 1px"
+                  src={design.images[2]!.url}
+                />
                 <span className={styles.cardShade} />
                 <span className={styles.collectionCopy}>
-                  <strong>{collection.title}</strong>
-                  <span>Explore <ArrowRight aria-hidden="true" size={14} /></span>
+                  <strong>{design.title}</strong>
+                  <span>{design.corePhilosophy} <ArrowRight aria-hidden="true" size={14} /></span>
                 </span>
               </Link>
             </article>
@@ -231,29 +145,23 @@ export function MobileEditorialStorefront({
         </div>
       </section>
 
-      <section className={styles.mobileSection} aria-labelledby="best-sellers-title">
-        <SectionHeading id="best-sellers-title" title="Best sellers" href="/collections/beyond" />
+      <section className={styles.mobileSection} aria-labelledby="designs-title">
+        <SectionHeading id="designs-title" title="BEYOND designs" href="/collections/beyond" />
         <div className={styles.productGrid}>
-          {bestSellers.map((product) => {
+          {products.slice(0, 4).map((product) => {
             const image = product.images[0];
-            const displayName = product.title.split(" — ")[0] ?? product.title;
 
             return (
               <article className={styles.productCard} key={product.id}>
                 <Link className={styles.productImage} href={`/products/${product.handle}`}>
                   {image ? (
-                    <Image
-                      alt={image.alt}
-                      fill
-                      sizes="(max-width: 767px) 50vw, 1px"
-                      src={image.url}
-                    />
+                    <Image alt={image.alt} fill sizes="(max-width: 767px) 50vw, 1px" src={image.url} />
                   ) : null}
                 </Link>
-                <FavoriteButton productName={displayName} />
+                <FavoriteButton productName={product.title} />
                 <Link className={styles.productDetails} href={`/products/${product.handle}`}>
-                  <span>{displayName}</span>
-                  <strong>{formatMoney(product.price)}</strong>
+                  <span>{product.title}</span>
+                  <strong>{product.priceIsPlaceholder ? "Price pending" : formatMoney(product.price)}</strong>
                 </Link>
               </article>
             );
@@ -263,34 +171,20 @@ export function MobileEditorialStorefront({
 
       <section className={styles.meaningBanner} aria-labelledby="meaning-title-mobile">
         <Image
-          alt="Models wearing the Beyond Limits collection"
+          alt={beyondDesigns[2]!.hero.mobile.alt}
           fill
           sizes="(max-width: 767px) 100vw, 1px"
-          src="/products/beyond-limits/sculptural-boxy-black/side-couple-black.png"
+          src={beyondDesigns[2]!.hero.mobile.url}
         />
         <div className={styles.meaningShade} />
         <div className={styles.meaningCopy}>
-          <h2 id="meaning-title-mobile">Made to<br />mean more.</h2>
-          <p>Apparel for ideas that move beyond the ordinary.</p>
-          <Link href="/collections/beyond">Shop the collection <ArrowRight aria-hidden="true" size={14} /></Link>
+          <h2 id="meaning-title-mobile">We create the design.<br />You give it meaning.</h2>
+          <p>The artwork is intentional. The interpretation is personal.</p>
+          <Link href="/about">Read the philosophy <ArrowRight aria-hidden="true" size={14} /></Link>
         </div>
       </section>
 
-      <section className={styles.mobileSection} aria-labelledby="shop-by-fit-title">
-        <SectionHeading id="shop-by-fit-title" title="Shop by fit" href="/collections/beyond" />
-        <div className={styles.fitRail}>
-          {fits.map((fit) => (
-            <Link href="/collections/beyond" className={styles.fitCard} key={fit.label}>
-              <Image alt="" fill sizes="(max-width: 767px) 48vw, 1px" src={fit.image} />
-              <span className={styles.cardShade} />
-              <strong>{fit.label}</strong>
-              <ArrowRight aria-hidden="true" size={15} />
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <ul className={styles.benefitRail} aria-label="Ra & Ra product benefits" role="list">
+      <ul className={styles.benefitRail} aria-label="BEYOND garment specification" role="list">
         {benefits.map(({ label, Icon }) => (
           <li key={label}>
             <Icon aria-hidden="true" size={25} strokeWidth={1.25} />
@@ -300,43 +194,32 @@ export function MobileEditorialStorefront({
       </ul>
 
       <section className={styles.mobileSection} aria-labelledby="stories-title">
-        <SectionHeading id="stories-title" title="Stories beyond" href="/journal" />
+        <SectionHeading id="stories-title" title="Read the stories" href="/journal" />
         <div className={styles.storyGrid}>
-          <article className={styles.storyCard}>
-            <Link href="/journal/atlas-and-the-weight-of-heaven">
-              <div className={styles.storyMedia}>
-                <Image alt="Beyond Limits artwork inspired by Atlas" fill sizes="48vw" src="/products/beyond-limits/sculptural-boxy-black/lifestyle-back.png" />
-              </div>
-              <div>
-                <span>Journal</span>
-                <h3>The weight Atlas carried</h3>
-                <p>A closer reading of strength, burden and the heavens.</p>
-                <ArrowRight aria-hidden="true" size={15} />
-              </div>
-            </Link>
-          </article>
-          <article className={styles.storyCard}>
-            <Link href="/journal/what-250-gsm-really-means">
-              <div className={styles.storyMedia}>
-                <Image alt="Close view of black cotton texture" fill sizes="48vw" src="/editorial/washed-cotton-macro.png" />
-              </div>
-              <div>
-                <span>Material study</span>
-                <h3>Weight, hand and purpose</h3>
-                <p>How fabric weight changes structure, drape and feel.</p>
-                <ArrowRight aria-hidden="true" size={15} />
-              </div>
-            </Link>
-          </article>
+          {beyondDesigns.slice(0, 2).map((design) => (
+            <article className={styles.storyCard} key={design.handle}>
+              <Link href={`/journal/${design.handle}`}>
+                <div className={styles.storyMedia}>
+                  <Image alt={design.images[2]!.alt} fill sizes="48vw" src={design.images[2]!.url} />
+                </div>
+                <div>
+                  <span>{design.number} / 04</span>
+                  <h3>{design.collectionStoryHeading}</h3>
+                  <p>{design.shortDescription}</p>
+                  <ArrowRight aria-hidden="true" size={15} />
+                </div>
+              </Link>
+            </article>
+          ))}
         </div>
       </section>
 
       <section className={styles.mobileSection} aria-labelledby="world-mobile-title">
-        <SectionHeading id="world-mobile-title" title="Seen in the Ra & Ra world" href="/journal" />
+        <SectionHeading id="world-mobile-title" title="A closer look" href="/collections/beyond" />
         <div className={styles.worldRail}>
-          {worldImages.map((image) => (
-            <div className={styles.worldImage} key={image.src}>
-              <Image alt={image.alt} fill sizes="(max-width: 767px) 62vw, 1px" src={image.src} />
+          {beyondDesigns.map((design) => (
+            <div className={styles.worldImage} key={design.handle}>
+              <Image alt={design.images[3]!.alt} fill sizes="(max-width: 767px) 62vw, 1px" src={design.images[3]!.url} />
             </div>
           ))}
         </div>
@@ -344,14 +227,16 @@ export function MobileEditorialStorefront({
 
       <section className={styles.newsletter} aria-labelledby="mobile-newsletter-title">
         <div>
-          <p>Studio letters · Edition 01</p>
-          <h2 id="mobile-newsletter-title">Join the<br />movement</h2>
+          <p>RA &amp; RA / COLLECTION 01</p>
+          <h2 id="mobile-newsletter-title">Letters from<br />the studio</h2>
         </div>
-        <p>Be the first to hear about new drops, limited editions and the stories behind the work.</p>
+        <p>Collection stories and release updates—sent only when there is something worth sharing.</p>
         <div className={styles.newsletterForm}>
           <NewsletterForm action={newsletterAction} config={editorialHomepage.newsletter} variant="editorial" />
         </div>
-        <span className={styles.newsletterNote}><CheckCircle2 aria-hidden="true" size={14} /> We only write when there is something worth sharing.</span>
+        <span className={styles.newsletterNote}>
+          <CheckCircle2 aria-hidden="true" size={14} /> We only write when there is something worth sharing.
+        </span>
       </section>
     </div>
   );

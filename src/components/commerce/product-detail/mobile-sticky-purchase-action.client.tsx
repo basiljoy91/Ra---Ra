@@ -15,6 +15,7 @@ interface MobileStickyPurchaseActionProps {
   onAction: () => void;
   price: Money;
   compareAtPrice?: Money | undefined;
+  pricePending?: boolean | undefined;
 }
 
 export function MobileStickyPurchaseAction({
@@ -25,6 +26,7 @@ export function MobileStickyPurchaseAction({
   onAction,
   price,
   compareAtPrice,
+  pricePending = false,
 }: MobileStickyPurchaseActionProps) {
   const [visible, setVisible] = useState(false);
 
@@ -76,7 +78,11 @@ export function MobileStickyPurchaseAction({
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold">{productTitle}</p>
           <div className="mt-1">
-            <ProductPrice price={price} compareAtPrice={compareAtPrice} />
+            <ProductPrice
+              price={price}
+              compareAtPrice={compareAtPrice}
+              pending={pricePending}
+            />
           </div>
         </div>
         <Button

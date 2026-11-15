@@ -87,7 +87,7 @@ export function QualityStory({ content }: QualityStoryProps) {
               </li>
             ))}
           </ul>
-          <p className={styles.qualityCaption}>Limited edition 01</p>
+          <p className={styles.qualityCaption}>RA &amp; RA / COLLECTION 01</p>
         </div>
       </div>
     </section>

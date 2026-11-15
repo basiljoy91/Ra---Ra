@@ -6,33 +6,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import styles from "@/components/homepage/homepage.module.css";
+import { beyondDesigns } from "@/data/beyond-collection";
 
-const slides = [
-  {
-    title: "Beyond Limits",
-    note: "Atlas reimagined · Strength beyond burden",
-    src: "/campaign/hero-beyond-limits.png",
-    href: "/products/beyond-limits-sculptural-boxy-black",
-  },
-  {
-    title: "Beyond Fear",
-    note: "Courage is movement, not the absence of fear",
-    src: "/campaign/hero-beyond-fear.png",
-    href: "/products/beyond-fear-sculptural-boxy-black",
-  },
-  {
-    title: "Beyond Time",
-    note: "Past and present leave marks on the same self",
-    src: "/campaign/hero-beyond-time.png",
-    href: "/products/past-present-beyond-sculptural-boxy-black",
-  },
-  {
-    title: "Beyond Reality",
-    note: "The visible world is only one version of what exists",
-    src: "/campaign/hero-beyond-reality.png",
-    href: "/products/beyond-reality-sculptural-boxy-black",
-  },
-] as const;
+const slides = beyondDesigns.map((design) => ({
+  title: design.title,
+  note: design.corePhilosophy,
+  src: design.hero.desktop.url,
+  alt: design.hero.desktop.alt,
+  href: `/products/${design.handle}`,
+}));
 
 export function HeroCarousel() {
   const [current, setCurrent] = useState(0);
@@ -48,7 +30,7 @@ export function HeroCarousel() {
     return () => window.clearInterval(timer);
   }, [paused]);
 
-  const activeSlide = slides[current] ?? slides[0];
+  const activeSlide = slides[current] ?? slides[0]!;
 
   function move(direction: -1 | 1) {
     setCurrent((index) => (index + direction + slides.length) % slides.length);
@@ -73,7 +55,7 @@ export function HeroCarousel() {
             key={slide.src}
           >
             <Image
-              alt={index === current ? `${slide.title} ra&ra campaign` : ""}
+              alt={index === current ? slide.alt : ""}
               className={styles.heroCampaignImage}
               fill
               priority={index === 0}
@@ -104,7 +86,7 @@ export function HeroCarousel() {
       <div className={styles.heroCarouselAction}>
         <p>{activeSlide.note}</p>
         <Link href={activeSlide.href}>
-          Read {activeSlide.title}
+          Explore {activeSlide.title}
           <ArrowRight aria-hidden="true" size={16} />
         </Link>
       </div>

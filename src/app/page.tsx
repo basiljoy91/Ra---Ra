@@ -6,7 +6,7 @@ import { getCommerceRequestContext } from "@/lib/commerce/shopify/request-contex
 export default async function Home() {
   const context = await getCommerceRequestContext();
   const products = await getProducts(
-    { collectionHandle: "beyond", limit: 16 },
+    { collectionHandle: "beyond", limit: 4 },
     context,
   );
   return (

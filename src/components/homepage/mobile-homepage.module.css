@@ -97,6 +97,9 @@
 
 .heroCopy h1 span:last-child {
   margin-left: 0.15em;
+  font-size: 0.58em;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .heroCopy i {

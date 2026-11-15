@@ -90,6 +90,7 @@ export function ProductCard({
         compareAtPrice={product.compareAtPrice}
         headingLevel={headingLevel}
         price={product.price}
+        pricePending={Boolean(product.priceIsPlaceholder)}
         priceRange={priceRange}
         productHref={productHref}
         title={product.title}
@@ -102,7 +103,7 @@ export function ProductCard({
           productTitle={product.title}
           quickAddAction={quickAddAction}
           showColourOptions={resolvedShowColours}
-          showQuickAdd={resolvedShowQuickAdd}
+          showQuickAdd={resolvedShowQuickAdd && !product.priceIsPlaceholder}
           soldOut={soldOut}
           variants={actionVariants}
         />

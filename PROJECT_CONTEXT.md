@@ -605,3 +605,35 @@ The following must be treated as unknown until the project owner supplies confir
 6. Validate proportionately: `pnpm lint`, `pnpm typecheck`, `pnpm build`, then focused responsive, keyboard, screen-reader/live-region, and reduced-motion checks for changed UI.
 7. Update this document whenever a provider becomes live, a decision is confirmed, a security/deployment change lands, or a major fixture is replaced with approved content. Keep historical statements and verified code facts clearly separated.
 
+## 28. November 2026 — Source-Backed BEYOND Catalogue Replacement
+
+This section records the approved replacement that supersedes the older development catalogue described in the historical sections above. Historical notes are intentionally retained for traceability; they no longer describe the active development catalogue.
+
+### Active development catalogue
+
+The catalogue now contains one shared garment construction carrying four designs, in this order:
+
+1. `beyond-time` — Beyond Time
+2. `beyond-fear` — Beyond Fear
+3. `beyond-reality` — Beyond Reality
+4. `beyond-limits` — Beyond Limits
+
+The shared working specification is 280 GSM, 100% Supima cotton, double-jersey knit, solid deep black, boxy oversized unisex fit, dropped shoulders, standard oversized length, wide straight sleeves, reinforced 2.5–3 cm rib crew neck, shoulder-to-shoulder tape, double-needle sleeve and bottom hems, and a dense smooth matte softly structured surface. Interlock is proposed only and is explicitly not supplier-approved.
+
+The one shared size chart contains finished garment measurements for S through XXL. It is explicitly provisional pending supplier sampling and fit approval. Care, print method, origin, production approval, price, inventory, shipping and returns remain outside the approved source material and are omitted or marked pending.
+
+### Content and imagery sources
+
+- `Beyond Story.txt` is the source of truth for the collection philosophy, definitive story headings, collection stories, product stories, core philosophies and signature statements.
+- `Spec details for website.docx` is the source of truth for the shared garment construction and provisional measurements.
+- `Website content ver1.docx` is subordinate concise copy and is used only where consistent with the definitive story source.
+- The V2 product and hero image folders are the source of truth for visible designs. Imported copies live under `public/products/beyond-*` and `public/campaign/beyond-v2`; application code does not reference the original attachment paths.
+
+### Commerce boundary and compatibility
+
+The provider-neutral `Product` and `Collection` contracts remain in place. When Shopify is configured, the storefront normalizes matching Shopify commerce records into the four approved design presentations while retaining Shopify IDs, variants, options, prices and availability. If Shopify does not contain canonical handles yet, the adapter can use the corresponding historical design record as the commerce source while presenting the canonical handle and source-backed content.
+
+Development-only products retain internal fixture money values only to satisfy the existing commerce interface. They expose `priceIsPlaceholder`, render “Price pending,” disable purchase actions and remain noindexed. Those internal values must never be treated as an approved offer.
+
+Permanent compatibility redirects map the previous design/fit URLs to the four canonical product routes. Every historical Time design URL maps to `/products/beyond-time`.
+

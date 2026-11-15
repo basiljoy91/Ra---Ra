@@ -11,6 +11,7 @@ interface ProductPriceProps {
   priceRange?: MoneyRange | undefined;
   locale?: string | undefined;
   size?: "small" | "large" | undefined;
+  pending?: boolean | undefined;
 }
 
 export function ProductPrice({
@@ -19,12 +20,21 @@ export function ProductPrice({
   priceRange,
   locale,
   size = "small",
+  pending = false,
 }: ProductPriceProps) {
   const priceClassName =
     size === "large" ? "type-price" : "type-small font-semibold";
   const rangeComparison = priceRange
     ? compareMoney(priceRange.min, priceRange.max)
     : 0;
+
+  if (pending) {
+    return (
+      <p className={`${priceClassName} text-foreground-muted`}>
+        Price pending
+      </p>
+    );
+  }
 
   if (priceRange && rangeComparison !== null && rangeComparison !== 0) {
     return (

@@ -10,9 +10,9 @@ import { getCommerceRequestContext } from "@/lib/commerce/shopify/request-contex
 import { buildAbsoluteUrl } from "@/lib/utilities";
 import type { CollectionSummary } from "@/types/collection";
 
-const title = "Explore the Editions";
+const title = "BEYOND";
 const description =
-  "Each ra&ra edition begins with one connected idea, then explores it through artwork, fabric weight, proportion and placement.";
+  "The things we carry. Four designs. Four human experiences. One way of making the invisible personal.";
 
 export const metadata: Metadata = {
   title,
@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     url: buildAbsoluteUrl("/collections", siteConfig.siteUrl),
     images: [
       {
-        url: "/campaign/hero-beyond-limits.png",
+        url: "/campaign/beyond-v2/desktop/collection.png",
         width: 1672,
         height: 941,
-        alt: "Beyond Limits campaign with two models and a fractured Atlas sculpture",
+        alt: "Models wearing black RA & RA BEYOND T-shirts in an urban landscape",
       },
     ],
   },
@@ -63,7 +63,7 @@ export default async function CollectionsOverviewPage() {
       <Container>
         <CollectionBreadcrumbs />
         <header className="mt-8 max-w-3xl">
-          <p className="type-label text-accent">Limited-edition chapters</p>
+          <p className="type-label text-accent">RA &amp; RA / COLLECTION 01</p>
           <h1 className="type-page-heading mt-3">{title}</h1>
           <p className="type-subheading mt-5 text-foreground-muted">
             {description}

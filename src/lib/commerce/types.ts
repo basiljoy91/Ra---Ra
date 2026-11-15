@@ -45,6 +45,8 @@ export interface ProductDetails {
   care?: readonly string[];
   artworkPlacement?: string;
   manufacturing?: string;
+  construction?: readonly string[];
+  surface?: string;
   shippingSummary?: string;
   returnSummary?: string;
 }
@@ -53,6 +55,11 @@ export interface ProductStory {
   eyebrow?: string;
   title: string;
   shortStory: string;
+  corePhilosophy?: string;
+  productStoryParagraphs?: readonly string[];
+  collectionStoryHeading?: string;
+  collectionStoryParagraphs?: readonly string[];
+  signatureStatement?: string;
   emotionalMessage?: string;
   inspiration?: string;
   artworkMeaning?: string;
@@ -98,9 +105,9 @@ export interface Product {
   artworkPlacement?: string;
   seo: SeoFields;
   contentStatus: ContentStatus;
+  priceIsPlaceholder?: boolean;
   isNew?: boolean;
   isBestSeller?: boolean;
-  isLimitedEdition?: boolean;
 }
 
 export interface Collection {

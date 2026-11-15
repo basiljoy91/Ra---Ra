@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "The Journal";
 const description =
-  "Read the myths, material decisions and visual histories behind the ra&ra Beyond collection.";
+  "Read the definitive stories behind Beyond Time, Beyond Fear, Beyond Reality and Beyond Limits.";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: buildAbsoluteUrl("/journal", siteConfig.siteUrl),
-    images: [{ url: "/campaign/hero-beyond-time.png", width: 1672, height: 941, alt: "Models wearing the Past Present Beyond artwork beside a fractured classical portrait" }],
+    images: [{ url: "/campaign/beyond-v2/desktop/beyond-time.png", width: 1672, height: 941, alt: "Two models in black RA & RA T-shirts sharing a moment at an outdoor cafe" }],
   },
 };
 
@@ -37,9 +37,9 @@ export default function JournalIndexPage() {
         <Container>
           {featured ? <JournalCard article={featured} featured headingLevel={2} /> : null}
           <section aria-labelledby="journal-more-heading" className="mt-16 sm:mt-20">
-            <p className="type-label text-accent">Continue looking</p>
+            <p className="type-label text-accent">Time. Fear. Reality. Limits.</p>
             <h2 className="type-section-heading mt-3" id="journal-more-heading">
-              More from the collection journal
+              The other BEYOND stories
             </h2>
             <div className="mt-8">
               <JournalGrid articles={remaining} headingLevel={3} />

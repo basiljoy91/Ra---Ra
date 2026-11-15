@@ -16,7 +16,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "Size Guide";
 const description =
-  "Development structure for ra&ra garment measurements, fit guidance and care information.";
+  "Provisional finished garment measurements for the RA & RA BEYOND boxy oversized unisex T-shirt.";
 
 export const metadata: Metadata = {
   title,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: buildAbsoluteUrl("/size-guide", siteConfig.siteUrl),
-    images: [{ url: "/products/beyond-limits/sculptural-boxy-black/side-couple-black.png", width: 1536, height: 2048, alt: "Two models showing the fit of black Beyond Limits T-shirts" }],
+    images: [{ url: "/products/beyond-time/male-front.png", width: 1086, height: 1448, alt: "Male model wearing the black Beyond Time T-shirt from the front" }],
   },
 };
 
@@ -43,10 +43,10 @@ export default function SizeGuidePage() {
           <div className="max-w-3xl">
             <p className="type-label text-accent">Measurements</p>
             <h2 className="type-section-heading mt-3" id="size-chart-heading">
-              Development size table
+              BEYOND size chart
             </h2>
             <p className="mt-5 text-foreground-muted">
-              Every value remains pending until an approved supplier chart identifies the measurement points, units and tolerances.
+              These are proposed finished garment measurements in centimetres, not body measurements. They remain provisional until supplier sampling and fit approval.
             </p>
           </div>
           <div className="mt-8">

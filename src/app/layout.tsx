@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     siteName: siteConfig.siteName,
     images: [
       {
-        url: "/campaign/beyond-limits-hero.png",
-        width: 1536,
-        height: 1024,
-        alt: "ra&ra Beyond Limits campaign imagery",
+        url: "/campaign/beyond-v2/desktop/collection.png",
+        width: 1672,
+        height: 941,
+        alt: "Models wearing black RA & RA BEYOND T-shirts in an urban landscape",
       },
     ],
   },
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.siteName,
     description: siteConfig.siteDescription,
-    images: ["/campaign/beyond-limits-hero.png"],
+    images: ["/campaign/beyond-v2/desktop/collection.png"],
   },
   robots: {
     index: false,

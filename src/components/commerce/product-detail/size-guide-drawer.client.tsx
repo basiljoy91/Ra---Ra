@@ -162,7 +162,7 @@ export function SizeGuideDrawer({
         </div>
 
         <p className="mt-5 text-xs leading-5 text-white/50">
-          All values are garment measurements in cm. Compare them with a T-shirt you already own and like the fit of.
+          {chart.provisionalNote}
         </p>
       </div>
     </ModalDialog>
