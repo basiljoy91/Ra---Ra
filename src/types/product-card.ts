@@ -6,7 +6,6 @@ export type ProductCardHeadingLevel = 2 | 3 | 4;
 export type ProductBadgeKind =
   | "new"
   | "best-seller"
-  | "limited-edition"
   | "sold-out";
 
 export interface ProductColourOption {

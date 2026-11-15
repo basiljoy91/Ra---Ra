@@ -47,9 +47,18 @@ export function ProductStorySection({ product }: ProductStorySectionProps) {
             <h2 className="type-section-heading" id="product-story-heading">
               {story.title}
             </h2>
-            <p className="type-subheading max-w-[40rem] text-foreground-muted">
-              {story.shortStory}
-            </p>
+            {story.corePhilosophy ? (
+              <p className="type-subheading max-w-[40rem] text-foreground">
+                {story.corePhilosophy}
+              </p>
+            ) : null}
+            <div className="grid max-w-[42rem] gap-4 text-base leading-7 text-foreground-muted">
+              {(story.productStoryParagraphs ?? [story.shortStory]).map(
+                (paragraph, index) => (
+                  <p key={`${index}-${paragraph.slice(0, 32)}`}>{paragraph}</p>
+                ),
+              )}
+            </div>
             {story.emotionalMessage ? (
               <p className="type-body max-w-[40rem] text-foreground-muted">
                 {story.emotionalMessage}
@@ -61,9 +70,9 @@ export function ProductStorySection({ product }: ProductStorySectionProps) {
                 <p className="mt-2 text-foreground">{story.artworkMeaning}</p>
               </div>
             ) : null}
-            {story.quote ? (
-              <blockquote className="font-serif text-2xl leading-snug text-foreground">
-                “{story.quote}”
+            {story.signatureStatement ?? story.quote ? (
+              <blockquote className="border-l border-foreground pl-5 font-serif text-2xl leading-snug text-foreground">
+                “{story.signatureStatement ?? story.quote}”
               </blockquote>
             ) : null}
           </div>

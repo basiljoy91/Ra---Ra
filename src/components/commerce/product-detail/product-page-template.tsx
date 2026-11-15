@@ -1,5 +1,6 @@
 import { ProductDetailTabs } from "@/components/commerce/product-detail/product-detail-tabs.client";
 import { ProductPrimaryExperience } from "@/components/commerce/product-detail/product-primary-experience.client";
+import { ProductStorySection } from "@/components/commerce/product-detail/product-story-section";
 import styles from "@/components/commerce/product-detail/product-detail-mobile.module.css";
 import { RelatedProducts } from "@/components/commerce/product-detail/related-products";
 import { Container } from "@/components/layout/container";
@@ -49,6 +50,7 @@ export function ProductPageTemplate({
         </Container>
       </Section>
       <ProductDetailTabs product={product} />
+      <ProductStorySection product={product} />
       <RelatedProducts products={relatedProducts} />
       <div aria-hidden="true" className="h-20 lg:hidden" />
     </article>

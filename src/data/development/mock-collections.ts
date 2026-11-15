@@ -1,5 +1,9 @@
 import type { CollectionCatalogEntry, CollectionSummary } from "@/types/collection";
 import { developmentCollection } from "@/data/development/mock-commerce";
+import {
+  beyondCollectionHero,
+  beyondCollectionPhilosophy,
+} from "@/data/beyond-collection";
 
 export const COLLECTION_DEVELOPMENT_NOTICE =
   "Shopify test catalogue for the India checkout connection. EU launch settings remain separate.";
@@ -12,21 +16,16 @@ export const collectionCatalog: readonly CollectionCatalogEntry[] = [
     heroLayout: "story-left",
     developmentNotice: COLLECTION_DEVELOPMENT_NOTICE,
     story: {
-      eyebrow: "Limited Edition 01",
-      title: "Beyond",
+      eyebrow: "RA & RA / COLLECTION 01",
+      title: "BEYOND",
       introduction:
-        "Four original artworks expressed across four unisex constructions—from a structured 280 GSM boxy tee to washed charcoal, off-white and relaxed chocolate forms.",
-      longDescription:
-        "Beyond explores courage, perception, time and human limits through classical forms, celestial geometry and considered front-to-back artwork placement.",
-      campaignLine: "Four questions. Four artworks. One connected edition.",
-      quote: "The first look should be immediate. The second should reveal something new.",
+        "Four designs. Four human experiences. One way of making the invisible personal.",
+      longDescriptionParagraphs: beyondCollectionPhilosophy,
+      campaignLine: "THE THINGS WE CARRY.",
+      quote: "We create the design. You give it meaning.",
       heroMedia: {
-        desktop: {
-          url: "/campaign/beyond-limits-hero.png",
-          alt: "Model wearing a washed charcoal Beyond Limits oversized tee in directional light",
-          width: 1536,
-          height: 1024,
-        },
+        desktop: beyondCollectionHero.desktop,
+        mobile: beyondCollectionHero.mobile,
         focalPoint: {
           desktop: "66% 50%",
           tablet: "64% 50%",
@@ -36,7 +35,7 @@ export const collectionCatalog: readonly CollectionCatalogEntry[] = [
       editorialBlocks: [
         {
           type: "quote",
-          quote: "An edition, not an endless restock.",
+          quote: "The artwork is intentional. The interpretation is personal.",
         },
       ],
     },

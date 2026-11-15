@@ -219,10 +219,10 @@ export const homepageCollections = {
       themeKey: "pets",
     },
     {
-      id: "limited-editions",
-      title: "Limited Editions",
+      id: "collection-01",
+      title: "Collection 01",
       description:
-        "Reserved for confirmed limited releases when real collection content is available.",
+        "BEYOND translates Time, Fear, Reality and Limits into lines, forms, light and space.",
       status: "hidden",
       themeKey: "default",
     },
@@ -299,7 +299,7 @@ export const homepageNewsletter = {
   eyebrow: "From ra&ra",
   heading: "Stories Worth Wearing",
   description:
-    "Join us for new collections, meaningful designs and limited releases.",
+    "Join us for collection stories, meaningful designs and release updates.",
   emailLabel: "Email address",
   emailPlaceholder: "you@example.com",
   submitLabel: "Join the Story",

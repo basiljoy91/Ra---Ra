@@ -111,9 +111,6 @@ export function mapShopifyProduct(product: ShopifyProduct): Product {
     isBestSeller: product.tags.some(
       (tag) => tag.toLowerCase() === "best-seller",
     ),
-    isLimitedEdition: Boolean(
-      product.tags.some((tag) => tag.toLowerCase() === "limited-edition"),
-    ),
   };
 }
 

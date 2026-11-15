@@ -17,7 +17,12 @@ export function CollectionIntroduction({
   );
   const theme = getStorefrontCollectionTheme(entry.collection.themeKey);
 
-  if (!story.longDescription && !story.inspiration && !quoteBlock) {
+  if (
+    !story.longDescription &&
+    !story.longDescriptionParagraphs?.length &&
+    !story.inspiration &&
+    !quoteBlock
+  ) {
     return null;
   }
 
@@ -31,6 +36,13 @@ export function CollectionIntroduction({
               <p className="type-subheading mt-4 text-foreground-muted">
                 {story.longDescription}
               </p>
+            ) : null}
+            {story.longDescriptionParagraphs?.length ? (
+              <div className="mt-4 grid gap-4 text-base leading-7 text-foreground-muted">
+                {story.longDescriptionParagraphs.map((paragraph, index) => (
+                  <p key={`${index}-${paragraph.slice(0, 32)}`}>{paragraph}</p>
+                ))}
+              </div>
             ) : null}
             {story.inspiration ? (
               <p className="type-body mt-4 text-foreground-muted">

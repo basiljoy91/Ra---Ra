@@ -22,6 +22,7 @@ export function CollectionHero({ entry, productCount }: CollectionHeroProps) {
   const { collection, story } = entry;
   const theme = getStorefrontCollectionTheme(collection.themeKey);
   const media = story.heroMedia?.desktop;
+  const mobileMedia = story.heroMedia?.mobile;
   const focalPoint = story.heroMedia?.focalPoint;
   const imageStyle: FocalPointStyle = {
     "--collection-hero-position-mobile": focalPoint?.mobile ?? "50% 50%",
@@ -81,17 +82,22 @@ export function CollectionHero({ entry, productCount }: CollectionHeroProps) {
             )}
           >
             {media ? (
-              <Image
-                alt={media.alt}
-                className="collection-hero-image h-full w-full object-cover"
-                fetchPriority="high"
-                height={media.height ?? 1122}
-                priority
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                src={media.url}
-                style={imageStyle}
-                width={media.width ?? 1402}
-              />
+              <picture>
+                {mobileMedia ? (
+                  <source media="(max-width: 767px)" srcSet={mobileMedia.url} />
+                ) : null}
+                <Image
+                  alt={media.alt}
+                  className="collection-hero-image h-full w-full object-cover"
+                  fetchPriority="high"
+                  height={media.height ?? 1122}
+                  priority
+                  sizes="(min-width: 1024px) 58vw, 100vw"
+                  src={media.url}
+                  style={imageStyle}
+                  width={media.width ?? 1402}
+                />
+              </picture>
             ) : (
               <div
                 className={cn(

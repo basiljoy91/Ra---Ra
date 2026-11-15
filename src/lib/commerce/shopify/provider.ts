@@ -2,6 +2,7 @@ import {
   developmentCollection,
   developmentProducts,
 } from "@/data/development/mock-commerce";
+import { BEYOND_PRODUCT_HANDLES } from "@/data/beyond-collection";
 import type {
   Collection,
   CommerceRequestContext,
@@ -46,6 +47,68 @@ function developmentQuery(query: ProductQuery = {}): readonly Product[] {
   return filtered.slice(0, query.limit ?? filtered.length);
 }
 
+const legacyDesignPrefixes: Readonly<Record<string, string>> = {
+  "beyond-time": "past-present-beyond",
+  "beyond-fear": "beyond-fear",
+  "beyond-reality": "beyond-reality",
+  "beyond-limits": "beyond-limits",
+};
+
+function normalizeBeyondProducts(
+  products: readonly Product[],
+  includeDevelopmentFallbacks = true,
+): readonly Product[] {
+  const approvedByHandle = new Map(
+    developmentProducts.map((product) => [product.handle, product]),
+  );
+  const normalized = BEYOND_PRODUCT_HANDLES.flatMap((handle) => {
+    const approved = approvedByHandle.get(handle);
+    if (!approved) return [];
+
+    const legacyPrefix = legacyDesignPrefixes[handle] ?? handle;
+    const commerceProduct =
+      products.find((product) => product.handle === handle) ??
+      products.find(
+        (product) =>
+          product.handle === `${legacyPrefix}-sculptural-boxy-black`,
+      ) ??
+      products.find((product) => product.handle.startsWith(`${legacyPrefix}-`));
+
+    if (!commerceProduct) {
+      return includeDevelopmentFallbacks ? [approved] : [];
+    }
+
+    return [
+      {
+        ...approved,
+        id: commerceProduct.id,
+        price: commerceProduct.price,
+        ...(commerceProduct.compareAtPrice
+          ? { compareAtPrice: commerceProduct.compareAtPrice }
+          : {}),
+        variants: commerceProduct.variants,
+        ...(commerceProduct.options
+          ? { options: commerceProduct.options }
+          : {}),
+        ...(commerceProduct.defaultSelectedOptions
+          ? { defaultSelectedOptions: commerceProduct.defaultSelectedOptions }
+          : {}),
+        collectionHandles: commerceProduct.collectionHandles.length
+          ? commerceProduct.collectionHandles
+          : approved.collectionHandles,
+        contentStatus: "production",
+        priceIsPlaceholder: false,
+        seo: {
+          ...approved.seo,
+          noIndex: false,
+        },
+      } satisfies Product,
+    ];
+  });
+
+  return normalized;
+}
+
 const developmentProvider: CommerceProvider = {
   async getProducts(query) {
     return developmentQuery(query);
@@ -85,7 +148,11 @@ const shopifyProvider: CommerceProvider = {
       },
       buyerIp: context.buyerIp,
     });
-    return data.products.nodes.map(mapShopifyProduct);
+    const products = data.products.nodes.map(mapShopifyProduct);
+    return normalizeBeyondProducts(products, !query.search).slice(
+      0,
+      query.limit ?? 50,
+    );
   },
   async getProductByHandle(handle, context = {}) {
     const config = getShopifyConfig();
@@ -98,7 +165,22 @@ const shopifyProvider: CommerceProvider = {
       },
       buyerIp: context.buyerIp,
     });
-    return data.product ? mapShopifyProduct(data.product) : null;
+    if (!data.product) {
+      return developmentProducts.find((product) => product.handle === handle) ?? null;
+    }
+    const mapped = mapShopifyProduct(data.product);
+    const canonicalHandle =
+      BEYOND_PRODUCT_HANDLES.find(
+        (candidate) =>
+          candidate === handle ||
+          mapped.handle === candidate ||
+          mapped.handle.startsWith(`${legacyDesignPrefixes[candidate]}-`),
+      ) ?? handle;
+    return (
+      normalizeBeyondProducts([mapped], false).find(
+        (product) => product.handle === canonicalHandle,
+      ) ?? mapped
+    );
   },
   async getCollections(context = {}) {
     const config = getShopifyConfig();
@@ -129,7 +211,20 @@ const shopifyProvider: CommerceProvider = {
       },
       buyerIp: context.buyerIp,
     });
-    return data.collection ? mapShopifyCollection(data.collection) : null;
+    if (!data.collection) return null;
+    const collection = mapShopifyCollection(data.collection);
+    if (collection.handle !== "beyond") return collection;
+
+    return {
+      ...developmentCollection,
+      id: collection.id,
+      products: normalizeBeyondProducts(collection.products),
+      contentStatus: "production",
+      seo: {
+        ...developmentCollection.seo,
+        noIndex: false,
+      },
+    };
   },
 };
 

@@ -27,10 +27,6 @@ export function getProductBadges(
     badges.push("best-seller");
   }
 
-  if (product.isLimitedEdition) {
-    badges.push("limited-edition");
-  }
-
   return badges.slice(0, 2);
 }
 

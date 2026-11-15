@@ -19,6 +19,7 @@ interface ProductCardDetailsProps {
   headingLevel: ProductCardHeadingLevel;
   variant: ProductCardVariant;
   children?: ReactNode;
+  pricePending?: boolean;
 }
 
 const titleClasses: Record<ProductCardVariant, string> = {
@@ -37,6 +38,7 @@ export function ProductCardDetails({
   headingLevel,
   variant,
   children,
+  pricePending = false,
 }: ProductCardDetailsProps) {
   const Heading = `h${headingLevel}` as "h2" | "h3" | "h4";
 
@@ -57,6 +59,7 @@ export function ProductCardDetails({
       </Heading>
       <ProductPrice
         compareAtPrice={compareAtPrice}
+        pending={pricePending}
         price={price}
         priceRange={priceRange}
       />

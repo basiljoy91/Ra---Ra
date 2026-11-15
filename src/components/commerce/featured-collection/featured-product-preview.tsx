@@ -14,7 +14,9 @@ export function FeaturedProductPreview({
   frameClassName,
 }: FeaturedProductPreviewProps) {
   const image = product.images[0];
-  const formattedPrice = formatMoney(product.price);
+  const formattedPrice = product.priceIsPlaceholder
+    ? "Price pending"
+    : formatMoney(product.price);
 
   return (
     <Link

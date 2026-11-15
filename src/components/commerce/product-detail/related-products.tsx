@@ -65,6 +65,7 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
                       <div className="mt-2">
                         <ProductPrice
                           compareAtPrice={product.compareAtPrice}
+                          pending={product.priceIsPlaceholder}
                           price={product.price}
                         />
                       </div>

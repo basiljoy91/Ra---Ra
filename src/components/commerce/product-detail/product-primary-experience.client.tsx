@@ -4,11 +4,10 @@ import {
   Heart,
   CreditCard,
   LoaderCircle,
-  PackageCheck,
   Ruler,
-  ShieldCheck,
   ShoppingBag,
-  Truck,
+  Shirt,
+  Layers3,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -55,25 +54,13 @@ interface ProductPrimaryExperienceProps {
 }
 
 const DESIGN_ORDER = [
-  "Past Present Beyond",
-  "Beyond Reality",
+  "Beyond Time",
   "Beyond Fear",
+  "Beyond Reality",
   "Beyond Limits",
 ] as const;
 
-const FIT_ORDER = [
-  "Sculptural Boxy Tee",
-  "Washed Art Tee",
-  "Signature Regular Tee",
-  "Relaxed Essential Tee",
-] as const;
-
-const MOBILE_PRODUCT_STORIES: Readonly<Record<string, string>> = {
-  "Beyond Fear": "Courage is movement, not the absence of fear.",
-  "Beyond Reality": "The visible world is only one version of what exists.",
-  "Past Present Beyond": "The past arrives edited by everything that followed.",
-  "Beyond Limits": "Strength can mean questioning the burden itself.",
-};
+const FIT_ORDER = ["Boxy Oversized Unisex Tee"] as const;
 
 function getProductDesign(title: string): string {
   return title.split(/\s+[—–-]\s+/u, 1)[0]?.trim() ?? title;
@@ -87,16 +74,9 @@ function getProductFit(
 }
 
 function getMobileProductStory(product: Product): string {
-  const editorialStory = MOBILE_PRODUCT_STORIES[getProductDesign(product.title)];
-
-  if (editorialStory) return editorialStory;
-
   const description =
     product.story?.shortStory ?? product.shortDescription ?? product.description;
-
-  return description
-    .split(/Planned specification:|Unisex sizing|Final production details/iu, 1)[0]
-    ?.trim() || description;
+  return description;
 }
 
 function sortByPreferredOrder(
@@ -340,42 +320,6 @@ function getInitialImageUrl(
   );
 }
 
-function getLocalGalleryFallback(product: Product): readonly ProductImage[] {
-  const fitSlugs = [
-    "sculptural-boxy-black",
-    "washed-art-charcoal",
-    "signature-regular-off-white",
-    "relaxed-essential-chocolate",
-  ] as const;
-  const fitSlug = fitSlugs.find((candidate) =>
-    product.handle.endsWith(`-${candidate}`),
-  );
-
-  if (!fitSlug) return [];
-
-  const designSlug = product.handle.slice(0, -(fitSlug.length + 1));
-  const base = `/products/${designSlug}/${fitSlug}`;
-
-  return [
-    {
-      url: `${base}/side-couple-black.png`,
-      alt: `${product.title} worn by two models`,
-    },
-    {
-      url: `${base}/lifestyle-back.png`,
-      alt: `${product.title} back artwork`,
-    },
-    {
-      url: `${base}/front-male-black.png`,
-      alt: `${product.title} front view on a male model`,
-    },
-    {
-      url: `${base}/front-female-black.png`,
-      alt: `${product.title} front view on a female model`,
-    },
-  ];
-}
-
 function getGalleryImages(product: Product): readonly ProductImage[] {
   const images = new Map<string, ProductImage>();
 
@@ -389,9 +333,7 @@ function getGalleryImages(product: Product): readonly ProductImage[] {
     }
   }
 
-  return images.size > 0
-    ? Array.from(images.values())
-    : getLocalGalleryFallback(product);
+  return Array.from(images.values());
 }
 
 export function ProductPrimaryExperience({
@@ -418,6 +360,7 @@ export function ProductPrimaryExperience({
   const galleryImages = getGalleryImages(product);
   const resolution = resolveProductVariant(product, selections);
   const soldOut = isProductSoldOut(product);
+  const commercePending = Boolean(product.priceIsPlaceholder);
   const hasSizeOption = options.some(
     (option) => getOptionSelectionKey(option.name) === "size",
   );
@@ -554,7 +497,9 @@ export function ProductPrimaryExperience({
     });
   }
 
-  const stickyActionLabel = soldOut
+  const stickyActionLabel = commercePending
+    ? "Coming soon"
+    : soldOut
     ? "Sold Out"
     : resolution.status === "incomplete"
       ? hasSizeOption
@@ -584,7 +529,7 @@ export function ProductPrimaryExperience({
         <div className={`lg:sticky lg:top-[calc(var(--header-height-desktop)+1.25rem)] ${styles.productInformation}`}>
           <div>
             <p className={`inline-flex rounded-full bg-surface-muted px-3 py-1 text-[0.7rem] font-semibold tracking-wide text-foreground-muted ${styles.productBadge}`}>
-              {product.isNew ? "New arrival" : "Limited edition"}
+              RA &amp; RA / COLLECTION 01
             </p>
             <h1 className={`mt-4 max-w-[14ch] font-serif text-[clamp(2.45rem,4.5vw,4rem)] font-medium leading-[0.94] tracking-[-0.025em] ${styles.productTitle}`}>
               {product.title}
@@ -596,6 +541,7 @@ export function ProductPrimaryExperience({
               <ProductPrice
                 compareAtPrice={selectedCompareAt}
                 price={selectedPrice}
+                pending={commercePending}
                 size="large"
               />
             </div>
@@ -651,12 +597,14 @@ export function ProductPrimaryExperience({
                 aria-describedby="product-purchase-status"
                 className="w-full"
                 data-main-purchase-action
-                disabled={soldOut || isPending}
+                disabled={commercePending || soldOut || isPending}
                 onClick={handleAddToCart}
                 size="lg"
               >
                 <ShoppingBag aria-hidden="true" className="size-5" strokeWidth={1.6} />
-                {soldOut
+                {commercePending
+                  ? "Coming soon"
+                  : soldOut
                   ? "Sold Out"
                   : pendingAction === "add"
                     ? "Adding…"
@@ -665,13 +613,17 @@ export function ProductPrimaryExperience({
               <Button
                 aria-describedby="product-purchase-status"
                 className="col-span-2 row-start-2 w-full sm:col-span-1 sm:row-start-auto"
-                disabled={soldOut || isPending}
+                disabled={commercePending || soldOut || isPending}
                 onClick={handleBuyNow}
                 size="lg"
                 variant="secondary"
               >
                 <CreditCard aria-hidden="true" className="size-5" strokeWidth={1.6} />
-                {pendingAction === "buy" ? "Opening checkout…" : "Buy now"}
+                {commercePending
+                  ? "Price pending"
+                  : pendingAction === "buy"
+                    ? "Opening checkout…"
+                    : "Buy now"}
               </Button>
               <Button
                 aria-label="Save product"
@@ -698,19 +650,19 @@ export function ProductPrimaryExperience({
 
           <div className={`mt-6 grid grid-cols-3 gap-2 border-t border-border pt-5 text-center ${styles.purchaseBenefits}`}>
             <div className="grid justify-items-center gap-1.5">
-              <Truck aria-hidden="true" className="size-5" strokeWidth={1.5} />
-              <p className="text-[0.68rem] font-semibold">Delivery details</p>
-              <p className="text-[0.6rem] text-foreground-muted">Shown at checkout</p>
+              <Shirt aria-hidden="true" className="size-5" strokeWidth={1.5} />
+              <p className="text-[0.68rem] font-semibold">Supima cotton</p>
+              <p className="text-[0.6rem] text-foreground-muted">100% cotton</p>
             </div>
             <div className="grid justify-items-center gap-1.5">
-              <PackageCheck aria-hidden="true" className="size-5" strokeWidth={1.5} />
-              <p className="text-[0.68rem] font-semibold">Fit guidance</p>
-              <p className="text-[0.6rem] text-foreground-muted">Product size chart</p>
+              <Layers3 aria-hidden="true" className="size-5" strokeWidth={1.5} />
+              <p className="text-[0.68rem] font-semibold">280 GSM</p>
+              <p className="text-[0.6rem] text-foreground-muted">Double jersey</p>
             </div>
             <div className="grid justify-items-center gap-1.5">
-              <ShieldCheck aria-hidden="true" className="size-5" strokeWidth={1.5} />
-              <p className="text-[0.68rem] font-semibold">Secure checkout</p>
-              <p className="text-[0.6rem] text-foreground-muted">Protected payment</p>
+              <Ruler aria-hidden="true" className="size-5" strokeWidth={1.5} />
+              <p className="text-[0.68rem] font-semibold">Oversized fit</p>
+              <p className="text-[0.6rem] text-foreground-muted">Provisional chart</p>
             </div>
           </div>
         </div>
@@ -728,6 +680,7 @@ export function ProductPrimaryExperience({
       <MobileStickyPurchaseAction
         actionLabel={stickyActionLabel}
         disabled={
+          commercePending ||
           soldOut ||
           resolution.status === "unavailable" ||
           resolution.status === "invalid"
@@ -737,6 +690,7 @@ export function ProductPrimaryExperience({
         productTitle={product.title}
         price={selectedPrice}
         compareAtPrice={selectedCompareAt}
+        pricePending={commercePending}
       />
     </>
   );

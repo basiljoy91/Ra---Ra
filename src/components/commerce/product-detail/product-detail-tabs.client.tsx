@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Check, Ruler, Shirt, Sparkles } from "lucide-react";
+import { Check, Layers3, Ruler, Shirt } from "lucide-react";
 import { useState } from "react";
 
 import { SizeGuideDrawer } from "@/components/commerce/product-detail/size-guide-drawer.client";
 import styles from "@/components/commerce/product-detail/product-detail-mobile.module.css";
 import { Container } from "@/components/layout/container";
-import { productPageConfig } from "@/config/product-page";
 import type { Product } from "@/lib/commerce";
 import { cn } from "@/lib/utilities";
 
@@ -15,7 +14,7 @@ interface ProductDetailTabsProps {
   product: Product;
 }
 
-const tabs = ["Details", "Materials", "Size & Fit", "Shipping & Returns"] as const;
+const tabs = ["Details", "Materials", "Size & Fit"] as const;
 type Tab = (typeof tabs)[number];
 
 function getTabId(tab: Tab): string {
@@ -26,10 +25,14 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>("Details");
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const details = product.details;
-  const detailImage = product.images[4] ?? product.images[1] ?? product.images[0];
+  const detailImage =
+    product.images.find((image) => image.url.includes("artwork-detail")) ??
+    product.images.find((image) => image.url.includes("collar-detail")) ??
+    product.images[1] ??
+    product.images[0];
   const detailPoints = [
-    { id: "fit", text: `${details?.fit ?? "Unisex"} fit` },
-    { id: "material", text: details?.material ?? "Heavyweight premium cotton" },
+    { id: "fit", text: details?.fit ?? "Boxy oversized unisex fit" },
+    { id: "material", text: details?.material ?? "280 GSM, 100% Supima cotton" },
     {
       id: "artwork-placement",
       text:
@@ -37,8 +40,8 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
         product.artworkPlacement ??
         "Signature chest and back artwork",
     },
-    { id: "manufacturing", text: details?.manufacturing ?? "Soft-hand print finish" },
-    { id: "unisex", text: "Designed as a unisex style" },
+    { id: "surface", text: details?.surface ?? "Dense, smooth, matte and softly structured" },
+    { id: "colour", text: "Solid deep black" },
   ];
 
   return (
@@ -63,12 +66,12 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
           <details>
             <summary>Materials &amp; care <span aria-hidden="true">+</span></summary>
             <div className={styles.mobileDetailContent}>
-              <p><strong>Fabric:</strong> {details?.material ?? "100% Supima cotton double jersey"}</p>
-              <p className="mt-2"><strong>Finish:</strong> {details?.manufacturing ?? "Soft-hand screen print"}</p>
-              {details?.care?.length ? (
+              <p><strong>Fabric:</strong> {details?.material ?? "280 GSM, 100% Supima cotton double jersey"}</p>
+              <p className="mt-2"><strong>Surface:</strong> {details?.surface ?? "Dense, smooth, matte and softly structured"}</p>
+              {details?.construction?.length ? (
                 <ul role="list">
-                  {details.care.map((instruction, index) => (
-                    <li key={`${index}-${instruction}`}>— {instruction}</li>
+                  {details.construction.map((item, index) => (
+                    <li key={`${index}-${item}`}>— {item}</li>
                   ))}
                 </ul>
               ) : null}
@@ -77,18 +80,11 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
           <details>
             <summary>Size &amp; fit <span aria-hidden="true">+</span></summary>
             <div className={styles.mobileDetailContent}>
-              <p>{details?.fit ?? "Unisex"} fit. Select your usual size for the intended silhouette, or size down for a closer fit.</p>
+              <p>{details?.fit ?? "Boxy oversized unisex"}. Measurements are provisional pending supplier sampling and fit approval.</p>
               <button onClick={() => setSizeGuideOpen(true)} type="button">
                 <Ruler aria-hidden="true" className="size-4" strokeWidth={1.6} />
                 Open this product’s size chart
               </button>
-            </div>
-          </details>
-          <details>
-            <summary>Shipping &amp; returns <span aria-hidden="true">+</span></summary>
-            <div className={styles.mobileDetailContent}>
-              <p><strong>Shipping:</strong> {details?.shippingSummary ?? productPageConfig.shippingSummary}</p>
-              <p className="mt-2"><strong>Returns:</strong> {details?.returnSummary ?? productPageConfig.returnSummary}</p>
             </div>
           </details>
           {detailImage ? (
@@ -162,20 +158,20 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <Sparkles aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.6} />
+                  <Layers3 aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.6} />
                   <div>
-                    <p className="font-semibold">Finish</p>
+                    <p className="font-semibold">Surface and structure</p>
                     <p className="mt-1 text-foreground-muted">
-                      {details?.manufacturing ?? "Soft-hand screen print"}
+                      {details?.surface ?? "Dense, smooth, matte and softly structured"}
                     </p>
                   </div>
                 </div>
-                {details?.care?.length ? (
+                {details?.construction?.length ? (
                   <div>
-                    <p className="font-semibold">Care</p>
+                    <p className="font-semibold">Construction</p>
                     <ul className="mt-2 grid gap-2 text-foreground-muted" role="list">
-                      {details.care.map((instruction, index) => (
-                        <li key={`${index}-${instruction}`}>— {instruction}</li>
+                      {details.construction.map((item, index) => (
+                        <li key={`${index}-${item}`}>— {item}</li>
                       ))}
                     </ul>
                   </div>
@@ -188,9 +184,9 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                 <div className="flex gap-4">
                   <Ruler aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.6} />
                   <div>
-                    <p className="font-semibold">{details?.fit ?? "Unisex"} fit</p>
+                    <p className="font-semibold">{details?.fit ?? "Boxy oversized unisex"}</p>
                     <p className="mt-2 max-w-md leading-6 text-foreground-muted">
-                      Available in S, M, L, XL and XXL. Select your usual size for the intended silhouette, or size down for a closer fit.
+                      Available in S, M, L, XL and XXL. The chart lists proposed finished garment measurements, not body measurements. All dimensions remain provisional pending supplier sampling and fit approval.
                     </p>
                   </div>
                 </div>
@@ -205,22 +201,6 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
               </div>
             ) : null}
 
-            {activeTab === "Shipping & Returns" ? (
-              <div className="grid gap-6 text-sm">
-                <div>
-                  <p className="font-semibold">Shipping</p>
-                  <p className="mt-2 leading-6 text-foreground-muted">
-                    {details?.shippingSummary ?? productPageConfig.shippingSummary}
-                  </p>
-                </div>
-                <div>
-                  <p className="font-semibold">Returns</p>
-                  <p className="mt-2 leading-6 text-foreground-muted">
-                    {details?.returnSummary ?? productPageConfig.returnSummary}
-                  </p>
-                </div>
-              </div>
-            ) : null}
           </div>
 
           <div className="relative min-h-72 overflow-hidden rounded-xl bg-[#eeece8] md:min-h-[24rem]">

@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 const title = "About ra&ra";
 const description =
-  "Discover how ra&ra turns questions about courage, perception, time and limitation into considered limited-edition apparel.";
+  "Discover BEYOND: four designs translating Time, Fear, Reality and Limits into a visual language of lines, forms, light and space.";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: buildAbsoluteUrl("/about", siteConfig.siteUrl),
-    images: [{ url: "/campaign/hero-beyond-limits.png", width: 1672, height: 941, alt: "Two models in Beyond Limits T-shirts beside a fractured Atlas sculpture" }],
+    images: [{ url: "/campaign/beyond-v2/desktop/collection.png", width: 1672, height: 941, alt: "Models wearing black RA & RA BEYOND T-shirts in an urban landscape" }],
   },
 };
 

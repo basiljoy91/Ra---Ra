@@ -70,6 +70,7 @@ export interface CollectionStory {
   title: string;
   introduction: string;
   longDescription?: string;
+  longDescriptionParagraphs?: readonly string[];
   campaignLine?: string;
   quote?: string;
   inspiration?: string;

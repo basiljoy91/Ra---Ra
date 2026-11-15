@@ -45,8 +45,8 @@ const primaryNavigation = [
         enabled: true,
       },
       {
-        id: "limited-edition-preview",
-        label: "Limited Edition",
+        id: "collection-story",
+        label: "The Collection Story",
         href: "/collections/beyond",
         enabled: true,
       },
@@ -64,8 +64,8 @@ const primaryNavigation = [
         enabled: true,
       },
       {
-        id: "limited-editions",
-        label: "Limited Editions",
+        id: "collection-01",
+        label: "Collection 01",
         badge: "01",
         href: "/collections/beyond",
         enabled: true,
@@ -94,8 +94,8 @@ const headerConfig = {
     messages: [
       {
         id: "launch-notice",
-        text: "Shopify checkout testing · Beyond Edition 01",
-        shortText: "Shopify checkout testing",
+        text: "RA & RA / COLLECTION 01 · BEYOND",
+        shortText: "COLLECTION 01 · BEYOND",
       },
     ],
   },
@@ -106,7 +106,7 @@ const headerConfig = {
 export const siteConfig = {
   siteName: "ra&ra",
   siteDescription:
-    "Limited-edition apparel built around researched artwork, considered materials and ideas that reward a second look.",
+    "BEYOND translates Time, Fear, Reality and Limits into a visual language of lines, forms, light and space.",
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],

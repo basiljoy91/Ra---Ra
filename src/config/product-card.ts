@@ -18,10 +18,6 @@ export const productBadgeDefinitions = {
     label: "Best Seller",
     className: "border-accent bg-accent text-primary-foreground",
   },
-  "limited-edition": {
-    label: "Limited Edition",
-    className: "border-border bg-accent-soft text-foreground",
-  },
 } as const satisfies Record<ProductBadgeKind, ProductBadgeDefinition>;
 
 interface ProductColourDefinition {

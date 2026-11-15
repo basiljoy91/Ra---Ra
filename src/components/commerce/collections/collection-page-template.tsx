@@ -2,6 +2,7 @@ import { CollectionEmptyState } from "@/components/commerce/collections/collecti
 import { CollectionHero } from "@/components/commerce/collections/collection-hero";
 import { CollectionIntroduction } from "@/components/commerce/collections/collection-introduction";
 import { CollectionResults } from "@/components/commerce/collections/collection-results";
+import { CollectionStorySections } from "@/components/commerce/collections/collection-story-sections";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import type {
@@ -36,6 +37,7 @@ export function CollectionPageTemplate({
         {...(active ? { productCount: query.totalProducts } : {})}
       />
       <CollectionIntroduction entry={entry} />
+      <CollectionStorySections products={entry.collection.products} />
       {active ? (
         <CollectionResults
           collectionHandle={entry.collection.handle}
