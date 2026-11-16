@@ -51,6 +51,14 @@ function multiSelectFilter(
   return { id, label, type: "multi-select", options };
 }
 
+function categoryFilter(
+  options: readonly FilterOption[],
+): CollectionFilter | undefined {
+  return options.length > 0
+    ? { id: "type", label: "Product Type", type: "multi-select", options }
+    : undefined;
+}
+
 export function buildCollectionFilters(
   products: readonly Product[],
 ): readonly CollectionFilter[] {
@@ -81,7 +89,7 @@ export function buildCollectionFilters(
   const filters: Array<CollectionFilter | undefined> = [
     multiSelectFilter("size", "Size", sizeOptions),
     multiSelectFilter("colour", "Colour", colourOptions),
-    multiSelectFilter("type", "Product Type", typeOptions),
+    categoryFilter(typeOptions),
     multiSelectFilter("placement", "Artwork Placement", placementOptions),
     multiSelectFilter(
       "availability",

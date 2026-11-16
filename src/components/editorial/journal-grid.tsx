@@ -19,12 +19,13 @@ export function JournalGrid({
   }
 
   return (
-    <div className="grid gap-x-7 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
       {articles.map((article) => (
         <JournalCard
           article={article}
           headingLevel={headingLevel}
           key={article.slug}
+          variant="standard"
         />
       ))}
     </div>

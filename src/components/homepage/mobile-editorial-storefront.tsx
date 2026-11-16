@@ -25,7 +25,7 @@ import { formatMoney } from "@/lib/utilities";
 import type { NewsletterFormAction } from "@/types/newsletter";
 
 const shortcuts = [
-  { label: "Collection", href: "/collections/beyond", Icon: Sparkles },
+  { label: "Designs", href: "#designs-title", Icon: Sparkles },
   { label: "Beyond", href: "/about", Icon: Orbit },
   { label: "Stories", href: "/journal", Icon: Feather },
   { label: "Fit", href: "/size-guide", Icon: Shirt },
@@ -46,14 +46,16 @@ function SectionHeading({
 }: {
   id: string;
   title: string;
-  href: string;
+  href?: string;
 }) {
   return (
     <div className={styles.sectionHeading}>
       <h2 id={id}>{title}</h2>
-      <Link href={href}>
-        View all <ArrowRight aria-hidden="true" size={13} />
-      </Link>
+      {href ? (
+        <Link href={href}>
+          View all <ArrowRight aria-hidden="true" size={13} />
+        </Link>
+      ) : null}
     </div>
   );
 }
@@ -93,7 +95,7 @@ export function MobileEditorialStorefront({
           </h1>
           <i aria-hidden="true" />
           <p>Four designs.<br />Four human experiences.</p>
-          <Link href="/collections/beyond">
+          <Link href="#designs-title">
             Explore the collection <ArrowRight aria-hidden="true" size={18} />
           </Link>
         </div>
@@ -122,8 +124,8 @@ export function MobileEditorialStorefront({
         </div>
       </section>
 
-      <section className={styles.mobileSection} aria-labelledby="featured-collections-title">
-        <SectionHeading id="featured-collections-title" title="The four stories" href="/collections/beyond" />
+      <section className={styles.mobileSection} aria-labelledby="four-stories-title">
+        <SectionHeading id="four-stories-title" title="The four stories" href="/journal" />
         <div className={styles.collectionRail}>
           {beyondDesigns.map((design) => (
             <article className={styles.collectionCard} key={design.handle}>
@@ -146,7 +148,7 @@ export function MobileEditorialStorefront({
       </section>
 
       <section className={styles.mobileSection} aria-labelledby="designs-title">
-        <SectionHeading id="designs-title" title="BEYOND designs" href="/collections/beyond" />
+        <SectionHeading id="designs-title" title="BEYOND designs" />
         <div className={styles.productGrid}>
           {products.slice(0, 4).map((product) => {
             const image = product.images[0];
@@ -215,7 +217,7 @@ export function MobileEditorialStorefront({
       </section>
 
       <section className={styles.mobileSection} aria-labelledby="world-mobile-title">
-        <SectionHeading id="world-mobile-title" title="A closer look" href="/collections/beyond" />
+        <SectionHeading id="world-mobile-title" title="A closer look" />
         <div className={styles.worldRail}>
           {beyondDesigns.map((design) => (
             <div className={styles.worldImage} key={design.handle}>

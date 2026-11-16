@@ -19,6 +19,7 @@ export interface EditorialHeroConfig {
   title: string;
   lead?: string;
   image?: ProductImage;
+  mobileImage?: ProductImage;
   imagePosition?: string;
   developmentNotice?: string;
 }

@@ -57,18 +57,35 @@ export const editorialCta = {
   eyebrow: "RA & RA / COLLECTION 01",
   heading: "Choose the story that stays with you.",
   description: "Explore Beyond Time, Beyond Fear, Beyond Reality and Beyond Limits.",
-  label: "Explore BEYOND",
-  href: "/collections/beyond",
+  label: "Read the four stories",
+  href: "/journal",
 } as const satisfies EditorialCtaConfig;
 
 export const journalIndexHero = {
-  eyebrow: "BEYOND / THE FOUR STORIES",
+  eyebrow: "Ra & Ra Journal",
   title: "The artwork is intentional. The interpretation is personal.",
   lead:
     "Read the definitive stories behind Time, Fear, Reality and Limits.",
-  image: beyondCollectionHero.mobile,
-  imagePosition: "50% 40%",
+  image: beyondCollectionHero.desktop,
+  mobileImage: beyondCollectionHero.mobile,
+  imagePosition: "50% 42%",
 } as const satisfies EditorialHeroConfig;
+
+export const journalNewsletter = {
+  id: "journal-newsletter",
+  eyebrow: "Letters from the studio",
+  heading: "Stay close to the stories.",
+  description:
+    "Receive future Journal stories and collection updates when email delivery is connected.",
+  emailLabel: "Email address",
+  emailPlaceholder: "Your email address",
+  submitLabel: "Subscribe",
+  pendingLabel: "Sending…",
+  consentText:
+    "Email delivery is not yet connected. Development submissions are validated but not stored.",
+  privacyLabel: "Review the current FAQ.",
+  privacyHref: "/faq",
+} as const;
 
 export const journalArticles: readonly JournalArticle[] = beyondDesigns.map(
   (design, index) => ({

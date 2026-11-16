@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { CommunityGridSection } from "@/components/storytelling/community/community-grid-section";
-import { developmentCommunityShowcase } from "@/config/homepage";
+import { developmentCommunityShowcase } from "@/config/development-showcases";
 import {
   DEVELOPMENT_COMMUNITY_NOTICE,
   developmentCommunityItems,

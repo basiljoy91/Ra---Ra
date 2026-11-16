@@ -151,6 +151,9 @@ export function MobileFilterDrawer({
           ref={formRef}
         >
           <input name="sort" type="hidden" value={state.sort} />
+          {state.selected.type.map((value) => (
+            <input key={value} name="type" type="hidden" value={value} />
+          ))}
           <div className="min-h-0 flex-1 overflow-y-auto px-[var(--page-gutter)] py-6">
             <div className="flex items-center justify-between gap-4 pb-5">
               <p className="type-small text-foreground-muted" aria-live="polite">

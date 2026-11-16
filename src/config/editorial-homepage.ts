@@ -6,7 +6,7 @@ export const editorialHomepage = {
       "Four designs. Four human experiences.",
       "One way of making the invisible personal.",
     ],
-    cta: { label: "Explore BEYOND", href: "/collections/beyond" },
+    cta: { label: "Explore BEYOND", href: "#beyond-products" },
     image: {
       src: "/campaign/beyond-v2/desktop/collection.png",
       alt: "Models wearing black RA & RA BEYOND T-shirts in an urban landscape",

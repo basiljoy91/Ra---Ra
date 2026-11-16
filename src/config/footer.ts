@@ -10,10 +10,10 @@ export const footerConfig = {
       id: "shop",
       label: "Shop",
       links: [
-        { id: "new-arrivals", label: "New Arrivals", href: "/collections/beyond?sort=newest" },
-        { id: "t-shirts", label: "T-Shirts", href: "/collections/beyond" },
-        { id: "story", label: "The Collection Story", href: "/about" },
-        { id: "all-products", label: "All Products", href: "/collections/beyond" },
+        { id: "beyond-time", label: "Beyond Time", href: "/products/beyond-time" },
+        { id: "beyond-fear", label: "Beyond Fear", href: "/products/beyond-fear" },
+        { id: "beyond-reality", label: "Beyond Reality", href: "/products/beyond-reality" },
+        { id: "beyond-limits", label: "Beyond Limits", href: "/products/beyond-limits" },
       ],
     },
     {
@@ -34,7 +34,7 @@ export const footerConfig = {
         { id: "story", label: "Our Story", href: "/about" },
         { id: "journal", label: "Journal", href: "/journal" },
         { id: "size-guide", label: "Size Guide", href: "/size-guide" },
-        { id: "collection", label: "Collection 01", href: "/collections/beyond" },
+        { id: "philosophy", label: "BEYOND Philosophy", href: "/about" },
       ],
     },
   ],

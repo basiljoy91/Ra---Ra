@@ -71,6 +71,9 @@ export function DesktopFilterPanel({
         </div>
         <form onSubmit={handleSubmit}>
           <input name="sort" type="hidden" value={state.sort} />
+          {state.selected.type.map((value) => (
+            <input key={value} name="type" type="hidden" value={value} />
+          ))}
           <CollectionFilterFields
             filters={filters}
             idPrefix="desktop-filter"

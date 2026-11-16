@@ -103,8 +103,8 @@ export function CartPageClient() {
           <p className="mt-2 text-foreground-muted">
             Choose a design and size from the Beyond collection.
           </p>
-          <Link className={buttonStyles({ className: "mt-6", size: "lg" })} href="/collections/beyond">
-            Shop Beyond
+          <Link className={buttonStyles({ className: "mt-6", size: "lg" })} href="/">
+            Discover Beyond
           </Link>
           <p aria-live="polite" className={cn("mt-4 min-h-5 text-sm", message && "text-error")}>
             {message}

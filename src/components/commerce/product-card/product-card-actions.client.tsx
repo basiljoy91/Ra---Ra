@@ -15,6 +15,7 @@ import type {
 } from "@/types/product-card";
 
 interface ProductCardActionsProps {
+  actionLabel?: string;
   productId: string;
   productTitle: string;
   productHref: string;
@@ -32,6 +33,7 @@ interface DirectFeedback {
 }
 
 export function ProductCardActions({
+  actionLabel = "Quick Add",
   productId,
   productTitle,
   productHref,
@@ -119,7 +121,7 @@ export function ProductCardActions({
             size="md"
             variant="secondary"
           >
-            {isPending ? "Adding…" : "Quick Add"}
+            {isPending ? "Adding…" : actionLabel}
           </Button>
         ) : (
           <Link

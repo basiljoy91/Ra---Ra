@@ -4,7 +4,6 @@ import { buildAbsoluteUrl } from "@/lib/utilities";
 
 interface ProductStructuredDataProps {
   product: Product;
-  collection?: { handle: string; title: string };
 }
 
 function serializeJsonLd(value: unknown): string {
@@ -13,7 +12,6 @@ function serializeJsonLd(value: unknown): string {
 
 export function ProductStructuredData({
   product,
-  collection,
 }: ProductStructuredDataProps) {
   const productUrl = buildAbsoluteUrl(
     `/products/${product.handle}`,
@@ -47,25 +45,6 @@ export function ProductStructuredData({
     {
       "@type": "ListItem",
       position: 2,
-      name: "Collections",
-      item: buildAbsoluteUrl("/collections", siteConfig.siteUrl),
-    },
-    ...(collection
-      ? [
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: collection.title,
-            item: buildAbsoluteUrl(
-              `/collections/${collection.handle}`,
-              siteConfig.siteUrl,
-            ),
-          },
-        ]
-      : []),
-    {
-      "@type": "ListItem",
-      position: collection ? 4 : 3,
       name: product.title,
       item: productUrl,
     },

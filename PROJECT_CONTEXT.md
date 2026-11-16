@@ -155,9 +155,9 @@ sequenceDiagram
   participant UI as Component tree
   participant Action as Mock server action
 
-  B->>Page: GET /products/[handle] or /collections/[handle]?query
-  Page->>Data: find product / catalog entry
-  Page->>Page: parse query, resolve metadata, derive filters/related items
+  B->>Page: GET /products/[handle]
+  Page->>Data: find product
+  Page->>Page: resolve metadata and related items
   Page->>UI: render server HTML + client boundaries
   B->>UI: choose variant/filter or submit form
   UI->>Action: server action where applicable
@@ -176,15 +176,13 @@ There is no provider-specific deployment configuration, container, infrastructur
 | Location | Responsibility and important behavior |
 |---|---|
 | `src/app/layout.tsx` | Root HTML shell: English language, Cormorant/Manrope variables, skip link, header, main landmark, footer, global metadata/viewport. Root metadata defaults to `noindex,nofollow`. |
-| `src/app/page.tsx` | Home composition. Reads `homepage.ts` plus `developmentCollection`; derives new arrivals/best sellers locally. Reviews/newsletter/community only render when feature flags become true. |
+| `src/app/page.tsx` | Home composition. Reads the provider-backed four-product BEYOND catalogue and renders the responsive editorial storefront. |
 | `src/app/loading.tsx` | Global App Router loading boundary using full-screen `JourneyLoader`. |
 | `src/app/globals.css` | Canonical semantic tokens, typography, reset, focus ring, responsive art direction, dialog transitions, rails, and global reduced-motion treatment. Do not scatter replacement colors/spacing in components without updating this system. |
-| `src/app/collections/page.tsx` | Collections overview route using visible catalog summaries; deliberately noindexed. |
-| `src/app/collections/[collectionHandle]/page.tsx` | Reusable collection route. Builds facets from products, parses canonical query state, redirects overlarge page numbers, conditionally passes mock quick add for active collections, and emits CollectionPage JSON-LD. |
 | `src/app/products/[productHandle]/page.tsx` | Dynamic product route with static params, SEO, product JSON-LD, related-product selection, and mock add-to-cart adapter. |
 | `src/app/about`, `contact`, `faq`, `size-guide`, `journal`, `journal/[slug]` | Editorial routes assembled from typed local content and reusable editorial components. |
 | `src/app/robots.ts` | Disallows all crawlers (`/`) while still exposing the sitemap URL. This is a deliberate prelaunch posture. |
-| `src/app/sitemap.ts` | Generates home, collection, editorial, and development-editorial URLs from local data. Review before launch because the global robots/noindex posture and development data make this unsuitable as final launch SEO. |
+| `src/app/sitemap.ts` | Generates home, editorial, journal, and product URLs. Collection routes were removed in November 2026. |
 | `src/app/development/*` | Component verification pages for product cards, reviews, newsletter, community, and loader. Community/newsletter/reviews return 404 under production; product cards and journey loader currently do not. |
 
 ### Data, configuration, contracts, and actions
@@ -192,22 +190,21 @@ There is no provider-specific deployment configuration, container, infrastructur
 | Location | Responsibility |
 |---|---|
 | `src/config/site.ts` | Site name/url resolver, Germany/EUR development market, feature flags, header/nav configuration, placeholder contact email. Invalid `NEXT_PUBLIC_SITE_URL` fails production configuration; absent value falls back to localhost in development. |
-| `src/config/homepage.ts` | All homepage content, supplied image references, product IDs, focal points, section presentation, and disabled provider placeholders. It is the first place to change approved homepage copy/order/data—not the components. |
+| `src/config/editorial-homepage.ts` | Current homepage configuration and newsletter presentation. |
+| `src/config/development-showcases.ts` | Development-only review, newsletter, and community showcase configuration. |
 | `src/config/footer.ts` | Footer statement/nav groups/market display/cookie trigger. Several configured destinations are not routes yet. |
-| `src/config/*themes.ts` | Controlled class maps for product, collection-card, feature, and storefront collection themes. `CollectionThemeKey` is deliberately a narrow union. |
+| `src/config/*themes.ts` | Controlled class maps retained for active product and feature presentation. |
 | `src/config/product-page.ts` | Development warning and generic shipping/returns/related-product copy. |
 | `src/data/development/mock-commerce.ts` | Six intentionally non-production product fixtures, variant generator, pets collection, lookups. Covers alternate image, changed variant price/image, unavailable combination, one-option product, long title, sold out, and missing image. |
-| `src/data/development/mock-collections.ts` | Catalog containing active pets and empty `travel-development` reuse fixture, plus collection lookups/visible summaries. |
 | `src/data/development/editorial-content.ts` | About, three development Journal articles, FAQ, Contact/Size Guide heroes, Size Chart and safe placeholder copy. |
 | `src/data/development/mock-reviews.ts`, `mock-community.ts` | Clearly-labelled fixtures for isolated development showcases. They must not be presented as real customer/social content. |
 | `src/lib/commerce/types.ts` | Provider-neutral `Money`, product, variant, collection, SEO, content status, and market contracts. Money is a decimal string intentionally—not a JavaScript number. |
 | `src/lib/commerce/provider.ts` | Read-only product/collection provider seam. Cart, checkout, accounts, and inventory synchronization are intentionally deferred. |
 | `src/lib/commerce/product-card.ts`, `variant-resolution.ts` | Sold-out/badge/color helpers and canonical color/colour-aware variant resolution/availability. Reuse these rather than rebuilding selection logic. |
-| `src/lib/collections/*` | Facet construction, query parse/canonicalization, filtering, ordering, pagination, active-filter helpers. Server rendering is driven by URL state rather than a client-store. |
 | `src/lib/utilities/*` | `cn`, absolute URL building, current-nav detection, and safe string-decimal money comparison/ranges/formatting. |
 | `src/lib/validation/*` | Email/contact normalization, required fields, format, and character limits. |
 | `src/features/*` | Four `"use server"` development adapters. Their successful messages explicitly state that no cart/email/subscription/message is written. |
-| `src/types/*` | Page/component contracts for navigation, content, collections, product cards/details, footer, forms, reviews, and storytelling. Keep new integration data mapped into these contracts. |
+| `src/types/*` | Page/component contracts for navigation, content, product cards/details, footer, forms, reviews, and storytelling. Keep new integration data mapped into these contracts. |
 
 ### Component systems
 
@@ -218,17 +215,14 @@ There is no provider-specific deployment configuration, container, infrastructur
 | `components/navigation` | Config-driven announcement/header. Desktop dropdown and mobile drawer are separate interactive components. Search/cart open honest unavailable dialogs; no account/wishlist UI is exposed. |
 | `components/storytelling` | Hero, brand promise, editorial banner, review grid, and community grid. Hero model permits video in types but `HeroMedia` throws unless the active media type is `image`; video rendering is deliberately deferred. |
 | `components/commerce/discovery` | Config-driven category cards; native horizontal mobile rail and responsive grid; supplied local imagery and focal points. |
-| `components/commerce/featured-collection` | Story/presentation + campaign media + minimal preview product cards, split layouts driven by collection theme/configuration. |
-| `components/commerce/collection-navigation` | Homepage “Shop by Collection”; active links only for approved active content, visual coming-soon state otherwise. |
 | `components/commerce/product-card` and `product-showcase` | Reusable standard/compact/editorial cards, image fallback/alternate hover, limited badges, color and quick-add client boundaries, modal selection, loading skeleton, and configurable grids/rails. |
-| `components/commerce/collections` | Reusable hero/introduction/results/filter/pagination/structured-data system. Desktop filters submit GET immediately; mobile drawer preserves draft form state until Apply; sort uses URL navigation transition. |
 | `components/commerce/product-detail` | Server template plus focused client purchase experience: gallery, option availability, quantity, result feedback, sticky mobile action, factual info/story, related products, JSON-LD. |
 | `components/editorial` | Editorial layout/hero, typed rich-text renderer, article/FAQ structured data, accordion-like FAQ item, journal card/grid, breadcrumbs, CTA, and size table. |
 | `components/forms` | Contact/newsletter React form actions with accessible labels, error/status messages, pending state, and development-safe server action hooks. |
 
 ### Public assets
 
-`public/` holds only local campaign/product/discovery images and the first-collection imagery: `hero/`, `featured-collection/`, `collections/`, `discovery/`, `editorial/`, and `development-products/`. Alt text and intrinsic dimensions live primarily in the typed config/data rather than being inferred at render time. The original brief/media/reference files from Phase 0 are **not** in this repository; their original external locations are no longer a reliable handoff source.
+`public/` holds local campaign, product, discovery, editorial, and development imagery. The obsolete tracked collection-page asset was removed with the collection feature. Alt text and intrinsic dimensions live primarily in typed config/data rather than being inferred at render time.
 
 ## 7. Frontend Implementation
 
@@ -237,9 +231,7 @@ There is no provider-specific deployment configuration, container, infrastructur
 | Route | Status and behavior |
 |---|---|
 | `/` | Full composed prototype homepage. It has no page-level metadata export; root metadata applies. |
-| `/collections` | Collection overview: active pets and coming-soon travel fixture. |
-| `/collections/pets` | Active mock catalog with 6 fixture products, facets, sort, filters, page size 4, quick-add feedback, and noindex metadata. |
-| `/collections/travel-development` | Reusable empty, coming-soon collection template; no products/inventory are fabricated. |
+| Collection routes | Removed in November 2026. Product discovery now happens on the homepage, product pages, navigation product links, and search. |
 | `/products/[six development handles]` | Static development product detail pages, including sold-out and missing-image states. |
 | `/about` | Development About story and CTA. The “Our Story” nav anchor points to `#our-story`, but the current About blocks do not visibly define that ID; verify/fix when working on navigation. |
 | `/journal` and three `/journal/[slug]` routes | Development editorial index and typed article pages. |
@@ -551,7 +543,7 @@ The local Git history contains the ten commits summarized in section 14; there a
 - [GitHub repository](https://github.com/basiljoy91/Ra---Ra)
 - `README.md` — early foundation document; useful but stale as noted above.
 - `.env.example` — variable names only, not configured credentials.
-- `src/config/homepage.ts` — current homepage source of truth.
+- `src/config/editorial-homepage.ts` — current homepage configuration.
 - `src/lib/commerce/types.ts` and `src/lib/commerce/provider.ts` — mandatory integration seam.
 - `src/data/development/` — all current non-production content/data fixtures.
 - `public/` — currently tracked campaign/product assets.
@@ -597,10 +589,10 @@ The following must be treated as unknown until the project owner supplies confir
 
 ## 27. Instructions for the New Codex Instance
 
-1. Start by reading this file, then `package.json`, `src/config/site.ts`, `src/config/homepage.ts`, the commerce contracts, and the target route/components. Treat current code as the implementation source of truth.
+1. Start by reading this file, then `package.json`, `src/config/site.ts`, `src/config/editorial-homepage.ts`, the commerce contracts, and the target route/components. Treat current code as the implementation source of truth.
 2. Before a production change, re-check every `development`/`Pending`/placeholder warning in the relevant data/config. Do not assume a polished UI represents live business capability.
 3. If asked to implement commerce, first obtain the unresolved decisions in section 25. Design the provider mapper/server-only token flow before touching page components.
-4. Make changes in the smallest approved phase. Preserve strict TypeScript, the server-first component model, provider-neutral types, URL-driven collection state, and existing accessibility contracts.
+4. Make changes in the smallest approved phase. Preserve strict TypeScript, the server-first component model, provider-neutral types, and existing accessibility contracts.
 5. When working on navigation/footer/product purchase content, account for the missing routes and non-persistent mock actions. Avoid presenting unavailable behavior as active.
 6. Validate proportionately: `pnpm lint`, `pnpm typecheck`, `pnpm build`, then focused responsive, keyboard, screen-reader/live-region, and reduced-motion checks for changed UI.
 7. Update this document whenever a provider becomes live, a decision is confirmed, a security/deployment change lands, or a major fixture is replaced with approved content. Keep historical statements and verified code facts clearly separated.
@@ -636,4 +628,10 @@ The provider-neutral `Product` and `Collection` contracts remain in place. When 
 Development-only products retain internal fixture money values only to satisfy the existing commerce interface. They expose `priceIsPlaceholder`, render “Price pending,” disable purchase actions and remain noindexed. Those internal values must never be treated as an approved offer.
 
 Permanent compatibility redirects map the previous design/fit URLs to the four canonical product routes. Every historical Time design URL maps to `/products/beyond-time`.
+
+## 29. November 2026 — Responsive Provider-Backed Shop
+
+The public dynamic collection route was restored at the project owner’s request as a focused, provider-backed shop. `/collections/beyond` now uses the current commerce provider for products, variants, prices, availability and images; supports URL-driven category selection, faceted filtering, sorting and pagination; presents a sticky desktop filter column and responsive three/four-column product grid; and uses a purpose-built horizontal product-card list with the existing quick-add dialog on mobile. The collection campaign hero uses repository assets with mobile/desktop art direction, and the compact material banner reads only verified product details already present in provider data.
+
+The removed `/collections` overview, legacy collection navigation, featured-collection modules, obsolete fixtures, and old collection-only image remain removed. The current global header, footer and mobile bottom navigation were not recreated or redesigned as part of the shop implementation. Faceted URLs remain canonicalized and noindexed; the canonical collection route is again included in the sitemap.
 

@@ -1,10 +1,8 @@
+import { CollectionCategoryTabs } from "@/components/commerce/collections/collection-category-tabs";
 import { CollectionEmptyState } from "@/components/commerce/collections/collection-empty-state";
 import { CollectionHero } from "@/components/commerce/collections/collection-hero";
-import { CollectionIntroduction } from "@/components/commerce/collections/collection-introduction";
+import { CollectionMaterialBanner } from "@/components/commerce/collections/collection-material-banner";
 import { CollectionResults } from "@/components/commerce/collections/collection-results";
-import { CollectionStorySections } from "@/components/commerce/collections/collection-story-sections";
-import { CollectionShortcuts } from "@/components/commerce/collections/collection-shortcuts";
-import { CollectionDesktopTail } from "@/components/commerce/collections/collection-desktop-tail";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import type {
@@ -38,11 +36,11 @@ export function CollectionPageTemplate({
         entry={entry}
         {...(active ? { productCount: query.totalProducts } : {})}
       />
-      <CollectionShortcuts products={entry.collection.products} />
-      <div className="lg:hidden">
-        <CollectionIntroduction entry={entry} />
-        <CollectionStorySections products={entry.collection.products} />
-      </div>
+      <CollectionCategoryTabs
+        collectionHandle={entry.collection.handle}
+        products={entry.collection.products}
+        state={state}
+      />
       {active ? (
         <>
           <CollectionResults
@@ -53,7 +51,7 @@ export function CollectionPageTemplate({
             state={state}
             {...(quickAddAction ? { quickAddAction } : {})}
           />
-          <CollectionDesktopTail image={entry.story.heroMedia?.desktop} />
+          <CollectionMaterialBanner products={entry.collection.products} />
         </>
       ) : (
         <Section spacing="md" tone="background">

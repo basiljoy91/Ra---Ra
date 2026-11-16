@@ -14,6 +14,7 @@ interface CollectionToolbarProps {
   clearHref: string;
   filteredTotal: number;
   totalProducts: number;
+  hasActiveQuery: boolean;
 }
 
 export function CollectionToolbar({
@@ -25,19 +26,20 @@ export function CollectionToolbar({
   clearHref,
   filteredTotal,
   totalProducts,
+  hasActiveQuery,
 }: CollectionToolbarProps) {
   return (
-    <div className="grid gap-4 border-y border-border py-5 sm:grid-cols-[minmax(0,1fr)_minmax(13rem,auto)] sm:items-end lg:border-t-0 lg:border-[#cfc6bb] lg:pt-0 lg:pb-7">
+    <div className="grid gap-4 border-b border-border pb-6 sm:grid-cols-[minmax(0,1fr)_minmax(13rem,auto)] sm:items-end lg:border-[#cfc6bb] lg:pb-7">
       <div>
         <p className="type-label text-accent lg:text-[0.62rem] lg:tracking-[0.18em] lg:text-[#71685f]">
-          <span className="lg:hidden">The Collection Edit</span>
+          <span className="lg:hidden">Shop / {collectionLabel}</span>
           <span className="hidden lg:inline">Shop / {collectionLabel}</span>
         </p>
         <h2
-          className="type-subheading mt-1 font-semibold lg:mt-2 lg:font-serif lg:text-[clamp(2.25rem,3.2vw,3.75rem)] lg:font-normal lg:leading-none lg:tracking-[-0.035em] lg:text-[#171513]"
+          className="type-subheading mt-1 font-semibold text-[#171513] lg:mt-2 lg:font-serif lg:text-[clamp(2.25rem,3.2vw,3.75rem)] lg:font-normal lg:leading-none lg:tracking-[-0.035em]"
           id="collection-products-heading"
         >
-          <span className="lg:hidden">Products</span>
+          <span className="lg:hidden">{collectionLabel} Collection</span>
           <span className="hidden lg:inline">Shop {collectionLabel}</span>
         </h2>
         <p
@@ -46,7 +48,7 @@ export function CollectionToolbar({
           className="type-small mt-2 text-foreground-muted lg:text-sm lg:text-[#686057]"
           role="status"
         >
-          {activeCount > 0 ? "Filtered to" : "Showing"} {filteredTotal} of {totalProducts}{" "}
+          {hasActiveQuery ? "Filtered to" : "Showing"} {filteredTotal} of {totalProducts}{" "}
           {totalProducts === 1 ? "product" : "products"}
         </p>
       </div>

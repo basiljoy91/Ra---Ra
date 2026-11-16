@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { NewsletterSection } from "@/components/forms/newsletter/newsletter-section";
-import { developmentNewsletterShowcase } from "@/config/homepage";
+import { developmentNewsletterShowcase } from "@/config/development-showcases";
 import { submitDevelopmentNewsletter } from "@/features/newsletter/development-newsletter-signup";
 
 export const metadata: Metadata = {

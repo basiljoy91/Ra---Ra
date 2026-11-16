@@ -25,8 +25,8 @@ export function RelatedProducts({ products }: RelatedProductsProps) {
           <h2 className={`font-serif text-3xl font-medium tracking-[-0.02em] ${styles.relatedHeading}`} id="related-products-heading">
             {productPageConfig.relatedProductsHeading}
           </h2>
-          <Link className="inline-flex items-center gap-2 text-xs font-semibold no-underline" href="/collections/beyond">
-            View all
+          <Link className="inline-flex items-center gap-2 text-xs font-semibold no-underline" href="/">
+            Discover all
             <ArrowRight aria-hidden="true" className="size-3.5" strokeWidth={1.7} />
           </Link>
         </div>

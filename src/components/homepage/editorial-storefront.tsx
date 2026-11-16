@@ -25,8 +25,8 @@ function ProductRail({ products }: { products: readonly Product[] }) {
     <section className={styles.productRailSection} aria-labelledby="beyond-products">
       <div className={styles.sectionHeadingRow}>
         <h2 id="beyond-products">The four designs</h2>
-        <Link href="/collections/beyond">
-          Read the collection <ArrowRight aria-hidden="true" size={14} />
+        <Link href="/about">
+          Read the philosophy <ArrowRight aria-hidden="true" size={14} />
         </Link>
       </div>
       <div className={styles.productRail}>
@@ -113,7 +113,7 @@ export function EditorialStorefront({
               Time, Fear, Reality and Limits into a visual language of lines,
               forms, light and space.
             </p>
-            <Link className={styles.darkButton} href="/collections/beyond">
+            <Link className={styles.darkButton} href="/about">
               Read the collection philosophy
             </Link>
           </div>
