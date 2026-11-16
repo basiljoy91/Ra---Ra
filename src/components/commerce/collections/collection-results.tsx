@@ -47,6 +47,7 @@ export function CollectionResults({
   return (
     <Section
       aria-labelledby="collection-products-heading"
+      className="lg:bg-[#f4efe8] lg:py-12 lg:[--accent:#171513] lg:[--background:#f4efe8] lg:[--border:#cfc6bb] lg:[--button:#171513] lg:[--button-foreground:#ffffff] lg:[--foreground:#171513] lg:[--foreground-muted:#686057] lg:[--surface-muted:#e9e0d6] lg:[--surface:#faf7f2] lg:[color-scheme:light]"
       spacing="md"
       tone="background"
     >
@@ -55,12 +56,13 @@ export function CollectionResults({
           activeCount={activeCount}
           clearHref={clearHref}
           collectionHandle={collectionHandle}
+          collectionLabel={collectionLabel}
           filteredTotal={query.filteredTotal}
           filters={filters}
           state={state}
           totalProducts={query.totalProducts}
         />
-        <div className="mt-8 grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-start">
+        <div className="mt-8 grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:items-start lg:gap-8 xl:grid-cols-[15.5rem_minmax(0,1fr)] xl:gap-10">
           <DesktopFilterPanel
             activeCount={activeCount}
             clearHref={clearHref}

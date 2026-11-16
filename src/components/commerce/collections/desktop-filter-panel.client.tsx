@@ -49,12 +49,19 @@ export function DesktopFilterPanel({
 
   return (
     <aside aria-label="Product filters" className="hidden lg:block">
-      <div className="sticky top-[calc(var(--header-height-desktop)+var(--space-6))] rounded-[var(--radius-panel)] border border-border bg-surface p-6">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="type-subheading font-semibold">Filter</h2>
+      <div className="sticky top-[calc(var(--header-height-desktop)+1.5rem)] border-r border-[#cfc6bb] pr-6">
+        <div className="flex min-h-11 items-center justify-between gap-4 border-b border-[#cfc6bb] pb-4">
+          <h2 className="text-xs font-semibold tracking-[0.16em] text-[#171513] uppercase">
+            Filters
+            {activeCount > 0 ? (
+              <span className="ml-2 text-[#71685f]" aria-hidden="true">
+                {activeCount}
+              </span>
+            ) : null}
+          </h2>
           {activeCount > 0 ? (
             <Link
-              className="type-caption font-semibold underline"
+              className="type-caption font-semibold text-[#4f4943] underline underline-offset-4"
               href={clearHref}
               scroll={false}
             >
@@ -62,14 +69,18 @@ export function DesktopFilterPanel({
             </Link>
           ) : null}
         </div>
-        <form className="mt-6" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input name="sort" type="hidden" value={state.sort} />
           <CollectionFilterFields
             filters={filters}
             idPrefix="desktop-filter"
             state={state}
           />
-          <Button className="mt-6 w-full" disabled={isPending} type="submit">
+          <Button
+            className="mt-6 w-full rounded-none bg-[#171513] text-xs tracking-[0.08em] uppercase"
+            disabled={isPending}
+            type="submit"
+          >
             {isPending ? "Updating…" : "Apply Filters"}
           </Button>
         </form>

@@ -21,7 +21,7 @@ export function CollectionFilterFields({
         if (filter.type === "range") {
           return (
             <fieldset
-              className="border-b border-border py-6 first:pt-0"
+              className="border-b border-border py-6 first:pt-0 lg:border-[#cfc6bb] lg:py-5 lg:first:pt-5"
               key={filter.id}
             >
               <legend className="type-label text-foreground">
@@ -37,7 +37,7 @@ export function CollectionFilterFields({
                 >
                   Minimum
                   <input
-                    className="min-h-11 w-full rounded-[var(--radius-control)] border border-border bg-surface px-3 text-foreground"
+                    className="min-h-11 w-full rounded-[var(--radius-control)] border border-border bg-surface px-3 text-foreground lg:rounded-none lg:border-[#bfb5a9] lg:bg-[#faf7f2]"
                     defaultValue={state.priceMin ?? ""}
                     id={`${idPrefix}-price-min`}
                     inputMode="decimal"
@@ -52,7 +52,7 @@ export function CollectionFilterFields({
                 >
                   Maximum
                   <input
-                    className="min-h-11 w-full rounded-[var(--radius-control)] border border-border bg-surface px-3 text-foreground"
+                    className="min-h-11 w-full rounded-[var(--radius-control)] border border-border bg-surface px-3 text-foreground lg:rounded-none lg:border-[#bfb5a9] lg:bg-[#faf7f2]"
                     defaultValue={state.priceMax ?? ""}
                     id={`${idPrefix}-price-max`}
                     inputMode="decimal"
@@ -68,14 +68,14 @@ export function CollectionFilterFields({
 
         return (
           <fieldset
-            className="border-b border-border py-6 first:pt-0"
+            className="border-b border-border py-6 first:pt-0 lg:border-[#cfc6bb] lg:py-5 lg:first:pt-5"
             key={filter.id}
           >
             <legend className="type-label text-foreground">{filter.label}</legend>
             <div className="mt-3 grid gap-1">
               {filter.options.map((option) => (
                 <label
-                  className="type-small flex min-h-11 items-center gap-3 rounded-[var(--radius-control)] px-1 hover:bg-surface-muted"
+                  className="type-small flex min-h-11 items-center gap-3 rounded-[var(--radius-control)] px-1 text-foreground hover:bg-surface-muted lg:rounded-none lg:text-[0.82rem] lg:hover:bg-[#e9e0d6]"
                   key={option.value}
                 >
                   <input

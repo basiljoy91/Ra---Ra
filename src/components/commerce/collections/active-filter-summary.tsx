@@ -71,12 +71,12 @@ export function ActiveFilterSummary({
   }
 
   return (
-    <div aria-label="Active filters" className="mt-6">
+    <div aria-label="Active filters" className="mt-6 lg:mt-0 lg:mb-6">
       <div className="flex flex-wrap items-center gap-2">
         {tokens.map((token) => (
           <Link
             aria-label={`Remove filter: ${token.label}`}
-            className="type-caption inline-flex min-h-11 items-center rounded-full border border-border bg-surface px-4 font-semibold no-underline hover:border-foreground"
+            className="type-caption inline-flex min-h-11 items-center rounded-full border border-border bg-surface px-4 font-semibold no-underline hover:border-foreground lg:min-h-9 lg:border-[#bfb5a9] lg:bg-[#faf7f2] lg:px-3"
             href={token.href}
             key={token.id}
             scroll={false}

@@ -15,7 +15,7 @@ export function CollectionProductGrid({
 }: CollectionProductGridProps) {
   return (
     <ul
-      className="mt-8 grid grid-cols-1 gap-x-5 gap-y-12 min-[25rem]:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 min-[86rem]:grid-cols-4"
+      className="mt-8 grid grid-cols-1 gap-x-5 gap-y-12 min-[25rem]:grid-cols-2 md:grid-cols-3 lg:mt-0 lg:grid-cols-3 lg:gap-x-4 lg:gap-y-10 min-[80rem]:grid-cols-4"
       role="list"
     >
       {products.map((product) => (
@@ -23,7 +23,7 @@ export function CollectionProductGrid({
           <ProductCard
             collectionLabel={collectionLabel}
             headingLevel={3}
-            imageSizes="(min-width: 1376px) 18vw, (min-width: 1280px) 24vw, (min-width: 1024px) 34vw, (min-width: 768px) 31vw, (min-width: 400px) 50vw, 100vw"
+            imageSizes="(min-width: 1280px) 18vw, (min-width: 1024px) 24vw, (min-width: 768px) 31vw, (min-width: 400px) 50vw, 100vw"
             priority={false}
             product={product}
             {...(quickAddAction ? { quickAddAction } : {})}
