@@ -16,6 +16,8 @@ interface ProductGalleryProps {
   onImageChange: (url: string) => void;
 }
 
+const DESKTOP_THUMBNAIL_PREVIEW_COUNT = 5;
+
 export function ProductGallery({
   productTitle,
   images,
@@ -28,6 +30,25 @@ export function ProductGallery({
     images.findIndex((image) => image.url === activeImageUrl),
   );
   const activeImage = images[activeIndex];
+  const desktopThumbnailStart =
+    images.length > DESKTOP_THUMBNAIL_PREVIEW_COUNT &&
+    activeIndex >= DESKTOP_THUMBNAIL_PREVIEW_COUNT
+      ? Math.min(
+          activeIndex,
+          images.length - DESKTOP_THUMBNAIL_PREVIEW_COUNT,
+        )
+      : 0;
+  const desktopThumbnailImages = images.slice(
+    desktopThumbnailStart,
+    desktopThumbnailStart + DESKTOP_THUMBNAIL_PREVIEW_COUNT,
+  );
+  const desktopRemainingImages = Math.max(
+    0,
+    images.length -
+      (desktopThumbnailStart + DESKTOP_THUMBNAIL_PREVIEW_COUNT),
+  );
+  const firstHiddenImage =
+    images[desktopThumbnailStart + DESKTOP_THUMBNAIL_PREVIEW_COUNT];
 
   if (!activeImage) {
     return (
@@ -57,13 +78,13 @@ export function ProductGallery({
   return (
     <div
       aria-label={`Product images for ${productTitle}`}
-      className={`grid gap-3 md:grid-cols-[4.75rem_minmax(0,1fr)] ${styles.gallery}`}
+      className={`grid gap-3 lg:grid-cols-[4.75rem_minmax(0,1fr)] ${styles.gallery}`}
       role="region"
     >
       {images.length > 1 ? (
         <div
           aria-label="Choose product image"
-          className={`order-2 flex gap-3 overflow-x-auto pb-1 md:order-1 md:flex-col md:overflow-visible ${styles.galleryThumbnails}`}
+          className={`order-2 flex gap-3 overflow-x-auto pb-1 lg:hidden ${styles.galleryThumbnails}`}
           role="group"
         >
           {images.map((image, index) => {
@@ -101,7 +122,73 @@ export function ProductGallery({
         </div>
       ) : null}
 
-      <div className={`relative order-1 aspect-[3/4] overflow-hidden rounded-xl bg-[#eeece8] md:order-2 ${styles.galleryMain}`}>
+      {images.length > 1 ? (
+        <div
+          aria-label="Choose product image"
+          className={`order-1 hidden lg:grid ${styles.galleryThumbnails} ${styles.galleryThumbnailsDesktop}`}
+          role="group"
+        >
+          {desktopThumbnailImages.map((image, index) => {
+            const absoluteIndex = desktopThumbnailStart + index;
+            const current = absoluteIndex === activeIndex;
+
+            return (
+              <button
+                aria-label={`View image ${absoluteIndex + 1} of ${images.length}: ${image.alt}`}
+                aria-pressed={current}
+                className={cn(
+                  `relative w-full overflow-hidden rounded-lg border-2 bg-[#eeece8] transition-colors ${styles.galleryThumbnail}`,
+                  current ? "border-foreground" : "border-transparent",
+                )}
+                key={image.url}
+                onClick={() => {
+                  setZoomed(false);
+                  onImageChange(image.url);
+                }}
+                type="button"
+              >
+                <Image
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-cover"
+                  fetchPriority="low"
+                  fill
+                  loading="lazy"
+                  sizes="4.75rem"
+                  src={image.url}
+                />
+              </button>
+            );
+          })}
+
+          {desktopRemainingImages > 0 && firstHiddenImage ? (
+            <button
+              aria-label={`View ${desktopRemainingImages} more product ${desktopRemainingImages === 1 ? "image" : "images"}, starting with image ${desktopThumbnailStart + DESKTOP_THUMBNAIL_PREVIEW_COUNT + 1}`}
+              className={`relative w-full overflow-hidden rounded-lg border-2 border-transparent bg-[#111] text-white ${styles.galleryThumbnail} ${styles.galleryMoreThumbnail}`}
+              onClick={() => {
+                setZoomed(false);
+                onImageChange(firstHiddenImage.url);
+              }}
+              type="button"
+            >
+              <Image
+                alt=""
+                aria-hidden="true"
+                className="h-full w-full object-cover opacity-45"
+                fill
+                loading="lazy"
+                sizes="4.75rem"
+                src={firstHiddenImage.url}
+              />
+              <span aria-hidden="true" className="relative z-10 text-sm font-semibold tracking-wide">
+                +{desktopRemainingImages}
+              </span>
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div className={`relative order-1 aspect-[3/4] overflow-hidden rounded-xl bg-[#eeece8] lg:order-2 ${styles.galleryMain}`}>
         <Image
           alt={activeImage.alt}
           className={cn(

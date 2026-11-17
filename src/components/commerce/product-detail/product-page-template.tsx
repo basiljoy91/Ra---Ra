@@ -30,7 +30,7 @@ export function ProductPageTemplate({
 }: ProductPageTemplateProps) {
   return (
     <article className="product-detail-page">
-      <Section as="div" className={`pb-6 pt-5 sm:pb-8 sm:pt-7 ${styles.primarySection}`} spacing="sm">
+      <Section as="div" className={`pb-4 pt-5 sm:pb-5 sm:pt-7 lg:pb-2 ${styles.primarySection}`} spacing="sm">
         <Container className={styles.primaryContainer}>
           <ProductPrimaryExperience
             addToCartAction={addToCartAction}
