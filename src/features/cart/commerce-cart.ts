@@ -9,7 +9,10 @@ import {
   removeShopifyCartLine,
   updateShopifyCartBuyerIdentity,
   updateShopifyCartLine,
+  updateShopifyCartAttributes,
+  updateShopifyCartDiscountCodes,
 } from "@/lib/commerce/shopify/cart";
+import { getCartServiceConfiguration } from "@/config/cart.server";
 import { isShopifyConfigured } from "@/lib/commerce/shopify/config";
 import {
   getAvailableStorefrontMarkets,
@@ -187,7 +190,7 @@ export async function updateCartLineAction(
 
   try {
     const context = await getCommerceRequestContext();
-    const cart = quantity <= 0
+    let cart = quantity <= 0
       ? await removeShopifyCartLine(cartId, lineId, context)
       : await updateShopifyCartLine(
           cartId,
@@ -195,7 +198,150 @@ export async function updateCartLineAction(
           Math.min(quantity, 99),
           context,
         );
+    const giftVariantId = getCartServiceConfiguration().giftWrapVariantId;
+    if (
+      giftVariantId &&
+      cart.lines.every((line) => line.variant.id === giftVariantId)
+    ) {
+      const giftLineIds = cart.lines
+        .filter((line) => line.variant.id === giftVariantId)
+        .map((line) => line.id);
+      for (const giftLineId of giftLineIds) {
+        cart = await removeShopifyCartLine(cartId, giftLineId, context);
+      }
+    }
     return { status: "success", cart };
+  } catch (error) {
+    return { status: "error", message: errorMessage(error) };
+  }
+}
+
+function normalizeGiftMessage(value: string): string {
+  return value
+    .replace(/\r\n?/g, "\n")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .trim();
+}
+
+export async function updateGiftMessageAction(
+  enabled: boolean,
+  rawMessage: string,
+): Promise<CartMutationResult> {
+  const cartId = await readCartId();
+  if (!isShopifyConfigured() || !cartId) {
+    return { status: "error", message: "Your Shopify cart is not available." };
+  }
+  const message = normalizeGiftMessage(rawMessage);
+  if (message.length > 120) {
+    return { status: "error", message: "Gift messages are limited to 120 characters." };
+  }
+  if (enabled && !message) {
+    return { status: "error", message: "Add a gift message before saving." };
+  }
+  try {
+    const context = await getCommerceRequestContext();
+    const current = await getSynchronizedCart(cartId, context);
+    if (!current) {
+      await clearCartId();
+      return { status: "error", message: "Your cart expired. Please add the item again." };
+    }
+    const attributes = current.attributes.filter(
+      (attribute) =>
+        attribute.key !== "_ra_is_gift" && attribute.key !== "_ra_gift_message",
+    );
+    if (enabled) {
+      attributes.push({ key: "_ra_is_gift", value: "true" });
+      attributes.push({ key: "_ra_gift_message", value: message });
+    }
+    const cart = await updateShopifyCartAttributes(cartId, attributes, context);
+    return {
+      status: "success",
+      cart,
+      message: enabled ? "Gift message saved." : "Gift message removed.",
+    };
+  } catch (error) {
+    return { status: "error", message: errorMessage(error) };
+  }
+}
+
+export async function updateGiftWrapAction(enabled: boolean): Promise<CartMutationResult> {
+  const cartId = await readCartId();
+  const variantId = getCartServiceConfiguration().giftWrapVariantId;
+  if (!isShopifyConfigured() || !cartId) {
+    return { status: "error", message: "Your Shopify cart is not available." };
+  }
+  if (!variantId) {
+    return { status: "error", message: "Gift wrapping is not configured for this store." };
+  }
+  try {
+    const context = await getCommerceRequestContext();
+    let cart = await getSynchronizedCart(cartId, context);
+    if (!cart) {
+      await clearCartId();
+      return { status: "error", message: "Your cart expired. Please add the item again." };
+    }
+    const giftLines = cart.lines.filter((line) => line.variant.id === variantId);
+    if (enabled && giftLines.length === 0) {
+      cart = await addShopifyCartLine(cartId, variantId, 1, context);
+    } else if (enabled) {
+      const [first, ...duplicates] = giftLines;
+      if (first && first.quantity !== 1) {
+        cart = await updateShopifyCartLine(cartId, first.id, 1, context);
+      }
+      for (const duplicate of duplicates) {
+        cart = await removeShopifyCartLine(cartId, duplicate.id, context);
+      }
+    } else {
+      for (const line of giftLines) {
+        cart = await removeShopifyCartLine(cartId, line.id, context);
+      }
+    }
+    return {
+      status: "success",
+      cart,
+      message: enabled ? "Gift wrapping added." : "Gift wrapping removed.",
+    };
+  } catch (error) {
+    return { status: "error", message: errorMessage(error) };
+  }
+}
+
+export async function updateDiscountCodeAction(
+  rawCode: string,
+  mode: "add" | "remove",
+): Promise<CartMutationResult> {
+  const cartId = await readCartId();
+  if (!isShopifyConfigured() || !cartId) {
+    return { status: "error", message: "Your Shopify cart is not available." };
+  }
+  const code = rawCode.trim();
+  if (!code || code.length > 64) {
+    return { status: "error", message: "Enter a valid discount code." };
+  }
+  try {
+    const context = await getCommerceRequestContext();
+    const current = await getSynchronizedCart(cartId, context);
+    if (!current) {
+      await clearCartId();
+      return { status: "error", message: "Your cart expired. Please add the item again." };
+    }
+    const existing = current.discountCodes.map((discount) => discount.code);
+    const codes = mode === "remove"
+      ? existing.filter((existingCode) => existingCode.toLowerCase() !== code.toLowerCase())
+      : [...existing.filter((existingCode) => existingCode.toLowerCase() !== code.toLowerCase()), code];
+    const cart = await updateShopifyCartDiscountCodes(cartId, codes, context);
+    const applied = cart.discountCodes.find(
+      (discount) => discount.code.toLowerCase() === code.toLowerCase(),
+    );
+    return {
+      status: "success",
+      cart,
+      message: mode === "remove"
+        ? "Discount code removed."
+        : applied?.applicable
+          ? "Discount code applied."
+          : "That discount code is not valid for this cart.",
+    };
   } catch (error) {
     return { status: "error", message: errorMessage(error) };
   }

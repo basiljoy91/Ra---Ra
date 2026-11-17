@@ -18,12 +18,12 @@ function resolveSiteUrl(value: string | undefined): string {
 }
 
 const testMarket = {
-  code: "IN",
-  name: "India",
-  countryCode: "IN",
-  currencyCode: "INR",
-  defaultLocale: "en",
-  supportedLocales: ["en"],
+  code: "DE",
+  name: "Deutschland",
+  countryCode: "DE",
+  currencyCode: "EUR",
+  defaultLocale: "de",
+  supportedLocales: ["de", "en"],
 } as const satisfies Market;
 
 const primaryNavigation = [
@@ -66,8 +66,9 @@ const primaryNavigation = [
 const mobileSecondaryLinks = [
   { id: "faq", label: "FAQ", href: "/faq", enabled: true },
   { id: "size-guide", label: "Size Guide", href: "/size-guide", enabled: true },
-  { id: "shipping", label: "Shipping", href: "/faq#shipping", enabled: true },
-  { id: "returns", label: "Returns", href: "/faq#returns", enabled: true },
+  { id: "shipping", label: "Versand", href: "/shipping", enabled: true },
+  { id: "returns", label: "Rücksendungen", href: "/returns", enabled: true },
+  { id: "withdrawal", label: "Vertrag widerrufen", href: "/widerruf", enabled: true },
 ] as const satisfies readonly NavigationItem[];
 
 const headerConfig = {
@@ -96,10 +97,10 @@ export const siteConfig = {
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],
-  defaultCurrency: "INR",
+  defaultCurrency: "EUR",
   market: testMarket,
   socialLinks: {},
-  contactEmail: "hello@example.invalid",
+  contactEmail: "contact@raundra.com",
   navigationFeatureFlags: {
     account: false,
     wishlist: false,
@@ -112,7 +113,7 @@ export const siteConfig = {
   newsletterEnabled: true,
   communityEnabled: false,
   header: headerConfig,
-  usesPlaceholderContactDetails: true,
+  usesPlaceholderContactDetails: false,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

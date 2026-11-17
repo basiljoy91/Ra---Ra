@@ -9,9 +9,9 @@ import { siteConfig } from "@/config/site";
 import { faqCategories, faqHero } from "@/data/development/editorial-content";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
-const title = "Frequently Asked Questions";
+const title = "Häufige Fragen";
 const description =
-  "Confirmed information and clearly labelled development guidance for ra&ra orders, shipping, products and sizing.";
+  "Antworten und direkte Links zu Bestellung, Versand, Widerruf, Produkten und Größen bei Ra & Ra.";
 
 export const metadata: Metadata = {
   title,

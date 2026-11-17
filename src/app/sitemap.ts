@@ -6,15 +6,31 @@ import { getCollections, getProducts } from "@/lib/commerce/shopify/provider";
 import { buildAbsoluteUrl } from "@/lib/utilities";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [collections, products] = await Promise.all([
+  const [collectionsResult, productsResult] = await Promise.allSettled([
     getCollections(),
     getProducts({ limit: 250 }),
   ]);
-  const editorialRoutes = ["/about", "/journal", "/contact", "/faq", "/size-guide"].map(
+  const collections =
+    collectionsResult.status === "fulfilled" ? collectionsResult.value : [];
+  const products = productsResult.status === "fulfilled" ? productsResult.value : [];
+  const editorialRoutes = [
+    "/about",
+    "/journal",
+    "/contact",
+    "/faq",
+    "/size-guide",
+    "/impressum",
+    "/privacy",
+    "/terms",
+    "/shipping",
+    "/returns",
+    "/widerruf",
+    "/cookie-einstellungen",
+  ].map(
     (path) => ({
       url: buildAbsoluteUrl(path, siteConfig.siteUrl),
       changeFrequency: "monthly" as const,
-      priority: path === "/journal" ? 0.7 : 0.6,
+      priority: path === "/journal" ? 0.7 : path === "/widerruf" ? 0.8 : 0.6,
     }),
   );
   const journalRoutes = journalArticles.map((article) => ({

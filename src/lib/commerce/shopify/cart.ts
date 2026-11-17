@@ -8,6 +8,8 @@ import {
   CART_LINES_REMOVE_MUTATION,
   CART_LINES_UPDATE_MUTATION,
   CART_QUERY,
+  CART_ATTRIBUTES_UPDATE_MUTATION,
+  CART_DISCOUNT_CODES_UPDATE_MUTATION,
 } from "@/lib/commerce/shopify/documents";
 import { mapShopifyCart } from "@/lib/commerce/shopify/mapper";
 import type {
@@ -132,4 +134,30 @@ export async function updateShopifyCartBuyerIdentity(
     buyerIp: context.buyerIp,
   });
   return requireCart(data.cartBuyerIdentityUpdate);
+}
+
+export async function updateShopifyCartAttributes(
+  cartId: string,
+  attributes: readonly { key: string; value: string }[],
+  context: CommerceRequestContext = {},
+): Promise<Cart> {
+  const data = await shopifyFetch<{ cartAttributesUpdate: ShopifyCartPayload }>({
+    query: CART_ATTRIBUTES_UPDATE_MUTATION,
+    variables: { cartId, attributes, country: countryCode(context) },
+    buyerIp: context.buyerIp,
+  });
+  return requireCart(data.cartAttributesUpdate);
+}
+
+export async function updateShopifyCartDiscountCodes(
+  cartId: string,
+  discountCodes: readonly string[],
+  context: CommerceRequestContext = {},
+): Promise<Cart> {
+  const data = await shopifyFetch<{ cartDiscountCodesUpdate: ShopifyCartPayload }>({
+    query: CART_DISCOUNT_CODES_UPDATE_MUTATION,
+    variables: { cartId, discountCodes, country: countryCode(context) },
+    buyerIp: context.buyerIp,
+  });
+  return requireCart(data.cartDiscountCodesUpdate);
 }

@@ -407,6 +407,35 @@ body:has([data-editorial-homepage]) {
   color-scheme: light;
 }
 
+body:has([data-cart-page]) {
+  --background: #f6f0ea;
+  --surface: #fbf7f2;
+  --surface-muted: #eae1d8;
+  --foreground: #181512;
+  --foreground-muted: #6a625b;
+  --border: #cfc4ba;
+  --primary: #151311;
+  --primary-foreground: #fffaf5;
+  --button: #151311;
+  --button-foreground: #fffaf5;
+  --accent: #51463e;
+  --accent-soft: #e4d9cf;
+  --focus-ring: #51463e;
+  --brand-logo-filter: none;
+  color-scheme: light;
+}
+
+[data-cart-page] progress {
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #d7cec6;
+}
+
+[data-cart-page] progress::-webkit-progress-bar { background: #d7cec6; }
+[data-cart-page] progress::-webkit-progress-value { background: #181512; }
+[data-cart-page] progress::-moz-progress-bar { background: #181512; }
+
 @media (max-width: 47.999rem) {
   body {
     padding-bottom: calc(var(--mobile-bottom-nav-height) + env(safe-area-inset-bottom));

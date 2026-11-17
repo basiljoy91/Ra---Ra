@@ -71,6 +71,8 @@ export interface ShopifyCart {
   buyerIdentity: {
     countryCode: string | null;
   };
+  attributes: readonly { key: string; value: string }[];
+  discountCodes: readonly { code: string; applicable: boolean }[];
   cost: {
     subtotalAmount: ShopifyMoney;
     totalAmount: ShopifyMoney;

@@ -1,4 +1,3 @@
-import { Camera, CreditCard, Music2, Radio, Video } from "lucide-react";
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
@@ -25,12 +24,12 @@ export function SiteFooter({
     >
       <div className="max-[47.999rem]:hidden">
       <Container>
-        <div className="grid gap-8 py-8 md:grid-cols-[12rem_1fr_14rem] md:gap-10">
+        <div className="grid gap-8 py-8 md:grid-cols-[12rem_1fr_12rem] md:gap-10">
           <div>
             <BrandLogo large className="justify-start" />
             <p className="mt-3 text-[0.625rem] font-medium tracking-[0.16em] uppercase">{config.tagline}</p>
           </div>
-          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-7 border-border md:grid-cols-3 md:border-x md:px-10">
+          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-7 border-border lg:grid-cols-4 md:border-x md:px-10">
             {config.navigationGroups.map((group) => (
               <div key={group.id}>
                 <h2 className="mb-2 font-serif text-[1rem] font-medium tracking-[0.06em] uppercase">{group.label}</h2>
@@ -45,32 +44,28 @@ export function SiteFooter({
             ))}
           </nav>
           <div className="flex flex-col gap-5">
-            <div className="flex items-center gap-4" aria-label="Social links">
-              <Link href="/journal" aria-label="Instagram"><Camera size={19} strokeWidth={1.7} /></Link>
-              <Link href="/journal" aria-label="TikTok"><Music2 size={19} strokeWidth={1.7} /></Link>
-              <Link href="/journal" aria-label="YouTube"><Video size={20} strokeWidth={1.7} /></Link>
-              <Link href="/journal" aria-label="Spotify"><Radio size={19} strokeWidth={1.7} /></Link>
-            </div>
             <MarketSelector
               initialCountryCode={selectedCountryCode}
               markets={marketOptions}
             />
-            <div className="flex items-center gap-4">
-              <span className="text-[0.6875rem] font-bold italic">VISA</span>
-              <span className="text-[0.6875rem] font-bold">●●</span>
-              <span className="text-[0.6875rem] font-bold italic">PayPal</span>
-              <CreditCard aria-hidden="true" size={20} strokeWidth={1.2} />
-            </div>
+            <p className="text-[0.6875rem] leading-relaxed text-foreground-muted">Zahlungsarten werden ausschließlich im Shopify-Checkout angezeigt.</p>
           </div>
+        </div>
+        <div className="flex items-center justify-between gap-5 border-t border-border py-4">
+          <p className="text-[0.6875rem] text-foreground-muted">Gesetzlichen Widerruf online erklären — ohne Login oder Begründung.</p>
+          <Link className="inline-flex min-h-11 shrink-0 items-center rounded-[var(--radius-control)] border border-button bg-button px-4 text-[0.6875rem] font-semibold text-button-foreground no-underline" href="/widerruf">
+            Vertrag widerrufen
+          </Link>
         </div>
         <div className="flex flex-col gap-4 border-t border-border py-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.6875rem] text-foreground-muted">
             {config.copyrightNotice}
           </p>
           <div className="flex flex-wrap items-center gap-5 text-[0.625rem]">
-            <Link href="/faq">Privacy Policy</Link><span aria-hidden="true">|</span>
-            <Link href="/faq">Terms &amp; Conditions</Link><span aria-hidden="true">|</span>
-            <Link href="/faq">Cookie Settings</Link>
+            <Link href="/impressum">Impressum</Link><span aria-hidden="true">|</span>
+            <Link href="/privacy">Datenschutz</Link><span aria-hidden="true">|</span>
+            <Link href="/terms">AGB</Link><span aria-hidden="true">|</span>
+            <Link href="/cookie-einstellungen">Cookie-Einstellungen</Link>
           </div>
         </div>
       </Container>
@@ -106,15 +101,20 @@ export function SiteFooter({
             ))}
           </nav>
 
+          <Link className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-[var(--radius-control)] border border-button bg-button px-4 text-sm font-semibold text-button-foreground no-underline" href="/widerruf">
+            Vertrag widerrufen
+          </Link>
+
           <div className="flex flex-wrap items-center justify-between gap-3 py-5 text-[0.65rem]">
             <span>{config.market.marketLabel} · {config.market.currencyLabel}</span>
-            <Link href="/contact" className="underline decoration-border underline-offset-4">Contact</Link>
+            <Link href="/contact" className="underline decoration-border underline-offset-4">Kontakt</Link>
           </div>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 text-[0.58rem]">
-            <Link href="/faq">Privacy Policy</Link>
-            <Link href="/faq">Terms &amp; Conditions</Link>
-            <Link href="/faq">Cookie Settings</Link>
+            <Link href="/impressum">Impressum</Link>
+            <Link href="/privacy">Datenschutz</Link>
+            <Link href="/terms">AGB</Link>
+            <Link href="/cookie-einstellungen">Cookie-Einstellungen</Link>
           </div>
           <p className="mt-4 text-[0.58rem] text-foreground-muted">{config.copyrightNotice}</p>
         </div>

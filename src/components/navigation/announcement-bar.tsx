@@ -45,9 +45,9 @@ export function AnnouncementBar({ config }: AnnouncementBarProps) {
         )}
       </span>
       <span className="hidden justify-self-end tracking-[0.14em] min-[64rem]:inline-flex">
-        <Link href="/faq#shipping">Track order</Link>
+        <Link href="/shipping">Versand</Link>
         <span aria-hidden="true" className="mx-3 opacity-50">·</span>
-        <Link href="/faq">Help</Link>
+        <Link href="/faq">Hilfe</Link>
       </span>
     </aside>
   );

@@ -7,6 +7,10 @@ export const INDIA_STOREFRONT_MARKETS = [
   { countryCode: "IN", name: "India" },
 ] as const satisfies readonly StorefrontMarketOption[];
 
+export const GERMANY_STOREFRONT_MARKETS = [
+  { countryCode: "DE", name: "Deutschland" },
+] as const satisfies readonly StorefrontMarketOption[];
+
 export const EU_STOREFRONT_MARKETS = [
   { countryCode: "AT", name: "Austria" },
   { countryCode: "BE", name: "Belgium" },

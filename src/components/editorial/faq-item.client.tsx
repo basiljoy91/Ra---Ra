@@ -39,6 +39,17 @@ export function FaqItem({ item }: FaqItemProps) {
         role="region"
       >
         <p>{item.answer}</p>
+        {item.links?.length ? (
+          <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2" role="list">
+            {item.links.map((link) => (
+              <li key={link.href}>
+                <a className="font-semibold text-foreground underline" href={link.href}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </div>
   );

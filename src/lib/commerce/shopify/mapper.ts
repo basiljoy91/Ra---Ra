@@ -12,6 +12,7 @@ import type {
   ShopifyProduct,
   ShopifyVariant,
 } from "@/lib/commerce/shopify/types";
+import { getCartServiceConfiguration } from "@/config/cart.server";
 
 function mapImage(
   image: ShopifyImage,
@@ -145,12 +146,17 @@ export function mapShopifyCollection(
 }
 
 export function mapShopifyCart(cart: ShopifyCart): Cart {
+  const giftWrapVariantId = getCartServiceConfiguration().giftWrapVariantId;
   return {
     id: cart.id,
     checkoutUrl: cart.checkoutUrl,
-    totalQuantity: cart.totalQuantity,
+    totalQuantity: cart.lines.nodes
+      .filter((line) => line.merchandise.id !== giftWrapVariantId)
+      .reduce((quantity, line) => quantity + line.quantity, 0),
     subtotal: cart.cost.subtotalAmount,
     total: cart.cost.totalAmount,
+    attributes: cart.attributes,
+    discountCodes: cart.discountCodes,
     ...(cart.buyerIdentity.countryCode
       ? { buyerCountryCode: cart.buyerIdentity.countryCode }
       : {}),

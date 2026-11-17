@@ -142,6 +142,16 @@ export interface CartLine {
   total: Money;
 }
 
+export interface CartAttribute {
+  key: string;
+  value: string;
+}
+
+export interface CartDiscountCode {
+  code: string;
+  applicable: boolean;
+}
+
 export interface Cart {
   id: string;
   checkoutUrl: string;
@@ -150,4 +160,6 @@ export interface Cart {
   subtotal: Money;
   total: Money;
   buyerCountryCode?: string;
+  attributes: readonly CartAttribute[];
+  discountCodes: readonly CartDiscountCode[];
 }

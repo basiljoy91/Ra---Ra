@@ -84,7 +84,7 @@ export const editorialHomepage = {
     pendingLabel: "Sending…",
     consentText:
       "Email delivery is not yet connected. Development submissions are validated but not stored.",
-    privacyLabel: "Review the current FAQ.",
-    privacyHref: "/faq",
+    privacyLabel: "Datenschutzerklärung lesen.",
+    privacyHref: "/privacy",
   },
 } as const;

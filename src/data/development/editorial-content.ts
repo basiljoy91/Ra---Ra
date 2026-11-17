@@ -83,8 +83,8 @@ export const journalNewsletter = {
   pendingLabel: "Sending…",
   consentText:
     "Email delivery is not yet connected. Development submissions are validated but not stored.",
-  privacyLabel: "Review the current FAQ.",
-  privacyHref: "/faq",
+  privacyLabel: "Datenschutzerklärung lesen.",
+  privacyHref: "/privacy",
 } as const;
 
 export const journalArticles: readonly JournalArticle[] = beyondDesigns.map(
@@ -137,84 +137,94 @@ export const contactHero = {
 } as const satisfies EditorialHeroConfig;
 
 export const faqHero = {
-  eyebrow: "Help",
-  title: "Questions, answered honestly.",
+  eyebrow: "Hilfe",
+  title: "Fragen, ehrlich beantwortet.",
   lead:
-    "Confirmed product information and clearly marked provisional guidance for the BEYOND collection.",
+    "Bestätigte Informationen und klar gekennzeichnete Entwürfe rund um Bestellung, Versand, Produkte und Größen.",
   developmentNotice:
-    "Shipping, returns, payment, care and launch terms remain pending business and legal approval.",
+    "Diese FAQ ersetzen keine Rechtstexte. Offene Versand-, Steuer-, Zahlungs- und Produktionsangaben bleiben als Freigabeblocker markiert.",
 } as const satisfies EditorialHeroConfig;
 
 export const faqCategories = [
   {
     id: "orders",
-    title: "Orders",
+    title: "Bestellungen",
     items: [
       {
         id: "ordering-live",
-        question: "Can I place an order now?",
+        question: "Kann ich bereits bestellen?",
         answer:
-          "Ordering depends on the connected Shopify catalogue. Where a price or purchase action is marked pending, no approved offer is being made.",
+          "Bestellungen laufen über den angebundenen Shopify-Warenkorb und -Checkout. Der Live-Verkauf darf erst freigegeben werden, wenn Pflichtangaben, Steuerbehandlung, Versand, Widerrufsfunktion und Shopify-Richtlinien vollständig abgestimmt sind.",
+        links: [
+          { href: "/terms", label: "AGB-Entwurf" },
+          { href: "/contact", label: "Kontakt" },
+        ],
       },
       {
         id: "payment-methods",
-        question: "Which payment methods are available?",
+        question: "Welche Zahlungsarten sind verfügbar?",
         answer:
-          "Payment methods are shown only in the connected checkout and are not promised in this editorial content.",
+          "Verbindlich sind ausschließlich die Zahlungsarten, die im Shopify-Checkout tatsächlich angeboten werden. Eine Liste wird erst nach Prüfung der Shopify-Zahlungseinstellungen veröffentlicht.",
       },
     ],
   },
   {
     id: "products",
-    title: "Products",
+    title: "Produkte",
     items: [
       {
         id: "product-specifications",
-        question: "What is confirmed about the garment?",
+        question: "Welche Material- und Konstruktionsangaben sind bestätigt?",
         answer:
-          "The working specification is a solid deep-black, 280 GSM, 100% Supima-cotton, double-jersey T-shirt with a boxy oversized unisex fit, dropped shoulders, wide straight sleeves and reinforced construction. Interlock is proposed but not supplier-approved.",
+          "Lieferantendokumentation und Freigabe für Faserzusammensetzung, Supima-Bezeichnung, Flächengewicht, Strickart, Pflege und weitere Leistungsangaben stehen noch aus. Deshalb werden diese Angaben hier nicht als bestätigt dargestellt.",
       },
       {
         id: "artwork",
-        question: "Are all four designs different garments?",
+        question: "Sind die vier Motive unterschiedliche Kollektionen?",
         answer:
-          "No. Beyond Time, Beyond Fear, Beyond Reality and Beyond Limits are four designs carried by one shared garment construction.",
+          "Beyond Time, Beyond Fear, Beyond Reality und Beyond Limits sind vier Motive der BEYOND-Reihe. Verbindliche Produkt- und Variantendaten kommen aus dem angebundenen Shopify-Katalog.",
       },
       {
         id: "care",
-        question: "How should I care for the garment?",
+        question: "Wie pflege ich das Kleidungsstück?",
         answer:
-          "Care instructions are not published yet because the production process and supplier guidance have not been approved.",
+          "Pflegehinweise werden erst veröffentlicht, wenn die Produktionsausführung und Lieferantenangaben freigegeben sind. Bitte beachte anschließend die Kennzeichnung am Produkt.",
       },
     ],
   },
   {
     id: "sizing",
-    title: "Sizing",
+    title: "Größen",
     items: [
       {
         id: "size-chart",
-        question: "Which size should I choose?",
+        question: "Welche Größe soll ich wählen?",
         answer:
-          "Use the finished garment measurements to compare with a T-shirt you already own. The figures remain provisional pending supplier sampling and fit approval.",
+          "Vergleiche die fertigen Kleidungsmaße mit einem T-Shirt, dessen Passform du magst. Die aktuellen Maße bleiben bis zur Lieferantenbemusterung und Passformfreigabe vorläufig.",
+        links: [{ href: "/size-guide", label: "Zum Größenratgeber" }],
       },
     ],
   },
   {
     id: "policies",
-    title: "Shipping and returns",
+    title: "Versand, Widerruf und Rücksendung",
     items: [
       {
         id: "shipping",
-        question: "Where and when will RA & RA ship?",
+        question: "Wohin liefert Ra & Ra und wie lange dauert es?",
         answer:
-          "Destinations, carriers, delivery estimates and shipping costs have not been approved for publication.",
+          "Zum Start ist ausschließlich der Versand innerhalb Deutschlands vorgesehen. Tarif, Freigrenze, DHL-Integration und die geplante Gesamtdauer von ungefähr 3–6 Werktagen müssen noch im Betrieb und in Shopify bestätigt werden.",
+        links: [{ href: "/shipping", label: "Versand & Lieferung" }],
       },
       {
         id: "returns",
-        question: "What is the return policy?",
+        question: "Wer trägt die Rücksendekosten beim Widerruf?",
         answer:
-          "Return eligibility, costs, process and refund timing remain pending legal and business approval.",
+          "Ra & Ra trägt die unmittelbaren Kosten der gewöhnlichen Rücksendung im Rahmen des gesetzlichen Widerrufsrechts. Die Rücksendeanschrift und der kostenfreie praktische Ablauf sind noch einzurichten. Ein Widerruf ist nicht von einem Label oder einer Supportfreigabe abhängig.",
+        links: [
+          { href: "/returns", label: "Widerruf & Rücksendungen" },
+          { href: "/widerruf", label: "Vertrag widerrufen" },
+        ],
       },
     ],
   },
