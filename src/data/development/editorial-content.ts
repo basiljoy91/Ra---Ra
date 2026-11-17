@@ -63,7 +63,7 @@ export const editorialCta = {
 
 export const journalIndexHero = {
   eyebrow: "Ra & Ra Journal",
-  title: "The artwork is intentional. The interpretation is personal.",
+  title: "The things we carry.",
   lead:
     "Read the definitive stories behind Time, Fear, Reality and Limits.",
   image: beyondCollectionHero.desktop,

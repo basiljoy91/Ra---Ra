@@ -344,6 +344,16 @@
   display: none;
 }
 
+.journal-category-scroll {
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: var(--page-gutter);
+  scrollbar-width: none;
+}
+
+.journal-category-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .product-rail-scroll {
   overscroll-behavior-inline: contain;
   scroll-padding-inline: var(--page-gutter);

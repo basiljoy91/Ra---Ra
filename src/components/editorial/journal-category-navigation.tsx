@@ -33,7 +33,7 @@ export function JournalCategoryNavigation({
               All Articles <span aria-hidden="true" className="opacity-60">{totalArticles}</span>
             </Link>
           </li>
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <li
               className="shrink-0 snap-start md:border-r md:border-[#c7bdb2] md:last:border-r-0"
               key={category.value}

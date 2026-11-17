@@ -635,3 +635,9 @@ The public dynamic collection route was restored at the project owner’s reques
 
 The removed `/collections` overview, legacy collection navigation, featured-collection modules, obsolete fixtures, and old collection-only image remain removed. The current global header, footer and mobile bottom navigation were not recreated or redesigned as part of the shop implementation. Faceted URLs remain canonicalized and noindexed; the canonical collection route is again included in the sitemap.
 
+## 30. November 2026 — Responsive Journal Index
+
+The `/journal` index is now a server-rendered editorial landing page built exclusively from `journalArticles`. It includes responsive desktop/mobile campaign art direction, URL-driven category and text search, a deterministic featured composition, a non-duplicating latest-stories section, BEYOND editorial banner, ItemList structured data, and the existing development newsletter validation flow. Search and category query combinations retain `/journal` as their canonical URL and are noindexed while remaining followable.
+
+The current source contains four BEYOND articles, one real category (`BEYOND Story`), one featured article, and no publication dates or authors. The page therefore renders only those truthful fields: three articles form the featured composition and the fourth appears under Latest Stories. Article-detail metadata, structured data, related-story logic, global navigation, footer, product search, and mobile bottom navigation remain intact.
+
