@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "i18n:audit": "node scripts/audit-i18n.mjs",
     "legal:check": "node scripts/check-legal-readiness.mjs",
     "start": "next start",
     "lint": "eslint .",

@@ -28,6 +28,7 @@ export interface ModalDialogProps extends HTMLAttributes<HTMLDivElement> {
   dialogId?: string;
   placement?: ModalPlacement;
   panelClassName?: string;
+  dismissible?: boolean;
   children: ReactNode;
 }
 
@@ -45,6 +46,7 @@ export function ModalDialog({
   dialogId,
   placement = "center",
   panelClassName,
+  dismissible = true,
   className,
   children,
   ...props
@@ -78,7 +80,7 @@ export function ModalDialog({
     });
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && dismissible) {
         event.preventDefault();
         onCloseRef.current();
         return;
@@ -119,7 +121,7 @@ export function ModalDialog({
         returnFocusTo.focus();
       }
     };
-  }, [open]);
+  }, [dismissible, open]);
 
   if (!open) {
     return null;
@@ -135,13 +137,17 @@ export function ModalDialog({
       )}
       {...props}
     >
-      <button
-        type="button"
-        tabIndex={-1}
-        aria-label="Close dialog"
-        className="modal-overlay absolute inset-0 min-h-0 w-full border-0 bg-foreground/45 p-0"
-        onClick={onClose}
-      />
+      {dismissible ? (
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-label="Close dialog"
+          className="modal-overlay absolute inset-0 min-h-0 w-full border-0 bg-foreground/45 p-0"
+          onClick={onClose}
+        />
+      ) : (
+        <div aria-hidden="true" className="modal-overlay absolute inset-0 bg-black/72 backdrop-blur-sm" />
+      )}
       <div
         ref={panelRef}
         id={dialogId}

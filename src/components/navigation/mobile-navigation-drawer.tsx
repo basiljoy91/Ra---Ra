@@ -9,6 +9,8 @@ import { ModalDialog } from "@/components/ui/modal-dialog";
 import { cn, isNavigationHrefCurrent } from "@/lib/utilities";
 import type { Market } from "@/lib/commerce";
 import type { NavigationItem } from "@/types/navigation";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
+import { useLocale } from "@/components/i18n/locale-provider.client";
 
 interface MobileNavigationDrawerProps {
   open: boolean;
@@ -82,6 +84,7 @@ export function MobileNavigationDrawer({
   market,
 }: MobileNavigationDrawerProps) {
   const pathname = usePathname();
+  const { locale } = useLocale();
   const enabledPrimaryItems = primaryNavigation.filter(
     (item) => item.enabled !== false,
   );
@@ -199,9 +202,10 @@ export function MobileNavigationDrawer({
         ) : null}
 
         <div className="mt-auto border-t border-border pt-6 text-xs text-foreground-muted">
-          <p>
-            {market.name} · {market.currencyCode} · English
-          </p>
+          <div className="flex items-center justify-between gap-4">
+            <p>{market.name} · {market.currencyCode} · {locale === "de" ? "Deutsch" : "English"}</p>
+            <LanguageSwitcher compact />
+          </div>
         </div>
       </div>
     </ModalDialog>

@@ -15,7 +15,7 @@ export function EditorialLayout({
   as: Element = "div",
 }: EditorialLayoutProps) {
   return (
-    <Element>
+    <Element data-brand-page>
       <EditorialHero config={hero} />
       {children}
     </Element>

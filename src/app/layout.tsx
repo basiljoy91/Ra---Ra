@@ -1,15 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 
 import { SkipLink } from "@/components/layout/skip-link";
 import { SiteFooter } from "@/components/layout/footer/site-footer";
 import { SiteHeader } from "@/components/navigation/site-header";
+import { LocaleProvider } from "@/components/i18n/locale-provider.client";
 import { footerConfig } from "@/config/footer";
 import { siteConfig } from "@/config/site";
 import {
   getAvailableStorefrontMarkets,
   getCommerceRequestContext,
 } from "@/lib/commerce/shopify/request-context";
+import { isAppLocale, localeCookieName } from "@/i18n/config";
 
 import "./globals.css";
 
@@ -69,8 +72,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "dark",
-  themeColor: "#0b0b0b",
+  colorScheme: "light",
+  themeColor: "#f4efe8",
 };
 
 export default async function RootLayout({
@@ -80,31 +83,41 @@ export default async function RootLayout({
 }>) {
   const commerceContext = await getCommerceRequestContext();
   const marketOptions = getAvailableStorefrontMarkets();
+  const cookieStore = await cookies();
+  const storedLocale = cookieStore.get(localeCookieName)?.value;
+  const initialLocale = isAppLocale(storedLocale)
+    ? storedLocale
+    : siteConfig.defaultLocale;
 
   return (
     <html
-      lang={siteConfig.defaultLocale}
+      lang={initialLocale}
       className="h-full"
       data-scroll-behavior="smooth"
     >
       <body
         className={`${displayFont.variable} ${bodyFont.variable} flex min-h-full flex-col antialiased`}
       >
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
-        <SkipLink href="#main-content" />
-        <SiteHeader />
-        <main id="main-content" tabIndex={-1} className="flex-1">
-          {children}
-        </main>
-        <SiteFooter
-          config={footerConfig}
-          marketOptions={marketOptions}
-          selectedCountryCode={
-            commerceContext.countryCode ?? marketOptions[0]?.countryCode ?? "IN"
-          }
-        />
+        <LocaleProvider
+          hasStoredPreference={isAppLocale(storedLocale)}
+          initialLocale={initialLocale}
+        >
+          <noscript>
+            <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+          </noscript>
+          <SkipLink href="#main-content" />
+          <SiteHeader />
+          <main id="main-content" tabIndex={-1} className="flex-1">
+            {children}
+          </main>
+          <SiteFooter
+            config={footerConfig}
+            marketOptions={marketOptions}
+            selectedCountryCode={
+              commerceContext.countryCode ?? marketOptions[0]?.countryCode ?? "IN"
+            }
+          />
+        </LocaleProvider>
       </body>
     </html>
   );

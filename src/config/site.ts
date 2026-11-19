@@ -96,7 +96,7 @@ export const siteConfig = {
     "BEYOND translates Time, Fear, Reality and Limits into a visual language of lines, forms, light and space.",
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
-  supportedLocales: ["en"],
+  supportedLocales: ["en", "de"],
   defaultCurrency: "EUR",
   market: testMarket,
   socialLinks: {},
