@@ -3,6 +3,8 @@ export {
   compareMoney,
   formatMoney,
   getMoneyRange,
+  getMoneyProgress,
+  subtractMoney,
   type MoneyRange,
 } from "@/lib/utilities/money";
 export {

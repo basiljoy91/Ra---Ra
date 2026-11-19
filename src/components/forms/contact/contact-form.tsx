@@ -1,214 +1,80 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useCallback, useId, useState } from "react";
+import { useActionState, useId } from "react";
 import { useFormStatus } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utilities";
-import type {
-  ContactFormAction,
-  ContactFormState,
-  ContactSubmissionInput,
-} from "@/types/contact";
+import type { LegalContactAction, LegalContactField, LegalContactState } from "@/types/legal";
 
-const INITIAL_CONTACT_STATE: ContactFormState = {
-  status: "idle",
-  message: "",
-  submissionCount: 0,
-};
+const INITIAL_STATE: LegalContactState = { status: "idle", message: "", submissionCount: 0 };
+const fieldClass = "min-h-12 w-full rounded-[var(--radius-control)] border border-border bg-background px-4 py-3 text-foreground placeholder:text-foreground-muted hover:border-foreground-muted disabled:cursor-wait disabled:opacity-65";
 
-const INITIAL_VALUES: ContactSubmissionInput = {
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-};
-
-interface ContactFormProps {
-  action: ContactFormAction;
-}
-
-function ContactSubmitButton() {
+function SubmitButton() {
   const { pending } = useFormStatus();
-
-  return (
-    <Button className="w-full sm:w-auto" disabled={pending} size="lg" type="submit">
-      {pending ? "Checking message…" : "Check Message"}
-    </Button>
-  );
+  return <Button disabled={pending} size="lg" type="submit">{pending ? "Nachricht wird gesendet …" : "Nachricht senden"}</Button>;
 }
 
-export function ContactForm({ action }: ContactFormProps) {
-  const [values, setValues] = useState<ContactSubmissionInput>(INITIAL_VALUES);
-  const [dismissedSubmissionCount, setDismissedSubmissionCount] = useState(0);
-  const formActionWithReset = useCallback(
-    async (previousState: ContactFormState, formData: FormData) => {
-      const nextState = await action(previousState, formData);
-
-      if (nextState.status === "success") {
-        setValues(INITIAL_VALUES);
-      }
-
-      return nextState;
-    },
-    [action],
-  );
-  const [state, formAction] = useActionState(
-    formActionWithReset,
-    INITIAL_CONTACT_STATE,
-  );
-  const formId = useId();
-  const showResult = state.submissionCount > dismissedSubmissionCount;
-
-  function updateValue(field: keyof ContactSubmissionInput, value: string) {
-    setValues((current) => ({ ...current, [field]: value }));
-    setDismissedSubmissionCount(state.submissionCount);
-  }
-
-  const fieldClassName =
-    "min-h-12 w-full rounded-[var(--radius-control)] border border-border bg-surface px-4 py-3 text-foreground transition-colors duration-[var(--duration-base)] placeholder:text-foreground-muted hover:border-foreground-muted disabled:cursor-wait disabled:bg-surface-muted";
+export function ContactForm({ action }: { action: LegalContactAction }) {
+  const [state, formAction] = useActionState(action, INITIAL_STATE);
+  const id = useId();
+  const error = (field: LegalContactField) => state.fieldErrors?.[field];
 
   return (
     <form action={formAction} className="space-y-5" noValidate>
+      <div className="sr-only" aria-hidden="true">
+        <label htmlFor={`${id}-website`}>Website</label>
+        <input autoComplete="off" id={`${id}-website`} name="companyWebsite" tabIndex={-1} />
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <ContactField
-          autoComplete="name"
-          error={showResult ? state.fieldErrors?.name : undefined}
-          formId={formId}
-          label="Name"
-          name="name"
-          onChange={(value) => updateValue("name", value)}
-          value={values.name}
-        />
-        <ContactField
-          autoComplete="email"
-          error={showResult ? state.fieldErrors?.email : undefined}
-          formId={formId}
-          inputMode="email"
-          label="Email"
-          name="email"
-          onChange={(value) => updateValue("email", value)}
-          type="email"
-          value={values.email}
-        />
+        <Field error={error("name")} id={`${id}-name`} label="Name" name="name" />
+        <Field autoComplete="email" error={error("email")} id={`${id}-email`} label="E-Mail-Adresse" name="email" type="email" />
       </div>
-      <ContactField
-        error={showResult ? state.fieldErrors?.subject : undefined}
-        formId={formId}
-        label="Subject"
-        name="subject"
-        onChange={(value) => updateValue("subject", value)}
-        value={values.subject}
-      />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field error={error("orderNumber")} id={`${id}-order`} label="Bestellnummer (optional)" name="orderNumber" required={false} />
+        <div>
+          <label className="mb-2 block text-sm font-semibold" htmlFor={`${id}-topic`}>Thema</label>
+          <select aria-describedby={error("topic") ? `${id}-topic-error` : undefined} aria-invalid={Boolean(error("topic"))} className={cn(fieldClass, error("topic") && "border-error")} defaultValue="" id={`${id}-topic`} name="topic" required>
+            <option disabled value="">Bitte auswählen</option>
+            <option value="order">Bestellung</option>
+            <option value="shipping">Versand</option>
+            <option value="returns">Widerruf oder Rücksendung</option>
+            <option value="product">Produkt oder Größe</option>
+            <option value="other">Sonstiges</option>
+          </select>
+          <FieldError id={`${id}-topic-error`} message={error("topic")} />
+        </div>
+      </div>
       <div>
-        <label className="mb-2 block text-sm font-semibold" htmlFor={`${formId}-message`}>
-          Message
-        </label>
-        <textarea
-          aria-describedby={
-            showResult && state.fieldErrors?.message
-              ? `${formId}-message-error`
-              : undefined
-          }
-          aria-invalid={showResult && Boolean(state.fieldErrors?.message)}
-          className={cn(
-            fieldClassName,
-            "min-h-40 resize-y",
-            showResult && state.fieldErrors?.message && "border-error",
-          )}
-          id={`${formId}-message`}
-          maxLength={3000}
-          name="message"
-          onChange={(event) => updateValue("message", event.currentTarget.value)}
-          required
-          value={values.message}
-        />
-        {showResult && state.fieldErrors?.message ? (
-          <p className="mt-2 text-sm text-error" id={`${formId}-message-error`} role="alert">
-            {state.fieldErrors.message}
-          </p>
-        ) : null}
+        <label className="mb-2 block text-sm font-semibold" htmlFor={`${id}-message`}>Nachricht</label>
+        <textarea aria-describedby={error("message") ? `${id}-message-error` : undefined} aria-invalid={Boolean(error("message"))} className={cn(fieldClass, "min-h-44 resize-y", error("message") && "border-error")} id={`${id}-message`} maxLength={3000} name="message" required />
+        <FieldError id={`${id}-message-error`} message={error("message")} />
       </div>
-      <p className="type-caption max-w-2xl text-foreground-muted">
-        This form uses development validation only. Nothing is sent or stored. Final processing and privacy wording will be supplied before launch. See the{" "}
-        <Link className="font-semibold underline" href="/privacy">
-          privacy placeholder
-        </Link>
-        .
+      <p className="text-sm leading-6 text-foreground-muted">
+        Wir verwenden deine Angaben ausschließlich zur Bearbeitung deines Anliegens. Einzelheiten findest du in der <Link className="font-semibold text-foreground underline" href="/privacy">Datenschutzerklärung</Link>. Für einen Widerruf kannst du unabhängig davon die Seite <Link className="font-semibold text-foreground underline" href="/widerruf">Vertrag widerrufen</Link> nutzen.
       </p>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <ContactSubmitButton />
-        <p
-          aria-atomic="true"
-          aria-live="polite"
-          className={cn(
-            "min-h-6 text-sm font-semibold",
-            showResult && state.status === "success" && "text-success",
-            showResult && state.status === "error" && "text-error",
-          )}
-          role="status"
-        >
-          {showResult ? state.message : ""}
+        <SubmitButton />
+        <p aria-atomic="true" aria-live="polite" className={cn("min-h-6 text-sm font-semibold", state.status === "success" && "text-success", state.status === "error" && "text-error")} role="status">
+          {state.message}{state.reference ? ` Referenz: ${state.reference}` : ""}
         </p>
       </div>
     </form>
   );
 }
 
-interface ContactFieldProps {
-  autoComplete?: string | undefined;
-  error?: string | undefined;
-  formId: string;
-  inputMode?: "email" | undefined;
-  label: string;
-  name: "name" | "email" | "subject";
-  onChange: (value: string) => void;
-  type?: "email" | "text" | undefined;
-  value: string;
-}
-
-function ContactField({
-  autoComplete,
-  error,
-  formId,
-  inputMode,
-  label,
-  name,
-  onChange,
-  type = "text",
-  value,
-}: ContactFieldProps) {
-  const fieldId = `${formId}-${name}`;
-  const errorId = `${fieldId}-error`;
-
+function Field({ id, label, name, error, required = true, type = "text", autoComplete }: { id: string; label: string; name: "name" | "email" | "orderNumber"; error?: string | undefined; required?: boolean; type?: "text" | "email"; autoComplete?: string | undefined }) {
+  const errorId = `${id}-error`;
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold" htmlFor={fieldId}>
-        {label}
-      </label>
-      <input
-        aria-describedby={error ? errorId : undefined}
-        aria-invalid={Boolean(error)}
-        autoComplete={autoComplete}
-        className={cn(
-          "min-h-12 w-full rounded-[var(--radius-control)] border border-border bg-surface px-4 py-3 text-foreground transition-colors duration-[var(--duration-base)] placeholder:text-foreground-muted hover:border-foreground-muted",
-          error && "border-error",
-        )}
-        id={fieldId}
-        inputMode={inputMode}
-        maxLength={name === "subject" ? 140 : name === "email" ? 254 : 100}
-        name={name}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        required
-        type={type}
-        value={value}
-      />
-      {error ? (
-        <p className="mt-2 text-sm text-error" id={errorId} role="alert">
-          {error}
-        </p>
-      ) : null}
+      <label className="mb-2 block text-sm font-semibold" htmlFor={id}>{label}</label>
+      <input aria-describedby={error ? errorId : undefined} aria-invalid={Boolean(error)} autoComplete={autoComplete} className={cn(fieldClass, error && "border-error")} id={id} maxLength={name === "email" ? 254 : name === "orderNumber" ? 80 : 100} name={name} required={required} type={type} />
+      <FieldError id={errorId} message={error} />
     </div>
   );
+}
+
+function FieldError({ id, message }: { id: string; message?: string | undefined }) {
+  return message ? <p className="mt-2 text-sm text-error" id={id} role="alert">{message}</p> : null;
 }

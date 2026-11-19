@@ -1,0 +1,255 @@
+.page {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.header {
+  border-bottom: 1px solid var(--border);
+  background:
+    linear-gradient(120deg, rgb(183 155 121 / 0.08), transparent 48%),
+    var(--surface-muted);
+}
+
+.headerInner {
+  padding-block: clamp(3.25rem, 8vw, 6.5rem);
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 1rem;
+  max-width: 14ch;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.75rem, 7vw, 5.75rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.intro {
+  margin-top: 1.5rem;
+  max-width: 62ch;
+  color: var(--foreground-muted);
+  font-size: clamp(1rem, 1.6vw, 1.18rem);
+  line-height: 1.7;
+}
+
+.draft {
+  margin-top: 2rem;
+  max-width: 72ch;
+  border: 1px solid color-mix(in srgb, var(--warning) 48%, transparent);
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--warning) 9%, var(--surface));
+  padding: 1rem 1.1rem;
+}
+
+.draft strong {
+  display: block;
+  color: var(--warning);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.draft p {
+  margin-top: 0.35rem;
+  max-width: 68ch;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.layout {
+  display: grid;
+  gap: clamp(2.5rem, 7vw, 6rem);
+  padding-block: clamp(3rem, 8vw, 7rem);
+}
+
+.toc {
+  align-self: start;
+}
+
+.tocLabel {
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tocList {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tocList a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--foreground-muted);
+  font-size: 0.83rem;
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+.tocList a:hover {
+  color: var(--foreground);
+}
+
+.content {
+  min-width: 0;
+  max-width: 76ch;
+}
+
+.content > * + * {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.section {
+  scroll-margin-top: 8rem;
+}
+
+.section h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.05;
+}
+
+.section h3 {
+  margin-top: 2rem;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.section p,
+.section li,
+.section dd,
+.section dt {
+  font-size: clamp(0.98rem, 1.3vw, 1.05rem);
+  line-height: 1.78;
+}
+
+.section p,
+.section ul,
+.section ol,
+.section dl,
+.section address,
+.section table,
+.section blockquote {
+  margin-top: 1.15rem;
+}
+
+.section ul,
+.section ol {
+  padding-left: 1.25rem;
+}
+
+.section li + li {
+  margin-top: 0.55rem;
+}
+
+.section a {
+  font-weight: 600;
+}
+
+.section address {
+  font-style: normal;
+}
+
+.callout {
+  border-left: 0.18rem solid var(--accent);
+  background: var(--surface);
+  padding: 1.1rem 1.25rem;
+}
+
+.callout[data-tone="warning"] {
+  border-left-color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 7%, var(--surface));
+}
+
+.callout[data-tone="critical"] {
+  border-left-color: var(--error);
+  background: color-mix(in srgb, var(--error) 7%, var(--surface));
+}
+
+.definitionList {
+  display: grid;
+  gap: 1rem;
+}
+
+.definitionList > div {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.definitionList dt {
+  color: var(--foreground-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.definitionList dd {
+  margin-top: 0.25rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.formPanel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: 13.5rem minmax(0, 1fr);
+  }
+
+  .toc {
+    position: sticky;
+    top: calc(var(--announcement-height) + var(--header-height-desktop) + 1.5rem);
+  }
+}
+
+@media (max-width: 63.999rem) {
+  .toc {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.25rem;
+  }
+
+  .tocList {
+    display: flex;
+    gap: 0.5rem 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+  }
+
+  .tocList li {
+    flex: 0 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tocList a {
+    transition: none;
+  }
+}
+

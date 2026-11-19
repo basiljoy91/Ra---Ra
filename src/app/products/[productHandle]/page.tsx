@@ -116,10 +116,7 @@ export default async function ProductDetailPage({ params }: ProductRouteProps) {
 
   return (
     <>
-      <ProductStructuredData
-        product={product}
-        {...(collection ? { collection } : {})}
-      />
+      <ProductStructuredData product={product} />
       <ProductPageTemplate
         addToCartAction={commerceAddToCart}
         buyNowAction={commerceBuyNow}

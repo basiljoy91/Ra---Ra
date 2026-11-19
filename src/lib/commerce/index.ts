@@ -1,5 +1,7 @@
 export type {
   Cart,
+  CartAttribute,
+  CartDiscountCode,
   CartLine,
   Collection,
   CollectionThemeKey,

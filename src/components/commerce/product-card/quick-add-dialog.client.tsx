@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import Link from "next/link";
 import {
   useId,
   useState,
@@ -9,7 +10,7 @@ import {
 } from "react";
 
 import { ProductColourOptions } from "@/components/commerce/product-card/product-colour-options.client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonStyles } from "@/components/ui/button";
 import { ModalDialog } from "@/components/ui/modal-dialog";
 import { publishCartUpdated } from "@/lib/commerce/cart-events";
 import { cn } from "@/lib/utilities";
@@ -134,10 +135,16 @@ export function QuickAddDialog({
     (colourOptions.length <= 1 || Boolean(resolvedColour)) &&
     (sizes.length <= 1 || Boolean(resolvedSize));
 
+  function closeDialog() {
+    setSelectedSize(null);
+    setFeedback(null);
+    onClose();
+  }
+
   return (
     <ModalDialog
       descriptionId={descriptionId}
-      onClose={onClose}
+      onClose={closeDialog}
       open={open}
       titleId={titleId}
     >
@@ -152,7 +159,7 @@ export function QuickAddDialog({
           <button
             aria-label="Close quick add"
             className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border transition-colors duration-[var(--duration-fast)] hover:bg-surface-muted"
-            onClick={onClose}
+            onClick={closeDialog}
             type="button"
           >
             <X aria-hidden="true" size={20} strokeWidth={1.7} />
@@ -239,6 +246,19 @@ export function QuickAddDialog({
         >
           {feedback?.message ?? ""}
         </p>
+        {feedback?.kind === "success" ? (
+          <div className="mt-2 grid grid-cols-2 gap-3">
+            <Button onClick={closeDialog} variant="quiet">
+              Continue shopping
+            </Button>
+            <Link
+              className={buttonStyles({ className: "w-full", size: "md" })}
+              href="/cart"
+            >
+              View bag
+            </Link>
+          </div>
+        ) : null}
       </form>
     </ModalDialog>
   );

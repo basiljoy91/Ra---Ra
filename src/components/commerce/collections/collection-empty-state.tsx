@@ -40,9 +40,9 @@ export function CollectionEmptyState({
           className={buttonStyles({
             variant: noMatches ? "secondary" : "primary",
           })}
-          href={noMatches ? collectionHref : "/collections"}
+          href={noMatches ? collectionHref : "/"}
         >
-          {noMatches ? "Return to All Products" : "Explore Collections"}
+          {noMatches ? "Return to All Products" : "Return Home"}
         </Link>
       </div>
     </div>

@@ -45,7 +45,7 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
   ];
 
   return (
-    <section aria-label="Product information" className={`py-8 sm:py-10 ${styles.detailsSection}`}>
+    <section aria-label="Product information" className={`pb-8 pt-3 sm:pb-10 sm:pt-4 ${styles.detailsSection}`}>
       <Container>
         <div className={styles.mobileDetails}>
           <h2 className="sr-only">Product information</h2>

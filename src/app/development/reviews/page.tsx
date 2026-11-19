@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { ReviewSection } from "@/components/storytelling/reviews/review-section";
-import { developmentReviewShowcase } from "@/config/homepage";
+import { developmentReviewShowcase } from "@/config/development-showcases";
 import {
   DEVELOPMENT_REVIEW_NOTICE,
   developmentReviews,

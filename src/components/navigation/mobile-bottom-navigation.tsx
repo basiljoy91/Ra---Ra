@@ -1,6 +1,6 @@
 "use client";
 
-import { House, Layers3, Search, ShoppingBag, ShoppingCart } from "lucide-react";
+import { House, Search, ShoppingBag, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -27,11 +27,8 @@ export function MobileBottomNavigation({
       <Link aria-current={pathname === "/" ? "page" : undefined} className={cn(itemClass, pathname === "/" && "font-bold")} href="/">
         <span className="flex flex-col items-center gap-0.5"><House aria-hidden="true" fill={pathname === "/" ? "currentColor" : "none"} size={20} strokeWidth={1.6} />Home</span>
       </Link>
-      <Link aria-current={pathname.startsWith("/products") ? "page" : undefined} className={cn(itemClass, pathname.startsWith("/products") && "font-bold")} href="/collections/beyond">
+      <Link aria-current={pathname.startsWith("/products") ? "page" : undefined} className={cn(itemClass, pathname.startsWith("/products") && "font-bold")} href="/#designs-title">
         <span className="flex flex-col items-center gap-0.5"><ShoppingBag aria-hidden="true" size={20} strokeWidth={1.6} />Shop</span>
-      </Link>
-      <Link aria-current={pathname.startsWith("/collections") ? "page" : undefined} className={cn(itemClass, pathname.startsWith("/collections") && "font-bold")} href="/collections">
-        <span className="flex flex-col items-center gap-0.5"><Layers3 aria-hidden="true" fill={pathname.startsWith("/collections") ? "currentColor" : "none"} size={20} strokeWidth={1.6} />Collections</span>
       </Link>
       <button className={itemClass} type="button" onClick={onSearch} aria-label="Open search">
         <span className="flex flex-col items-center gap-0.5"><Search aria-hidden="true" size={20} strokeWidth={1.6} />Search</span>

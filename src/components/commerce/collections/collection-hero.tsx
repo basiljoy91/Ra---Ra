@@ -1,10 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
-import { CollectionBreadcrumbs } from "@/components/commerce/collections/collection-breadcrumbs";
 import { Container } from "@/components/layout/container";
-import { getStorefrontCollectionTheme } from "@/config/storefront-collection-themes";
-import { cn } from "@/lib/utilities";
 import type { CollectionCatalogEntry } from "@/types/collection";
 
 interface CollectionHeroProps {
@@ -19,8 +16,7 @@ type FocalPointStyle = CSSProperties & {
 };
 
 export function CollectionHero({ entry, productCount }: CollectionHeroProps) {
-  const { collection, story } = entry;
-  const theme = getStorefrontCollectionTheme(collection.themeKey);
+  const { story } = entry;
   const media = story.heroMedia?.desktop;
   const mobileMedia = story.heroMedia?.mobile;
   const focalPoint = story.heroMedia?.focalPoint;
@@ -29,90 +25,57 @@ export function CollectionHero({ entry, productCount }: CollectionHeroProps) {
     "--collection-hero-position-tablet": focalPoint?.tablet ?? "50% 50%",
     "--collection-hero-position-desktop": focalPoint?.desktop ?? "50% 50%",
   };
-  const mediaFirst = entry.heroLayout === "story-right";
 
   return (
     <section
       aria-labelledby="collection-heading"
-      className={cn("border-b", theme.heroClassName)}
-      data-collection-theme={collection.themeKey}
+      className="relative min-h-[21rem] overflow-hidden border-b border-white/10 bg-[#171513] text-white md:min-h-[23rem] lg:min-h-[25rem]"
     >
-      <Container className="py-[var(--section-space-sm)] lg:py-[var(--section-space-md)]">
-        <CollectionBreadcrumbs currentLabel={story.title} />
-        <div className="mt-6 grid items-center gap-8 md:grid-cols-[minmax(16rem,0.82fr)_minmax(0,1.18fr)] md:gap-8 lg:grid-cols-[minmax(20rem,0.82fr)_minmax(0,1.18fr)] lg:gap-12">
-          <div className={cn("max-w-xl", mediaFirst && "md:order-2")}>
-            <div className="flex flex-wrap items-center gap-3">
-              {story.eyebrow ? (
-                <p className={cn("type-label", theme.eyebrowClassName)}>
-                  {story.eyebrow}
-                </p>
-              ) : null}
-              <span
-                className={cn(
-                  "type-caption rounded-full border px-3 py-1 font-semibold",
-                  theme.statusClassName,
-                )}
-              >
-                {entry.status === "active" ? "Active Collection" : "Coming Soon"}
-              </span>
-            </div>
-            <h1 className="type-page-heading mt-4" id="collection-heading">
-              {story.title}
-            </h1>
-            <p className="type-body mt-5 text-foreground-muted">
-              {story.introduction}
+      {media ? (
+        <picture className="absolute inset-0">
+          {mobileMedia ? <source media="(max-width: 767px)" srcSet={mobileMedia.url} /> : null}
+          <Image
+            alt={media.alt}
+            className="collection-shop-hero-image h-full w-full object-cover"
+            fetchPriority="high"
+            height={media.height ?? 1122}
+            priority
+            sizes="100vw"
+            src={media.url}
+            style={imageStyle}
+            width={media.width ?? 1402}
+          />
+        </picture>
+      ) : null}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,9,8,0.88)_0%,rgba(10,9,8,0.64)_34%,rgba(10,9,8,0.1)_72%),linear-gradient(0deg,rgba(10,9,8,0.58)_0%,transparent_55%)]" />
+      <Container className="relative flex min-h-[21rem] items-end py-8 md:min-h-[23rem] md:items-center md:py-10 lg:min-h-[25rem]">
+        <div className="max-w-[27rem]">
+          {story.eyebrow ? (
+            <p className="text-[0.65rem] font-semibold tracking-[0.18em] text-white/75 uppercase md:text-xs">
+              {story.eyebrow}
             </p>
-            {story.campaignLine ? (
-              <p className="mt-6 font-serif text-[clamp(1.5rem,3vw,2.25rem)] leading-tight tracking-[-0.02em]">
-                {story.campaignLine}
-              </p>
-            ) : null}
-            {productCount !== undefined ? (
-              <p className="type-caption mt-5 text-foreground-muted">
-                {productCount} {productCount === 1 ? "product" : "products"}
-              </p>
-            ) : null}
-          </div>
-
-          <div
-            className={cn(
-              "relative aspect-[5/4] overflow-hidden rounded-[var(--radius-panel)] border md:aspect-[4/3] xl:aspect-[3/2]",
-              theme.mediaClassName,
-              mediaFirst && "md:order-1",
-            )}
+          ) : null}
+          <h1
+            className="mt-2 font-serif text-[clamp(3rem,12vw,5rem)] font-normal italic leading-[0.82] tracking-[-0.045em] text-white md:text-[clamp(4.5rem,7vw,7rem)]"
+            id="collection-heading"
           >
-            {media ? (
-              <picture>
-                {mobileMedia ? (
-                  <source media="(max-width: 767px)" srcSet={mobileMedia.url} />
-                ) : null}
-                <Image
-                  alt={media.alt}
-                  className="collection-hero-image h-full w-full object-cover"
-                  fetchPriority="high"
-                  height={media.height ?? 1122}
-                  priority
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  src={media.url}
-                  style={imageStyle}
-                  width={media.width ?? 1402}
-                />
-              </picture>
-            ) : (
-              <div
-                className={cn(
-                  "grid h-full place-items-center p-8 text-center",
-                  theme.placeholderClassName,
-                )}
-              >
-                <div className="max-w-sm">
-                  <p className="type-label opacity-75">Future collection</p>
-                  <p className="mt-4 font-serif text-[clamp(2rem,6vw,4.5rem)] leading-none tracking-[-0.035em]">
-                    A story still to come.
-                  </p>
-                </div>
-              </div>
-            )}
+            {story.title}
+          </h1>
+          <p className="mt-3 max-w-[24rem] text-sm leading-6 text-white/82 md:text-base">
+            {story.introduction}
+          </p>
+          <div className="mt-5 flex items-center gap-4">
+            <a
+              className="inline-flex min-h-11 items-center border border-white/75 bg-white px-5 text-xs font-semibold tracking-[0.1em] text-[#171513] no-underline hover:bg-transparent hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              href="#collection-products-heading"
+            >
+              Explore products
+            </a>
+            {productCount !== undefined ? (
+              <span className="text-xs text-white/70">
+                {productCount} {productCount === 1 ? "product" : "products"}
+              </span>
+            ) : null}
           </div>
         </div>
       </Container>

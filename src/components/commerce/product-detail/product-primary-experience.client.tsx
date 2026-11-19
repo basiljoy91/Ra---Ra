@@ -311,10 +311,10 @@ function getInitialImageUrl(
   selections: Readonly<Record<string, string>>,
 ): string | null {
   return (
+    product.images[0]?.url ??
     product.variants.find(
       (variant) => variant.available && matchesSelections(variant, selections),
     )?.image?.url ??
-    product.images[0]?.url ??
     getGalleryImages(product)[0]?.url ??
     null
   );

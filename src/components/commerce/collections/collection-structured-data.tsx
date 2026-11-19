@@ -34,12 +34,6 @@ export function CollectionStructuredData({
       {
         "@type": "ListItem",
         position: 2,
-        name: "Collections",
-        item: buildAbsoluteUrl("/collections", siteConfig.siteUrl),
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
         name: collectionTitle,
         item: collectionUrl,
       },

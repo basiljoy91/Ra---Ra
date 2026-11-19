@@ -334,6 +334,26 @@
   background: var(--border);
 }
 
+.collection-category-scroll {
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: var(--page-gutter);
+  scrollbar-width: none;
+}
+
+.collection-category-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.journal-category-scroll {
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: var(--page-gutter);
+  scrollbar-width: none;
+}
+
+.journal-category-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .product-rail-scroll {
   overscroll-behavior-inline: contain;
   scroll-padding-inline: var(--page-gutter);
@@ -387,6 +407,35 @@ body:has([data-editorial-homepage]) {
   color-scheme: light;
 }
 
+body:has([data-cart-page]) {
+  --background: #f6f0ea;
+  --surface: #fbf7f2;
+  --surface-muted: #eae1d8;
+  --foreground: #181512;
+  --foreground-muted: #6a625b;
+  --border: #cfc4ba;
+  --primary: #151311;
+  --primary-foreground: #fffaf5;
+  --button: #151311;
+  --button-foreground: #fffaf5;
+  --accent: #51463e;
+  --accent-soft: #e4d9cf;
+  --focus-ring: #51463e;
+  --brand-logo-filter: none;
+  color-scheme: light;
+}
+
+[data-cart-page] progress {
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #d7cec6;
+}
+
+[data-cart-page] progress::-webkit-progress-bar { background: #d7cec6; }
+[data-cart-page] progress::-webkit-progress-value { background: #181512; }
+[data-cart-page] progress::-moz-progress-bar { background: #181512; }
+
 @media (max-width: 47.999rem) {
   body {
     padding-bottom: calc(var(--mobile-bottom-nav-height) + env(safe-area-inset-bottom));
@@ -410,12 +459,14 @@ body:has([data-editorial-homepage]) {
   opacity: 0.72;
 }
 
-.featured-collection-media-image {
-  object-position: var(--collection-media-position-mobile, 50% 50%);
+.collection-shop-hero-image {
+  object-position: var(--collection-hero-position-mobile, 50% 50%);
 }
 
-.collection-hero-image {
-  object-position: var(--collection-hero-position-mobile, 50% 50%);
+@media (min-width: 48rem) and (max-width: 63.999rem) {
+  .collection-shop-hero-image {
+    object-position: var(--collection-hero-position-tablet, 50% 50%);
+  }
 }
 
 .editorial-banner-image {
@@ -428,22 +479,12 @@ body:has([data-editorial-homepage]) {
   }
 }
 
-@media (min-width: 48rem) {
-  .featured-collection-media-image {
-    object-position: var(--collection-media-position-desktop, 50% 50%);
-  }
-
-  .collection-hero-image {
-    object-position: var(--collection-hero-position-tablet, 50% 50%);
-  }
-}
-
 @media (min-width: 64rem) {
   .editorial-banner-image {
     object-position: var(--editorial-position-desktop, 100% 50%);
   }
 
-  .collection-hero-image {
+  .collection-shop-hero-image {
     object-position: var(--collection-hero-position-desktop, 50% 50%);
   }
 }

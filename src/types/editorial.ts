@@ -19,6 +19,7 @@ export interface EditorialHeroConfig {
   title: string;
   lead?: string;
   image?: ProductImage;
+  mobileImage?: ProductImage;
   imagePosition?: string;
   developmentNotice?: string;
 }
@@ -51,6 +52,10 @@ export interface FaqItemData {
   id: string;
   question: string;
   answer: string;
+  links?: readonly {
+    href: string;
+    label: string;
+  }[];
 }
 
 export interface FaqCategoryData {

@@ -30,7 +30,9 @@ export function DesktopHeader({
 }: DesktopHeaderProps) {
   return (
     <Container className="hidden h-[var(--header-height-desktop)] min-[64rem]:grid min-[64rem]:grid-cols-[1fr_auto_1fr] min-[64rem]:items-center min-[64rem]:gap-5">
-      <DesktopNavigation items={navigation.slice(0, 3)} />
+      <DesktopNavigation
+        items={navigation.filter((item) => item.id !== "journal").slice(0, 3)}
+      />
       <BrandLogo className="justify-self-center" />
       <div className="flex items-center justify-self-end gap-3">
         <Link

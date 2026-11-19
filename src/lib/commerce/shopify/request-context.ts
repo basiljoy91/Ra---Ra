@@ -2,6 +2,7 @@ import { cookies, headers } from "next/headers";
 
 import {
   EU_STOREFRONT_MARKETS,
+  GERMANY_STOREFRONT_MARKETS,
   INDIA_STOREFRONT_MARKETS,
   type StorefrontMarketOption,
 } from "@/config/storefront-markets";
@@ -10,17 +11,22 @@ import { getShopifyConfig } from "@/lib/commerce/shopify/config";
 
 export const MARKET_COOKIE = "ra_storefront_country";
 
-function marketMode(): "IN" | "EU" {
+function marketMode(): "DE" | "IN" | "EU" {
   const configured = process.env.SHOPIFY_MARKET_MODE?.trim().toUpperCase();
-  if (configured === "IN" || configured === "EU") return configured;
+  if (configured === "DE" || configured === "IN" || configured === "EU") return configured;
   const defaultCountry =
     process.env.SHOPIFY_DEFAULT_COUNTRY?.trim().toUpperCase() ??
     getShopifyConfig()?.countryCode;
-  return defaultCountry === "IN" ? "IN" : "EU";
+  if (defaultCountry === "IN") return "IN";
+  if (defaultCountry === "DE") return "DE";
+  return "EU";
 }
 
 export function getAvailableStorefrontMarkets(): readonly StorefrontMarketOption[] {
-  return marketMode() === "IN" ? INDIA_STOREFRONT_MARKETS : EU_STOREFRONT_MARKETS;
+  const mode = marketMode();
+  if (mode === "IN") return INDIA_STOREFRONT_MARKETS;
+  if (mode === "DE") return GERMANY_STOREFRONT_MARKETS;
+  return EU_STOREFRONT_MARKETS;
 }
 
 export function resolveStorefrontCountry(value?: string): string {
@@ -34,7 +40,7 @@ export function resolveStorefrontCountry(value?: string): string {
     getShopifyConfig()?.countryCode;
   return options.some((option) => option.countryCode === configuredDefault)
     ? configuredDefault!
-    : options[0]?.countryCode ?? "IN";
+    : options[0]?.countryCode ?? "DE";
 }
 
 export async function getCommerceRequestContext(): Promise<CommerceRequestContext> {

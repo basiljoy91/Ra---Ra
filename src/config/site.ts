@@ -18,12 +18,12 @@ function resolveSiteUrl(value: string | undefined): string {
 }
 
 const testMarket = {
-  code: "IN",
-  name: "India",
-  countryCode: "IN",
-  currencyCode: "INR",
-  defaultLocale: "en",
-  supportedLocales: ["en"],
+  code: "DE",
+  name: "Deutschland",
+  countryCode: "DE",
+  currencyCode: "EUR",
+  defaultLocale: "de",
+  supportedLocales: ["de", "en"],
 } as const satisfies Market;
 
 const primaryNavigation = [
@@ -33,41 +33,27 @@ const primaryNavigation = [
     enabled: true,
     children: [
       {
-        id: "all-products",
-        label: "All T-Shirts",
-        href: "/collections/beyond",
+        id: "beyond-time",
+        label: "Beyond Time",
+        href: "/products/beyond-time",
         enabled: true,
       },
       {
-        id: "new-arrivals",
-        label: "New Arrivals",
-        href: "/collections/beyond?sort=newest",
+        id: "beyond-fear",
+        label: "Beyond Fear",
+        href: "/products/beyond-fear",
         enabled: true,
       },
       {
-        id: "collection-story",
-        label: "The Collection Story",
-        href: "/collections/beyond",
-        enabled: true,
-      },
-    ],
-  },
-  {
-    id: "collections",
-    label: "Collections",
-    enabled: true,
-    children: [
-      {
-        id: "beyond-collection",
-        label: "Beyond",
-        href: "/collections/beyond",
+        id: "beyond-reality",
+        label: "Beyond Reality",
+        href: "/products/beyond-reality",
         enabled: true,
       },
       {
-        id: "collection-01",
-        label: "Collection 01",
-        badge: "01",
-        href: "/collections/beyond",
+        id: "beyond-limits",
+        label: "Beyond Limits",
+        href: "/products/beyond-limits",
         enabled: true,
       },
     ],
@@ -80,8 +66,9 @@ const primaryNavigation = [
 const mobileSecondaryLinks = [
   { id: "faq", label: "FAQ", href: "/faq", enabled: true },
   { id: "size-guide", label: "Size Guide", href: "/size-guide", enabled: true },
-  { id: "shipping", label: "Shipping", href: "/faq#shipping", enabled: true },
-  { id: "returns", label: "Returns", href: "/faq#returns", enabled: true },
+  { id: "shipping", label: "Versand", href: "/shipping", enabled: true },
+  { id: "returns", label: "Rücksendungen", href: "/returns", enabled: true },
+  { id: "withdrawal", label: "Vertrag widerrufen", href: "/widerruf", enabled: true },
 ] as const satisfies readonly NavigationItem[];
 
 const headerConfig = {
@@ -110,10 +97,10 @@ export const siteConfig = {
   siteUrl: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultLocale: "en",
   supportedLocales: ["en"],
-  defaultCurrency: "INR",
+  defaultCurrency: "EUR",
   market: testMarket,
   socialLinks: {},
-  contactEmail: "hello@example.invalid",
+  contactEmail: "contact@raundra.com",
   navigationFeatureFlags: {
     account: false,
     wishlist: false,
@@ -126,7 +113,7 @@ export const siteConfig = {
   newsletterEnabled: true,
   communityEnabled: false,
   header: headerConfig,
-  usesPlaceholderContactDetails: true,
+  usesPlaceholderContactDetails: false,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

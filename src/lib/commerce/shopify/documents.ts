@@ -94,6 +94,8 @@ export const CART_FIELDS = `
     checkoutUrl
     totalQuantity
     buyerIdentity { countryCode }
+    attributes { key value }
+    discountCodes { code applicable }
     cost {
       subtotalAmount { amount currencyCode }
       totalAmount { amount currencyCode }
@@ -185,6 +187,36 @@ export const CART_BUYER_IDENTITY_UPDATE_MUTATION = `
     $country: CountryCode!
   ) @inContext(country: $country) {
     cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {
+      cart { ...CartFields }
+      userErrors { field message code }
+      warnings { message code }
+    }
+  }
+`;
+
+export const CART_ATTRIBUTES_UPDATE_MUTATION = `
+  ${CART_FIELDS}
+  mutation StorefrontCartAttributesUpdate(
+    $cartId: ID!
+    $attributes: [AttributeInput!]!
+    $country: CountryCode!
+  ) @inContext(country: $country) {
+    cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+      cart { ...CartFields }
+      userErrors { field message code }
+      warnings { message code }
+    }
+  }
+`;
+
+export const CART_DISCOUNT_CODES_UPDATE_MUTATION = `
+  ${CART_FIELDS}
+  mutation StorefrontCartDiscountCodesUpdate(
+    $cartId: ID!
+    $discountCodes: [String!]!
+    $country: CountryCode!
+  ) @inContext(country: $country) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
       cart { ...CartFields }
       userErrors { field message code }
       warnings { message code }

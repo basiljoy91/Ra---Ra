@@ -1,8 +1,8 @@
+import { CollectionCategoryTabs } from "@/components/commerce/collections/collection-category-tabs";
 import { CollectionEmptyState } from "@/components/commerce/collections/collection-empty-state";
 import { CollectionHero } from "@/components/commerce/collections/collection-hero";
-import { CollectionIntroduction } from "@/components/commerce/collections/collection-introduction";
+import { CollectionMaterialBanner } from "@/components/commerce/collections/collection-material-banner";
 import { CollectionResults } from "@/components/commerce/collections/collection-results";
-import { CollectionStorySections } from "@/components/commerce/collections/collection-story-sections";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import type {
@@ -36,17 +36,23 @@ export function CollectionPageTemplate({
         entry={entry}
         {...(active ? { productCount: query.totalProducts } : {})}
       />
-      <CollectionIntroduction entry={entry} />
-      <CollectionStorySections products={entry.collection.products} />
+      <CollectionCategoryTabs
+        collectionHandle={entry.collection.handle}
+        products={entry.collection.products}
+        state={state}
+      />
       {active ? (
-        <CollectionResults
-          collectionHandle={entry.collection.handle}
-          collectionLabel={entry.collection.title}
-          filters={filters}
-          query={query}
-          state={state}
-          {...(quickAddAction ? { quickAddAction } : {})}
-        />
+        <>
+          <CollectionResults
+            collectionHandle={entry.collection.handle}
+            collectionLabel={entry.collection.title}
+            filters={filters}
+            query={query}
+            state={state}
+            {...(quickAddAction ? { quickAddAction } : {})}
+          />
+          <CollectionMaterialBanner products={entry.collection.products} />
+        </>
       ) : (
         <Section spacing="md" tone="background">
           <Container>

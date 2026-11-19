@@ -1,68 +1,53 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
-import { EditorialLayout } from "@/components/editorial/editorial-layout";
 import { ContactForm } from "@/components/forms/contact/contact-form";
-import { Container } from "@/components/layout/container";
-import { Section } from "@/components/layout/section";
-import { buttonStyles } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
-import { contactHero } from "@/data/development/editorial-content";
-import { submitDevelopmentContact } from "@/features/contact/development-contact-submission";
-import { buildAbsoluteUrl } from "@/lib/utilities";
+import { LegalCallout, LegalPageLayout, LegalSection, legalPageStyles } from "@/components/legal/legal-page-layout";
+import { legalConfig } from "@/config/legal";
+import { submitLegalContact } from "@/features/legal/legal-submissions";
+import { createLegalMetadata } from "@/lib/legal/metadata";
 
-const title = "Contact";
-const description =
-  "Contact ra&ra through a development-ready, accessible enquiry interface.";
+export const metadata = createLegalMetadata(
+  "/contact",
+  "Kontakt",
+  "Kontakt zu Ra & Ra für Bestellungen, Versand, Rücksendungen, Produkte und allgemeine Fragen.",
+);
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: buildAbsoluteUrl("/contact", siteConfig.siteUrl) },
-  openGraph: {
-    title,
-    description,
-    url: buildAbsoluteUrl("/contact", siteConfig.siteUrl),
-  },
-};
+const toc = [
+  { id: "direkt", label: "Direkter Kontakt" },
+  { id: "formular", label: "Kontaktformular" },
+  { id: "widerruf", label: "Widerruf" },
+] as const;
 
 export default function ContactPage() {
+  const trader = legalConfig.trader;
   return (
-    <EditorialLayout hero={contactHero}>
-      <Section spacing="lg">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-[minmax(16rem,0.7fr)_minmax(0,1.3fr)] lg:gap-20">
-            <aside className="lg:pt-2">
-              <p className="type-label text-accent">Before you write</p>
-              <h2 className="type-section-heading mt-3">How can we help?</h2>
-              <p className="mt-5 max-w-md text-foreground-muted">
-                The FAQ records what is confirmed and what remains pending. It may already answer questions about ordering, shipping, products or sizing.
-              </p>
-              <Link className={buttonStyles({ variant: "secondary", className: "mt-7" })} href="/faq">
-                Read the FAQ
-              </Link>
-              <div className="mt-10 border-t border-border pt-7">
-                <p className="font-semibold">Business email placeholder</p>
-                <p className="mt-2 break-all text-foreground-muted">{siteConfig.contactEmail}</p>
-                <p className="type-caption mt-2 text-foreground-muted">
-                  This reserved address is intentionally not active.
-                </p>
-              </div>
-            </aside>
-            <section aria-labelledby="contact-form-heading" className="rounded-[var(--radius-panel)] border border-border bg-surface p-5 sm:p-8 lg:p-10">
-              <h2 className="font-serif text-3xl font-semibold" id="contact-form-heading">
-                Send an enquiry
-              </h2>
-              <p className="mt-3 text-foreground-muted">
-                Complete the fields to validate the development form. No delivery service is connected.
-              </p>
-              <div className="mt-8">
-                <ContactForm action={submitDevelopmentContact} />
-              </div>
-            </section>
-          </div>
-        </Container>
-      </Section>
-    </EditorialLayout>
+    <LegalPageLayout
+      intro="Du hast eine Frage zu deiner Bestellung, zu Größen und Passformen oder zu einer Rücksendung? Schreib uns – wir helfen dir gerne weiter."
+      title="Kontakt"
+      toc={toc}
+    >
+      <LegalSection id="direkt" title="So erreichst du uns">
+        <dl className={legalPageStyles.definitionList}>
+          <div><dt>E-Mail</dt><dd><a href={`mailto:${trader.email.value}`}>{trader.email.value}</a></dd></div>
+          <div><dt>Telefon</dt><dd><a href={trader.phoneHref.value ?? undefined}>{trader.phoneDisplay.value}</a></dd></div>
+        </dl>
+        <p>Wir veröffentlichen bewusst keine unbestätigten Servicezeiten oder Antwortfristen. Rechtliche Anbieterangaben findest du im <Link href="/impressum">Impressum</Link>.</p>
+      </LegalSection>
+
+      <LegalSection id="formular" title="Nachricht senden">
+        {!legalConfig.submissions.contactConfigured ? (
+          <LegalCallout tone="critical">
+            <p><strong>Online-Versand noch nicht betriebsbereit.</strong> Das Formular validiert Eingaben und zeigt ausschließlich einen echten Erfolg nach Bestätigung durch den konfigurierten Serverdienst. Solange dieser fehlt, nutze bitte <a href="mailto:contact@raundra.com">contact@raundra.com</a>.</p>
+          </LegalCallout>
+        ) : null}
+        <div className={legalPageStyles.formPanel}>
+          <ContactForm action={submitLegalContact} />
+        </div>
+      </LegalSection>
+
+      <LegalSection id="widerruf" title="Vertrag widerrufen">
+        <p>Für einen Widerruf ist keine Begründung erforderlich. Nutze die hervorgehobene elektronische Funktion unter <Link href="/widerruf">Vertrag widerrufen</Link> oder sende eine eindeutige Erklärung per E-Mail. Hinweise zur Rücksendung findest du unter <Link href="/returns">Widerruf & Rücksendungen</Link>.</p>
+      </LegalSection>
+    </LegalPageLayout>
   );
 }

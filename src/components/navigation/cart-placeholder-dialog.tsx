@@ -151,8 +151,8 @@ export function CartPlaceholderDialog({ open, onClose }: CartDialogProps) {
               <p className="type-small mt-1 text-foreground-muted">
                 Choose a design and size from the Beyond collection.
               </p>
-              <Link href="/collections/beyond" onClick={onClose} className="mt-4 inline-block text-sm font-semibold">
-                Shop Beyond
+              <Link href="/" onClick={onClose} className="mt-4 inline-block text-sm font-semibold">
+                Discover Beyond
               </Link>
             </div>
           </div>
