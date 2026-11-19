@@ -4,6 +4,7 @@ import { HeaderActions } from "@/components/navigation/header-actions";
 import { Container } from "@/components/layout/container";
 import Link from "next/link";
 import type { NavigationItem } from "@/types/navigation";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 
 interface DesktopHeaderProps {
   navigation: readonly NavigationItem[];
@@ -35,6 +36,7 @@ export function DesktopHeader({
       />
       <BrandLogo className="justify-self-center" />
       <div className="flex items-center justify-self-end gap-3">
+        <LanguageSwitcher compact />
         <Link
           href="/journal"
           className="inline-flex min-h-11 items-center px-2 text-[0.6875rem] font-medium tracking-[0.1em] uppercase no-underline"

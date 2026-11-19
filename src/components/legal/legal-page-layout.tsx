@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { Container } from "@/components/layout/container";
 import { legalConfig } from "@/config/legal";
+import { LegalLanguageNotice } from "@/components/legal/legal-language-notice.client";
 
 import styles from "./legal-page.module.css";
 
@@ -19,7 +20,7 @@ type LegalPageLayoutProps = {
 
 export function LegalPageLayout({ title, intro, toc, children }: LegalPageLayoutProps) {
   return (
-    <article className={styles.page} data-legal-page lang="de">
+    <article className={styles.page} data-brand-page data-legal-page>
       <header className={styles.header}>
         <Container className={styles.headerInner}>
           <p className={styles.eyebrow}>Ra &amp; Ra / Rechtliches &amp; Service</p>
@@ -44,7 +45,10 @@ export function LegalPageLayout({ title, intro, toc, children }: LegalPageLayout
             ))}
           </ol>
         </nav>
-        <div className={styles.content}>{children}</div>
+        <div className={styles.content}>
+          <LegalLanguageNotice />
+          {children}
+        </div>
       </Container>
     </article>
   );

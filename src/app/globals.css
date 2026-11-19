@@ -2,27 +2,27 @@
 
 :root {
   /* ra&ra editorial colour system */
-  --background: #0b0b0b;
-  --surface: #171615;
-  --surface-muted: #11100f;
-  --foreground: #e9e1d7;
-  --foreground-muted: #a8a098;
-  --border: #373330;
-  --primary: #0b0b0b;
-  --primary-foreground: #e9e1d7;
-  --button: #e9e1d7;
-  --button-foreground: #0b0b0b;
-  --accent: #b79b79;
-  --accent-soft: #2a251f;
+  --background: #f4efe8;
+  --surface: #f8f4ee;
+  --surface-muted: #e7e0d7;
+  --foreground: #111111;
+  --foreground-muted: #625d57;
+  --border: #c9c1b7;
+  --primary: #111111;
+  --primary-foreground: #f7f1e8;
+  --button: #111111;
+  --button-foreground: #f7f1e8;
+  --accent: #5d5147;
+  --accent-soft: #ddd5cb;
   --success: #a8bda8;
   --warning: #d2ad74;
   --error: #d49489;
-  --focus-ring: #d3b28d;
-  --loader-background: #0b0b0b;
-  --loader-line: #e9e1d7;
+  --focus-ring: #51463e;
+  --loader-background: #f4efe8;
+  --loader-line: #111111;
   --loader-leash: #8b6a4d;
   --loader-paw: #6d6154;
-  --brand-logo-filter: invert(1) brightness(1.45);
+  --brand-logo-filter: none;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -107,7 +107,7 @@
     overflow-x: clip;
     background: var(--background);
     color: var(--foreground);
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     text-size-adjust: 100%;
   }
@@ -404,6 +404,24 @@ body:has([data-editorial-homepage]) {
   --brand-logo-filter: none;
   --header-height-desktop: 3.5rem;
   --announcement-height: 1.6rem;
+  color-scheme: light;
+}
+
+body:has([data-brand-page]) {
+  --background: #f4efe8;
+  --surface: #f8f4ee;
+  --surface-muted: #e7e0d7;
+  --foreground: #111111;
+  --foreground-muted: #625d57;
+  --border: #c9c1b7;
+  --primary: #111111;
+  --primary-foreground: #f7f1e8;
+  --button: #111111;
+  --button-foreground: #f7f1e8;
+  --accent: #5d5147;
+  --accent-soft: #ddd5cb;
+  --focus-ring: #51463e;
+  --brand-logo-filter: none;
   color-scheme: light;
 }
 

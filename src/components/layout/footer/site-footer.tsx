@@ -5,6 +5,7 @@ import { BrandLogo } from "@/components/navigation/brand-logo";
 import { MarketSelector } from "@/components/layout/footer/market-selector.client";
 import type { StorefrontMarketOption } from "@/config/storefront-markets";
 import type { FooterConfig } from "@/types/footer";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 
 type SiteFooterProps = {
   config: FooterConfig;
@@ -44,6 +45,7 @@ export function SiteFooter({
             ))}
           </nav>
           <div className="flex flex-col gap-5">
+            <LanguageSwitcher />
             <MarketSelector
               initialCountryCode={selectedCountryCode}
               markets={marketOptions}
@@ -107,7 +109,10 @@ export function SiteFooter({
 
           <div className="flex flex-wrap items-center justify-between gap-3 py-5 text-[0.65rem]">
             <span>{config.market.marketLabel} · {config.market.currencyLabel}</span>
-            <Link href="/contact" className="underline decoration-border underline-offset-4">Kontakt</Link>
+            <div className="flex items-center gap-3">
+              <LanguageSwitcher compact />
+              <Link href="/contact" className="underline decoration-border underline-offset-4">Kontakt</Link>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 text-[0.58rem]">

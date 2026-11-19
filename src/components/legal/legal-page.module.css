@@ -6,8 +6,9 @@
 .header {
   border-bottom: 1px solid var(--border);
   background:
-    linear-gradient(120deg, rgb(183 155 121 / 0.08), transparent 48%),
-    var(--surface-muted);
+    linear-gradient(110deg, rgb(17 17 17 / 0.96) 0%, rgb(17 17 17 / 0.9) 44%, rgb(17 17 17 / 0.64) 100%),
+    url("/campaign/beyond-v2/desktop/collection.png") center 40% / cover;
+  color: #f4efe8;
 }
 
 .headerInner {
@@ -15,7 +16,7 @@
 }
 
 .eyebrow {
-  color: var(--accent);
+  color: rgb(244 239 232 / 0.68);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -35,7 +36,7 @@
 .intro {
   margin-top: 1.5rem;
   max-width: 62ch;
-  color: var(--foreground-muted);
+  color: rgb(244 239 232 / 0.76);
   font-size: clamp(1rem, 1.6vw, 1.18rem);
   line-height: 1.7;
 }
@@ -45,7 +46,7 @@
   max-width: 72ch;
   border: 1px solid color-mix(in srgb, var(--warning) 48%, transparent);
   border-radius: var(--radius-control);
-  background: color-mix(in srgb, var(--warning) 9%, var(--surface));
+  background: rgb(17 17 17 / 0.58);
   padding: 1rem 1.1rem;
 }
 
@@ -62,6 +63,7 @@
   max-width: 68ch;
   font-size: 0.88rem;
   line-height: 1.55;
+  color: rgb(244 239 232 / 0.82);
 }
 
 .layout {
@@ -109,6 +111,27 @@
 
 .content > * + * {
   margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.languageNotice {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--surface) 88%, var(--accent));
+  padding: 1rem 1.15rem;
+}
+
+.languageNotice strong {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.languageNotice p {
+  margin-top: 0.4rem;
+  color: var(--foreground-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .section {
