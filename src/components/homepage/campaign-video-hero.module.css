@@ -1,0 +1,209 @@
+.hero {
+  position: relative;
+  min-height: clamp(32rem, 64vh, 46rem);
+  overflow: hidden;
+  isolation: isolate;
+  background: #978b7d;
+  color: #fff;
+}
+
+.poster,
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.poster {
+  z-index: -3;
+}
+
+.video {
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.video[data-visible="true"] {
+  opacity: 1;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(12 10 8 / 0.74) 0%, rgb(12 10 8 / 0.38) 34%, transparent 68%),
+    linear-gradient(0deg, rgb(8 7 6 / 0.55) 0%, transparent 42%);
+  pointer-events: none;
+}
+
+.copy {
+  position: absolute;
+  bottom: clamp(2rem, 5vw, 4.5rem);
+  left: clamp(1.25rem, 5vw, 5.5rem);
+  width: min(39rem, calc(100% - 8rem));
+}
+
+.eyebrow {
+  margin: 0 0 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  max-width: 10ch;
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(3.8rem, 7.5vw, 7.5rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.82;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 30rem;
+  margin: 1.35rem 0 0;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.cta {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.35rem;
+  border: 1px solid rgb(255 255 255 / 0.78);
+  background: rgb(14 12 10 / 0.26);
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-decoration: none;
+  text-transform: uppercase;
+  backdrop-filter: blur(0.45rem);
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  background: #f7f1e8;
+  color: #111;
+}
+
+.playbackControl {
+  position: absolute;
+  right: clamp(1.25rem, 3.5vw, 3.5rem);
+  bottom: clamp(1.5rem, 3.5vw, 3rem);
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid rgb(255 255 255 / 0.55);
+  border-radius: 999px;
+  background: rgb(12 10 8 / 0.34);
+  padding: 0.65rem 1rem;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  backdrop-filter: blur(0.55rem);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.playbackControl:hover,
+.playbackControl:focus-visible {
+  border-color: #fff;
+  background: rgb(12 10 8 / 0.72);
+}
+
+.liveStatus {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 47.999rem) {
+  .hero {
+    min-height: clamp(29rem, 74svh, 42rem);
+  }
+
+  .poster,
+  .video {
+    object-position: center;
+  }
+
+  .shade {
+    background:
+      linear-gradient(0deg, rgb(10 8 7 / 0.78) 0%, rgb(10 8 7 / 0.24) 48%, transparent 74%),
+      linear-gradient(90deg, rgb(10 8 7 / 0.25), transparent 70%);
+  }
+
+  .copy {
+    right: 1rem;
+    bottom: 1.35rem;
+    left: 1rem;
+    width: auto;
+    padding-right: 3.8rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  .copy h1 {
+    max-width: 8ch;
+    font-size: clamp(3.3rem, 16vw, 5.4rem);
+  }
+
+  .description {
+    max-width: 18rem;
+    margin-top: 0.85rem;
+    font-size: 1rem;
+  }
+
+  .cta {
+    min-height: 2.8rem;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+  }
+
+  .playbackControl {
+    right: 1rem;
+    bottom: 1.25rem;
+    width: 3rem;
+    min-width: 3rem;
+    padding: 0;
+  }
+
+  .playbackControl span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video,
+  .cta,
+  .playbackControl {
+    transition: none;
+  }
+}

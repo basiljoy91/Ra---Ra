@@ -4,8 +4,11 @@ import Link from "next/link";
 
 import { NewsletterForm } from "@/components/forms/newsletter/newsletter-form";
 import { FavoriteButton } from "@/components/homepage/favorite-button.client";
-import { HeroCarousel } from "@/components/homepage/hero-carousel.client";
-import { MobileEditorialStorefront } from "@/components/homepage/mobile-editorial-storefront";
+import { CampaignVideoHero } from "@/components/homepage/campaign-video-hero.client";
+import {
+  MobileEditorialStorefront,
+  MobileHomepageShortcuts,
+} from "@/components/homepage/mobile-editorial-storefront";
 import styles from "@/components/homepage/homepage.module.css";
 import { beyondCollectionHero, beyondDesigns } from "@/data/beyond-collection";
 import { editorialHomepage } from "@/config/editorial-homepage";
@@ -71,6 +74,12 @@ export function EditorialStorefront({
   return (
     <div className={styles.page} data-editorial-homepage>
       <div className={styles.mobileExperience}>
+        <MobileHomepageShortcuts />
+      </div>
+
+      <CampaignVideoHero />
+
+      <div className={styles.mobileExperience}>
         <MobileEditorialStorefront
           newsletterAction={newsletterAction}
           products={products}
@@ -78,8 +87,6 @@ export function EditorialStorefront({
       </div>
 
       <div className={styles.desktopExperience}>
-        <HeroCarousel />
-
         <section className={styles.storyStrip} aria-label="BEYOND stories">
           {beyondDesigns.map((story) => (
             <article className={styles.storyCard} key={story.handle}>

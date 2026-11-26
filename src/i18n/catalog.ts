@@ -1082,6 +1082,11 @@ export const translationPairs: readonly TranslationPair[] = [
   { en: "Stores the selected delivery country for market-specific storefront requests.", de: "Speichert das ausgewählte Lieferland für marktbezogene Shop-Anfragen." },
   { en: "Confirmed by the proprietor on 16 November 2026.", de: "Vom Inhaber am 16. November 2026 bestätigt." },
   { en: "We bear the direct cost of returning the goods.", de: "Wir tragen die unmittelbaren Kosten der Rücksendung der Waren." },
+  { en: "Play campaign film", de: "Kampagnenfilm abspielen" },
+  { en: "Pause campaign film", de: "Kampagnenfilm pausieren" },
+  { en: "Loading campaign film", de: "Kampagnenfilm wird geladen" },
+  { en: "Cotton fibres in warm morning light", de: "Baumwollfasern im warmen Morgenlicht" },
+  { en: "RA & RA / BEYOND", de: "RA & RA / BEYOND" },
 ] as const;
 
 const byEnglish = new Map(translationPairs.map((pair) => [pair.en, pair]));
