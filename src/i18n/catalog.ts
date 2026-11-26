@@ -1087,6 +1087,12 @@ export const translationPairs: readonly TranslationPair[] = [
   { en: "Loading campaign film", de: "Kampagnenfilm wird geladen" },
   { en: "Cotton fibres in warm morning light", de: "Baumwollfasern im warmen Morgenlicht" },
   { en: "RA & RA / BEYOND", de: "RA & RA / BEYOND" },
+  { en: "Turn sound on", de: "Ton einschalten" },
+  { en: "Mute campaign film", de: "Ton ausschalten" },
+  { en: "Campaign film unavailable. Showing campaign image.", de: "Kampagnenfilm nicht verfügbar. Kampagnenbild wird angezeigt." },
+  { en: "Four perspectives. One collection.", de: "Vier Perspektiven. Eine Kollektion." },
+  { en: "Discover the collection", de: "Kollektion entdecken" },
+  { en: "RA & RA / COLLECTION 01", de: "RA & RA / COLLECTION 01" },
 ] as const;
 
 const byEnglish = new Map(translationPairs.map((pair) => [pair.en, pair]));

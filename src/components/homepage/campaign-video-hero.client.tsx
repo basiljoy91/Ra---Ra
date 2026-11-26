@@ -1,19 +1,18 @@
 "use client";
 
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useLocale } from "@/components/i18n/locale-provider.client";
 import styles from "@/components/homepage/campaign-video-hero.module.css";
+import { beyondCollectionHero } from "@/data/beyond-collection";
 
 const DESKTOP_VIDEO = "/videos/beyond-hero-desktop.mp4";
 const MOBILE_VIDEO = "/videos/beyond-hero-mobile.mp4";
-const DESKTOP_POSTER = "/videos/beyond-hero-desktop-poster.jpg";
-const MOBILE_POSTER = "/videos/beyond-hero-mobile-poster.jpg";
 const MOBILE_QUERY = "(max-width: 47.999rem)";
-const LOAD_TIMEOUT_MS = 8_000;
+const LOAD_TIMEOUT_MS = 15_000;
 
 type PlaybackState = "poster" | "loading" | "playing" | "paused" | "error";
 
@@ -26,43 +25,46 @@ type NetworkInformation = {
 function shouldDeferAutoplay() {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
-  const slowConnection = connection?.effectiveType
-    ? ["slow-2g", "2g", "3g"].includes(connection.effectiveType)
-    : typeof connection?.downlink === "number" && connection.downlink < 1.5;
 
-  return reducedMotion || connection?.saveData === true || slowConnection;
+  return reducedMotion || connection?.saveData === true;
 }
 
 export function CampaignVideoHero() {
   const { locale } = useLocale();
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPausedRef = useRef(false);
+  const mutedRef = useRef(true);
   const loadTimerRef = useRef<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [source, setSource] = useState<string | null>(null);
   const [playbackState, setPlaybackState] = useState<PlaybackState>("poster");
   const [hasDecodedFrame, setHasDecodedFrame] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const copy = locale === "de"
     ? {
-        eyebrow: "RA & RA / BEYOND",
-        title: "Was wir in uns tragen.",
-        description: "Nicht alles, was uns prägt, ist sichtbar.",
+        eyebrow: "RA & RA / COLLECTION 01",
+        title: "BEYOND",
+        description: "Vier Perspektiven. Eine Kollektion.",
         cta: "Kollektion entdecken",
         play: "Kampagnenfilm abspielen",
         pause: "Kampagnenfilm pausieren",
+        unmute: "Ton einschalten",
+        mute: "Ton ausschalten",
         loading: "Kampagnenfilm wird geladen",
-        posterAlt: "Baumwollfasern im warmen Morgenlicht",
+        unavailable: "Kampagnenfilm nicht verfügbar. Kampagnenbild wird angezeigt.",
       }
     : {
-        eyebrow: "RA & RA / BEYOND",
-        title: "The things we carry.",
-        description: "Not everything that shapes us can be seen.",
-        cta: "Explore the collection",
+        eyebrow: "RA & RA / COLLECTION 01",
+        title: "BEYOND",
+        description: "Four perspectives. One collection.",
+        cta: "Discover the collection",
         play: "Play campaign film",
         pause: "Pause campaign film",
+        unmute: "Turn sound on",
+        mute: "Mute campaign film",
         loading: "Loading campaign film",
-        posterAlt: "Cotton fibres in warm morning light",
+        unavailable: "Campaign film unavailable. Showing campaign image.",
       };
 
   const clearLoadTimer = useCallback(() => {
@@ -94,19 +96,24 @@ export function CampaignVideoHero() {
 
   useEffect(() => {
     const media = window.matchMedia(MOBILE_QUERY);
+    let requestTimer: number | null = null;
     const syncViewport = () => {
+      if (requestTimer !== null) window.clearTimeout(requestTimer);
       const nextIsMobile = media.matches;
       setIsMobile(nextIsMobile);
       setHasDecodedFrame(false);
       setSource(null);
       setPlaybackState("poster");
       userPausedRef.current = false;
-      window.requestAnimationFrame(() => requestVideo());
+      requestTimer = window.setTimeout(() => requestVideo(), 350);
     };
 
     syncViewport();
     media.addEventListener("change", syncViewport);
-    return () => media.removeEventListener("change", syncViewport);
+    return () => {
+      if (requestTimer !== null) window.clearTimeout(requestTimer);
+      media.removeEventListener("change", syncViewport);
+    };
   }, [requestVideo]);
 
   useEffect(() => {
@@ -119,9 +126,10 @@ export function CampaignVideoHero() {
       if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) return;
       video.pause();
       setSource(null);
-      setPlaybackState("poster");
+      setPlaybackState("error");
     }, LOAD_TIMEOUT_MS);
 
+    video.muted = mutedRef.current;
     video.load();
     void playVideo();
 
@@ -166,7 +174,24 @@ export function CampaignVideoHero() {
     void playVideo();
   }
 
-  const poster = isMobile ? MOBILE_POSTER : DESKTOP_POSTER;
+  function toggleSound() {
+    const video = videoRef.current;
+    if (!video || !hasDecodedFrame) return;
+
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    mutedRef.current = nextMuted;
+    setIsMuted(nextMuted);
+
+    if (!nextMuted && video.paused) {
+      userPausedRef.current = false;
+      void playVideo();
+    }
+  }
+
+  const posterAsset = isMobile
+    ? beyondCollectionHero.mobile
+    : beyondCollectionHero.desktop;
   const isPlaying = playbackState === "playing";
 
   return (
@@ -176,12 +201,12 @@ export function CampaignVideoHero() {
       data-has-frame={hasDecodedFrame}
     >
       <Image
-        alt={copy.posterAlt}
+        alt={posterAsset.alt}
         className={styles.poster}
         fill
         priority
         sizes="100vw"
-        src={poster}
+        src={posterAsset.url}
       />
       <video
         aria-hidden="true"
@@ -189,7 +214,6 @@ export function CampaignVideoHero() {
         data-visible={hasDecodedFrame}
         disablePictureInPicture
         loop
-        muted
         onCanPlay={() => {
           clearLoadTimer();
           setHasDecodedFrame(true);
@@ -200,6 +224,7 @@ export function CampaignVideoHero() {
           setSource(null);
           setPlaybackState("error");
         }}
+        muted={isMuted}
         onPause={() => {
           if (hasDecodedFrame) setPlaybackState("paused");
         }}
@@ -209,8 +234,8 @@ export function CampaignVideoHero() {
           setPlaybackState("playing");
         }}
         playsInline
-        poster={poster}
-        preload={source ? "metadata" : "none"}
+        poster={posterAsset.url}
+        preload={source ? "auto" : "none"}
         ref={videoRef}
         src={source ?? undefined}
       />
@@ -226,18 +251,37 @@ export function CampaignVideoHero() {
         </Link>
       </div>
 
-      <button
-        aria-label={isPlaying ? copy.pause : copy.play}
-        className={styles.playbackControl}
-        onClick={togglePlayback}
-        type="button"
-      >
-        {isPlaying ? <Pause aria-hidden="true" size={17} /> : <Play aria-hidden="true" size={17} />}
-        <span>{isPlaying ? copy.pause : copy.play}</span>
-      </button>
+      <div className={styles.mediaControls}>
+        <button
+          aria-label={isPlaying ? copy.pause : copy.play}
+          className={styles.mediaControl}
+          onClick={togglePlayback}
+          title={isPlaying ? copy.pause : copy.play}
+          type="button"
+        >
+          {isPlaying ? <Pause aria-hidden="true" size={18} /> : <Play aria-hidden="true" size={18} />}
+        </button>
+
+        {hasDecodedFrame ? (
+          <button
+            aria-label={isMuted ? copy.unmute : copy.mute}
+            aria-pressed={!isMuted}
+            className={styles.mediaControl}
+            onClick={toggleSound}
+            title={isMuted ? copy.unmute : copy.mute}
+            type="button"
+          >
+            {isMuted ? <VolumeX aria-hidden="true" size={18} /> : <Volume2 aria-hidden="true" size={18} />}
+          </button>
+        ) : null}
+      </div>
 
       <p aria-live="polite" className={styles.liveStatus}>
-        {playbackState === "loading" ? copy.loading : ""}
+        {playbackState === "loading"
+          ? copy.loading
+          : playbackState === "error"
+            ? copy.unavailable
+            : ""}
       </p>
     </section>
   );

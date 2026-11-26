@@ -84,7 +84,6 @@ export function MobileEditorialStorefront({
           src={beyondDesigns[0]!.images[10]!.url}
         />
         <div className={styles.fabricShade} />
-        <span className={styles.fabricLabel} aria-hidden="true">RA &amp; RA</span>
         <div className={styles.fabricCopy}>
           <h2 id="fabric-title">One garment.<br />Four meanings.</h2>
           <p>280 GSM Supima cotton.<br />Dense, smooth and softly structured.</p>
