@@ -180,24 +180,6 @@
   background: linear-gradient(90deg, rgb(0 0 0 / 0.18), rgb(0 0 0 / 0.86));
 }
 
-.fabricLabel {
-  position: absolute;
-  top: 50%;
-  left: clamp(1.6rem, 11vw, 4.5rem);
-  display: grid;
-  min-width: clamp(5.1rem, 24vw, 7rem);
-  min-height: clamp(2.1rem, 10vw, 2.85rem);
-  place-items: center;
-  border: 1px solid #6e6862;
-  background: #292623;
-  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 0.35);
-  color: #e8e0d7;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(0.8rem, 3.7vw, 1.05rem);
-  letter-spacing: 0.05em;
-  transform: translateY(-50%) rotate(-5deg);
-}
-
 .fabricCopy {
   position: absolute;
   top: 50%;

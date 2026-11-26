@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 931.85 736.8" role="img" aria-labelledby="title desc">
+  <title id="title">Beyond Fear — reworked vector flame</title>
+  <desc id="desc">Crisp white lettering crossed by a layered, realistic gold-orange vector flame with a colour-preserving glow.</desc>
+
+  <defs>
+    <linearGradient id="fire-shell" x1="438" y1="0" x2="500" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d92c00"/>
+      <stop offset="0.16" stop-color="#ff5a00"/>
+      <stop offset="0.37" stop-color="#ffad00"/>
+      <stop offset="0.53" stop-color="#ffe96a"/>
+      <stop offset="0.66" stop-color="#fff6bc"/>
+      <stop offset="0.82" stop-color="#ff9a00"/>
+      <stop offset="1" stop-color="#e13b00"/>
+    </linearGradient>
+
+    <linearGradient id="fire-core" x1="0" y1="72" x2="0" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff1a0"/>
+      <stop offset="0.2" stop-color="#fffdf0"/>
+      <stop offset="0.48" stop-color="#ffffff"/>
+      <stop offset="0.7" stop-color="#fff2a0"/>
+      <stop offset="1" stop-color="#ffb000"/>
+    </linearGradient>
+
+    <linearGradient id="fire-edge" x1="0" y1="70" x2="0" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffca21" stop-opacity="0"/>
+      <stop offset="0.2" stop-color="#ff7a00" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#ffb000" stop-opacity="0.75"/>
+      <stop offset="0.78" stop-color="#ff5b00" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#ffbd21" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="fire-glow" x="400" y="25" width="145" height="690" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="outer-alpha"/>
+      <feFlood flood-color="#ff6500" flood-opacity="0.16" result="outer-colour"/>
+      <feComposite in="outer-colour" in2="outer-alpha" operator="in" result="outer-glow"/>
+
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="middle-alpha"/>
+      <feFlood flood-color="#ffad19" flood-opacity="0.32" result="middle-colour"/>
+      <feComposite in="middle-colour" in2="middle-alpha" operator="in" result="middle-glow"/>
+
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.6" result="inner-alpha"/>
+      <feFlood flood-color="#fff0a0" flood-opacity="0.58" result="inner-colour"/>
+      <feComposite in="inner-colour" in2="inner-alpha" operator="in" result="inner-glow"/>
+
+      <feMerge>
+        <feMergeNode in="outer-glow"/>
+        <feMergeNode in="middle-glow"/>
+        <feMergeNode in="inner-glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="hot-core-glow" x="420" y="40" width="110" height="670" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.4" result="soft"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.75" result="tight"/>
+      <feMerge>
+        <feMergeNode in="soft"/>
+        <feMergeNode in="tight"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="letter-glow" x="-2%" y="-30%" width="104%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="letter-alpha"/>
+      <feFlood flood-color="#e8bc68" flood-opacity="0.22" result="letter-colour"/>
+      <feComposite in="letter-colour" in2="letter-alpha" operator="in" result="letter-halo"/>
+      <feMerge>
+        <feMergeNode in="letter-halo"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Existing lettering preserved as clean outlined vectors. -->
+  <g id="lettering" fill="#f8f7f0" stroke="#d9b77a" stroke-width="0.8" paint-order="stroke fill" filter="url(#letter-glow)" transform="translate(-101.29 -201.84)">
+    <path d="M101.53,593.86l-.24-45.35,6.21,0,.24,45.35Zm3.67,0,0-5.89,12-.07q4.95,0,7-2a6.63,6.63,0,0,0,2-5.09v-.1a7.94,7.94,0,0,0-1.79-5.37q-1.77-2-5.81-2l-13.58.07,0-5.73,13.58-.08a7.32,7.32,0,0,0,5.21-1.69,6.45,6.45,0,0,0,1.73-4.89,6.35,6.35,0,0,0-2-5.08q-2-1.66-5.89-1.65l-12.72.07,0-5.9,13.85-.07q6.59,0,9.81,3.28a12.41,12.41,0,0,1,3.26,8.94,10.65,10.65,0,0,1-1.93,6.23,9.1,9.1,0,0,1-6.12,3.64,9.32,9.32,0,0,1,6.42,3.67,11.62,11.62,0,0,1,2.32,7.07v.1a11.9,11.9,0,0,1-3.47,9q-3.5,3.42-9.53,3.45Z"/>
+    <path d="M191.87,593.86l-.24-45.35,6.24,0,.24,45.35Zm2.82-39.31,0-6,25.54-.14,0,6Zm.1,19.8,0-6.05,22.18-.12,0,6.06Zm.11,19.49,0-6.05,25.54-.13,0,6.05Z"/>
+    <path d="M313.75,550.06l-14.33,26,.09,17.74-6.66,0-.09-17.74-14.61-25.84,7.42,0,10.48,19.64,10.29-19.75Z"/>
+    <path d="M393.5,594.17a17.5,17.5,0,0,1-8.67-2,14.61,14.61,0,0,1-5.77-5.84,18.49,18.49,0,0,1-2.09-8.83l-.07-12.91a18.39,18.39,0,0,1,2-8.86,14.52,14.52,0,0,1,5.71-5.89,19,19,0,0,1,17.31-.09,14.52,14.52,0,0,1,5.77,5.83,18.39,18.39,0,0,1,2.09,8.84l.07,12.91a18.39,18.39,0,0,1-2,8.84,14.45,14.45,0,0,1-5.71,5.91A17.39,17.39,0,0,1,393.5,594.17Zm0-6.3a9.26,9.26,0,0,0,7.05-2.86,10.42,10.42,0,0,0,2.61-7.47l-.07-13.35a10.42,10.42,0,0,0-2.69-7.46,10.28,10.28,0,0,0-14.1.08,10.38,10.38,0,0,0-2.64,7.49l.07,13.34a10.44,10.44,0,0,0,2.71,7.45A9.28,9.28,0,0,0,393.46,587.87Z"/>
+    <path d="M477.14,592.25l-.24-45.31,5.66,0,21.94,34.94-.73.81-.19-35.87,6.18,0,.23,45.32-5.72,0L482.41,557.7l.73-.82.18,35.34Z"/>
+    <path d="M579.17,593.78l-.24-45.35,6.89,0,.24,45.35Zm4.66,0,0-6,11.12-.06c3.62,0,6.43-.9,8.41-2.65a9.18,9.18,0,0,0,2.95-7.36l-.07-13.35a9.18,9.18,0,0,0-3-7.33c-2-1.72-4.81-2.58-8.44-2.56l-11.11.06,0-6.05,10.91-.06q8.91,0,13.82,4.19t4.94,12l.07,12.84a16.67,16.67,0,0,1-2.15,8.8,14.05,14.05,0,0,1-6.35,5.58,24.29,24.29,0,0,1-10.13,2Z"/>
+    <path d="M1000.72,592.29l-.24-45.39,6.24,0,.24,45.38Zm2.62-19.2,0-6.05,15.17-.08a5.45,5.45,0,0,0,4.36-2,8.73,8.73,0,0,0-.05-10.23,5.48,5.48,0,0,0-4.38-1.91l-15.18.08,0-6.05,14.93-.08a13.68,13.68,0,0,1,6.8,1.6,11.46,11.46,0,0,1,4.53,4.55,15.44,15.44,0,0,1,.06,13.77,11.58,11.58,0,0,1-4.49,4.61,13.47,13.47,0,0,1-6.76,1.67Zm22.4,19.06-10.29-20.53,6.2-1.47,11.49,22Z"/>
+    <path d="M902.94,593.88l16.16-45.43,5.32,0,16.64,45.26-6.73,0L921.81,557.2l-12.14,36.65Zm7.51-10,0-6,23.4-.12,0,6Z"/>
+    <path d="M814.51,593.86l-.24-45.35,6.24,0,.24,45.35Zm2.82-39.31,0-6,25.55-.14,0,6Zm.1,19.8,0-6.05,22.18-.12,0,6.06Zm.1,19.49,0-6.05,25.54-.13,0,6.05Z"/>
+    <path d="M726.68,592.29l-.24-45.35,6.24,0,.24,45.35ZM729.53,553l0-6.05,24.92-.13,0,6.05Zm.1,20.21,0-6,21.57-.11,0,6.05Z"/>
+  </g>
+
+  <!-- New pure-vector flame. The glow is isolated from the lettering. -->
+  <g id="fire" filter="url(#fire-glow)">
+    <path fill="url(#fire-edge)" opacity="0.38" d="M458 228C444 247 436 273 439 302c2 21 12 36 20 50-5-18-7-37-5-57 2-27 11-47 20-66-7 5-12 11-16 19Zm30 196c14 22 17 49 8 77-4 14-12 28-18 45 3-23 7-42 8-61 2-23-2-43 2-61Z"/>
+
+    <path fill="url(#fire-shell)" stroke="#ff9d00" stroke-width="1" stroke-linejoin="round" d="M476 63C466 105 485 145 478 187c-6 38-28 68-28 112 0 34 12 55 17 76 6 27 24 48 25 81 2 37-16 65-21 98-6 39 7 76-3 128-4-43-13-80-7-127 5-40 21-69 20-101-1-28-14-48-20-73-7-28-19-48-19-80 0-47 20-78 28-115 9-41-7-80 6-123Z"/>
+
+    <path fill="url(#fire-core)" opacity="0.96" d="M476 91c-5 38 5 70-3 108-6 31-17 62-15 99 1 31 9 52 12 76 3 28 12 50 11 78 0 29-9 59-13 89-4 37 2 73 0 112-4-40-9-75-4-114 4-34 12-61 12-88 0-27-9-48-14-72-5-28-8-49-7-78 1-40 11-72 17-103 7-38-2-69 4-107Z"/>
+
+    <path fill="#fff8c9" opacity="0.75" d="M472 177c-3 24-12 48-13 74-1 29 5 53 11 75-2-29 0-55 5-80 4-24 5-45-3-69Zm3 310c-4 22-9 43-10 68-1 25 1 49 4 70 0-28 3-50 8-72 5-24 5-44-2-66Z"/>
+
+    <path fill="none" stroke="url(#fire-core)" stroke-width="3.1" stroke-linecap="round" filter="url(#hot-core-glow)" d="M476 108c1 39 2 57-6 94-6 29-12 59-10 96 1 31 8 51 10 77 2 30 11 51 11 78 0 28-9 58-13 88-3 36 1 69-1 106"/>
+
+    <path fill="none" stroke="#ffffff" stroke-opacity="0.88" stroke-width="1.25" stroke-linecap="round" d="M475 126c0 29-1 47-7 76-6 30-10 59-8 92m9 83c3 28 10 50 10 76 0 29-9 57-12 87"/>
+  </g>
+</svg>

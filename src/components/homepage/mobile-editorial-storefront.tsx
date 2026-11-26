@@ -17,7 +17,6 @@ import { FavoriteButton } from "@/components/homepage/favorite-button.client";
 import styles from "@/components/homepage/mobile-homepage.module.css";
 import { editorialHomepage } from "@/config/editorial-homepage";
 import {
-  beyondCollectionHero,
   beyondDesigns,
 } from "@/data/beyond-collection";
 import type { Product } from "@/lib/commerce";
@@ -69,38 +68,6 @@ export function MobileEditorialStorefront({
 }) {
   return (
     <div className={styles.mobilePage}>
-      <nav className={styles.shortcutNav} aria-label="Homepage shortcuts">
-        {shortcuts.map(({ label, href, Icon }, index) => (
-          <Link aria-current={index === 0 ? "page" : undefined} href={href} key={label}>
-            <Icon aria-hidden="true" size={25} strokeWidth={1.35} />
-            <span>{label}</span>
-          </Link>
-        ))}
-      </nav>
-
-      <section className={styles.hero} aria-labelledby="mobile-hero-title">
-        <Image
-          alt={beyondCollectionHero.mobile.alt}
-          className={styles.heroImage}
-          fill
-          priority
-          sizes="(max-width: 767px) 100vw, 1px"
-          src={beyondCollectionHero.mobile.url}
-        />
-        <div className={styles.heroShade} />
-        <div className={styles.heroCopy}>
-          <h1 id="mobile-hero-title">
-            <span>Beyond</span>
-            <span>Collection</span>
-          </h1>
-          <i aria-hidden="true" />
-          <p>Four designs.<br />Four human experiences.</p>
-          <Link href="#designs-title">
-            Explore the collection <ArrowRight aria-hidden="true" size={18} />
-          </Link>
-        </div>
-      </section>
-
       <nav className={styles.seriesNav} aria-label="Explore the BEYOND stories">
         {beyondDesigns.map((design) => (
           <Link href={`/products/${design.handle}`} key={design.handle}>
@@ -117,7 +84,6 @@ export function MobileEditorialStorefront({
           src={beyondDesigns[0]!.images[10]!.url}
         />
         <div className={styles.fabricShade} />
-        <span className={styles.fabricLabel} aria-hidden="true">RA &amp; RA</span>
         <div className={styles.fabricCopy}>
           <h2 id="fabric-title">One garment.<br />Four meanings.</h2>
           <p>280 GSM Supima cotton.<br />Dense, smooth and softly structured.</p>
@@ -241,5 +207,18 @@ export function MobileEditorialStorefront({
         </span>
       </section>
     </div>
+  );
+}
+
+export function MobileHomepageShortcuts() {
+  return (
+    <nav className={styles.shortcutNav} aria-label="Homepage shortcuts">
+      {shortcuts.map(({ label, href, Icon }, index) => (
+        <Link aria-current={index === 0 ? "page" : undefined} href={href} key={label}>
+          <Icon aria-hidden="true" size={25} strokeWidth={1.35} />
+          <span>{label}</span>
+        </Link>
+      ))}
+    </nav>
   );
 }
